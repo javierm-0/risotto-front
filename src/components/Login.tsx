@@ -24,24 +24,31 @@ function Login() {
   
         const dominiosPermitidos = ['alumnos.ucn.cl', 'ucn.cl'];
   
-        if (dominiosPermitidos.includes(domain)) {
+        if (dominiosPermitidos.includes(domain))
+          {
           console.log('Dominio valido, continuar con login');
-          if(domain == "alumnos.ucn.cl"){
+          localStorage.setItem('user', JSON.stringify(userInfo));
+
+          if(domain == "alumnos.ucn.cl")
+            {
             //inicioEstudiante
             navigate('/inicioEstudiante');
-          }
-          else{
+            }
+          else
+            {
             //inicioDocente
-            
-          }
 
-        } else {
+            }
+          }
+        else 
+          {
           console.warn('Dominio no permitido:', domain);
           alert('Alerta: Cuenta de correo no autorizada para acceder al sistema.');
-        }
-      } catch (error) {
+          }
+      } catch (error)
+        {
         console.error('Error al obtener datos del usuario:', error);
-      }
+        }
     },
     onError: (error) => {
       console.error('Error en login con Google:', error);
