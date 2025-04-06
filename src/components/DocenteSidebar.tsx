@@ -4,10 +4,13 @@ import ucnLogo from '../assets/IsologoUCN.png';
 import iconClose from '../assets/arrow-reduce-tag.svg';
 import iconHome from '../assets/home.svg';
 import iconUser from '../assets/profile-circle.svg';
+import iconVista from '../assets/VistaDoc.png';
+import iconCrear from '../assets/CrearDoc.png';
+import iconDiagnostico from '../assets/VerDiagnostico.png';
 import iconProgram from '../assets/simulation.png';
 import { BsArrowLeftSquareFill, BsList } from 'react-icons/bs';
 
-const StudentSidebar = () => {
+const DocenteSidebar = () => {
   const [isOpen, setIsOpen] = useState(true);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const navigate = useNavigate();
@@ -16,13 +19,23 @@ const StudentSidebar = () => {
     {
       title: 'Inicio',
       icon: iconHome,
-      link: '/inicioEstudiante',
+      link: '/inicioDocente',
     },
     {
-      title: 'Entrar a la simulación',
-      icon: iconProgram,
-      link: '/inicioEstudiante/simulacion',
+      title: 'Ver Casos Clínicos',
+      icon: iconVista,
+      link: '/inicioDocente/verCasos',
     },
+    {
+      title: 'Crear Casos Clínicos',
+      icon: iconCrear,
+      link: '/inicioDocente/crearCasos',
+    },
+    {
+      title: 'Ver Diagnosticos finales',
+      icon: iconDiagnostico,
+      link: '/inicioDocente/Diagnosticos',
+    },    
     {
       title: 'Cerrar Sesión',
       spacing: true,
@@ -68,7 +81,7 @@ const StudentSidebar = () => {
         className="w-30 mb-8 rounded cursor-pointer block"
         alt="UCN Logo"
       />
-      {isOpen && <p className="text-white font-semibold mb-4">Menú Alumno</p>}
+      {isOpen && <p className="text-white font-semibold mb-4">Menú Docente</p>}
       <ul className="pt-2">{isOpen && renderMenuItems()}</ul>
     </div>
   );
@@ -86,7 +99,7 @@ const StudentSidebar = () => {
         className="w-30 mb-8 rounded cursor-pointer block"
         alt="UCN Logo"
       />
-      <p className="text-white font-semibold mb-4">Menú Alumno</p>
+      <p className="text-white font-semibold mb-4">Menú Docente</p>
       <ul className="pt-2">{renderMenuItems()}</ul>
     </div>
   );
@@ -120,4 +133,4 @@ const StudentSidebar = () => {
   );
 };
 
-export default StudentSidebar;
+export default DocenteSidebar;
