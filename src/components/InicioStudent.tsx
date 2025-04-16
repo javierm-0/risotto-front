@@ -21,7 +21,7 @@ function InicioStudent() {
       </div>
 
       {/* Contenido principal */}
-      <div className="flex-1 p-6 sm:p-8">
+      <div className="flex-1 p-6 sm:p-8 mt-10 md:mt-0">
         <h2 className="text-2xl sm:text-xl font-bold text-[#164a5f] mb-4">
           ¡Bienvenid@ {location.state?.userName} al Sistema de Simulación!
         </h2>
