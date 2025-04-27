@@ -59,7 +59,7 @@ function Login() {
           ¡Bienvenid@ al Sistema!
         </h1>
         <p className="text-white text-sm sm:text-xs text-center mb-8">
-          Inicie sesión para acceder a las funcionalidades del sistema de simulación
+          Inicie sesión para acceder al sistema de simulación de casos clínicos.
         </p>
         <button
           type="button"
