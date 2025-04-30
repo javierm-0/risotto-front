@@ -20,22 +20,26 @@ function InicioStudent() {
       </div>
 
       <div className="flex-1 p-6 sm:p-8 mt-10 md:mt-0 md:pr-40">
-        <h2 className="text-2xl sm:text-xl font-bold text-[#164a5f] mb-4">
+        <h1 className="text-2xl sm:text-xl font-bold text-[#164a5f] mb-4">
           ¡Bienvenid@ al Sistema de Simulación!
+        </h1>
+        <div className="text-justify text-base sm:text-sm leading-relaxed lg:text-lg text-gray-700 mb-4">
+          <p>
+            Este sistema es una plataforma diseñada para apoyar la preparación de los estudiantes de Enfermería de la 
+            Universidad Católica del Norte en la atención de pacientes, a través de experiencias simuladas que fortalecen 
+            sus competencias clínicas.
+          </p>
+          <p className="mt-4 mb-4">
+            Es el resultado de una colaboración entre la carrera de Enfermería y la carrera de 
+            Ingeniería Civil en Informática de la Universidad Católica del Norte, 
+            una alianza que busca integrar la tecnología con la formación en salud para 
+            enriquecer el proceso de enseñanza-aprendizaje.
+          </p>
+        </div>
+        <h2 className="text-lg sm:text-base font-bold text-[#164a5f] mb-2">
+          Resultados de aprendizaje
         </h2>
-        <p className="text-justify text-base sm:text-sm leading-relaxed lg:text-lg text-gray-700 mb-4">
-          Este sistema es una plataforma diseñada para apoyar la preparación de los estudiantes de Enfermería de la 
-          Universidad Católica del Norte en la atención de pacientes, a través de experiencias simuladas que fortalecen 
-          sus competencias clínicas.
-          <br /><br />
-          Es el resultado de una colaboración entre la carrera de Enfermería y la carrera de 
-          Ingeniería Civil en Informática de la Universidad Católica del Norte, 
-          una alianza que busca integrar la tecnología con la formación en salud para 
-          enriquecer el proceso de enseñanza-aprendizaje.
-          <br /><br />
-          <h2 className="text-lg sm:text-base font-bold text-[#164a5f] mb-2">
-            Resultados de aprendizaje
-          </h2>
+        <p>
           A través de esta plataforma, se espera que el estudiante demuestre habilidades de comunicación efectiva, 
           trabajo colaborativo y toma de decisiones en contextos clínicos simulados, 
           contribuyendo al desarrollo de una atención segura y centrada en el paciente.

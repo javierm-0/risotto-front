@@ -19,9 +19,19 @@ const StudentSidebar = () => {
       link: '/inicioEstudiante',
     },
     {
-      title: 'Entrar a la simulación',
+      title: 'Casos de Urgencia',
       icon: iconProgram,
-      link: '/inicioEstudiante/simulacion',
+      link: '/inicioEstudiante/CasosUrgencia',
+    },
+    {
+      title: 'Casos Hospitalarios',
+      icon: iconProgram,
+      link: '/inicioEstudiante/CasosHospitalarios',
+    },
+    {
+      title: 'Casos APS',
+      icon: iconProgram,
+      link: '/inicioEstudiante/CasosAPS',
     },
     {
       title: 'Cerrar Sesión',
