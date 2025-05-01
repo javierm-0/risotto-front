@@ -7,9 +7,9 @@ import Logout from '../components/Logout'
 import VerCasos from '../components/VerCasos'
 import CrearCasos from '../components/CrearCasos'
 import Diagnosticos from '../components/Diagnosticos'
-import CasoUrgencia from '../components/CasosST.tsx/CasoUrgencia'
-import CasoAPS from '../components/CasosST.tsx/CasoAPS'
-import CasoHospitalario from '../components/CasosST.tsx/CasoHospitalario'
+import ListaCasosAPS from '../components/CasosST.tsx/ListaCasosAPS'
+import ListaCasosUrgencia from '../components/CasosST.tsx/ListaCasosUrgencia'
+import ListadoCasosHospitalarios from '../components/CasosST.tsx/ListaCasosHospitalarios'
 
 
 function App() {
@@ -23,19 +23,19 @@ function App() {
             <InicioStudent></InicioStudent>
           </ProtectedRoute>
           }> </Route>
-        <Route path='/inicioEstudiante/CasosUrgencia' element={
+        <Route path='/inicioEstudiante/ListadoCasosUrgencia' element={
           <ProtectedRoute allowedRoles={['Estudiante']}>
-            <CasoUrgencia></CasoUrgencia>
+            <ListaCasosUrgencia></ListaCasosUrgencia>
           </ProtectedRoute>
           }> </Route>
-        <Route path='/inicioEstudiante/CasosAPS' element={
+        <Route path='/inicioEstudiante/ListadoCasosAPS' element={
           <ProtectedRoute allowedRoles={['Estudiante']}>
-            <CasoAPS></CasoAPS>
+            <ListaCasosAPS></ListaCasosAPS>
           </ProtectedRoute>
           }> </Route>
-        <Route path='/inicioEstudiante/CasosHospitalarios' element={
+        <Route path='/inicioEstudiante/ListadoCasosHospitalarios' element={
           <ProtectedRoute allowedRoles={['Estudiante']}>
-            <CasoHospitalario></CasoHospitalario>
+            <ListadoCasosHospitalarios></ListadoCasosHospitalarios>
           </ProtectedRoute>
           }> </Route>
 

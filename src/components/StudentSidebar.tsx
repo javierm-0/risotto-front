@@ -21,17 +21,17 @@ const StudentSidebar = () => {
     {
       title: 'Casos de Urgencia',
       icon: iconProgram,
-      link: '/inicioEstudiante/CasosUrgencia',
+      link: '/inicioEstudiante/ListadoCasosUrgencia',
     },
     {
       title: 'Casos Hospitalarios',
       icon: iconProgram,
-      link: '/inicioEstudiante/CasosHospitalarios',
+      link: '/inicioEstudiante/ListadoCasosHospitalarios',
     },
     {
       title: 'Casos APS',
       icon: iconProgram,
-      link: '/inicioEstudiante/CasosAPS',
+      link: '/inicioEstudiante/ListadoCasosAPS',
     },
     {
       title: 'Cerrar Sesión',
