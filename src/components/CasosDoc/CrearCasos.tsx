@@ -1,4 +1,4 @@
-import DocenteSidebar from "./DocenteSidebar";
+import DocenteSidebar from "../DocenteSidebar";
 
 function CrearCasos(){
     return (

@@ -5,11 +5,12 @@ import InicioDocente from '../components/InicioDocente'
 import ProtectedRoute from '../auth/ProtectedRoute'
 import Logout from '../components/Logout'
 import VerCasos from '../components/VerCasos'
-import CrearCasos from '../components/CrearCasos'
+import CrearCasos from '../components/CasosDoc/CrearCasos'
 import Diagnosticos from '../components/Diagnosticos'
-import ListaCasosAPS from '../components/CasosST.tsx/ListaCasosAPS'
-import ListaCasosUrgencia from '../components/CasosST.tsx/ListaCasosUrgencia'
-import ListadoCasosHospitalarios from '../components/CasosST.tsx/ListaCasosHospitalarios'
+import ListaCasosAPS from '../components/CasosST/ListaCasosAPS'
+import ListaCasosUrgencia from '../components/CasosST/ListaCasosUrgencia'
+import ListadoCasosHospitalarios from '../components/CasosST/ListaCasosHospitalarios'
+import TestearInterprete from '../components/Test/TestearInterprete'
 
 
 function App() {
@@ -36,6 +37,11 @@ function App() {
         <Route path='/inicioEstudiante/ListadoCasosHospitalarios' element={
           <ProtectedRoute allowedRoles={['Estudiante']}>
             <ListadoCasosHospitalarios></ListadoCasosHospitalarios>
+          </ProtectedRoute>
+          }> </Route>
+        <Route path='/inicioEstudiante/testing' element={
+          <ProtectedRoute allowedRoles={['Estudiante']}>
+            <TestearInterprete></TestearInterprete>
           </ProtectedRoute>
           }> </Route>
 

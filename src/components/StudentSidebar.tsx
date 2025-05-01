@@ -34,6 +34,11 @@ const StudentSidebar = () => {
       link: '/inicioEstudiante/ListadoCasosAPS',
     },
     {
+      title: 'Testear Interprete',
+      icon: iconProgram,
+      link: '/inicioEstudiante/testing',
+    },
+    {
       title: 'Cerrar Sesión',
       spacing: true,
       icon: iconClose,

@@ -1,5 +1,5 @@
 import axios from "axios";
-import Tostadas from "../components/Tostadas";
+import Tostadas from "../utils/Tostadas";
 import { User } from "../types/User";
 
   //verifica si los datos de Google coinciden con los del back

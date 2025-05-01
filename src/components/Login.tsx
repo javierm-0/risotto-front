@@ -1,7 +1,7 @@
 import { useGoogleLogin } from '@react-oauth/google';
 import ucnLogo from '../assets/ucnLogo.png';
 import { useNavigate } from 'react-router-dom';
-import Tostadas from './Tostadas';
+import Tostadas from '../utils/Tostadas';
 import { ToastContainer } from 'react-toastify';
 import { verificarUsuario } from '../api/userAux';
 

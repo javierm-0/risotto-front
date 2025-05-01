@@ -1,12 +1,12 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import Tostadas from "../Tostadas";
+import Tostadas from "../../utils/Tostadas";
 import StudentSidebar from "../StudentSidebar";
 
 
 
-function CasoAPS() {
+function CasoHospitalario() {
   const location = useLocation();
 
   useEffect(() => {
@@ -23,7 +23,7 @@ function CasoAPS() {
 
       <div className="flex-1 p-6 sm:p-8 mt-10 md:mt-0">
         <h2 className="text-3xl sm:text-xl font-bold text-[#164a5f] mb-4">
-          Simulacion de casos APS
+          Simulacion de casos hospitalario
         </h2>
         <ToastContainer />
       </div>
@@ -31,4 +31,4 @@ function CasoAPS() {
   );
 }
 
-export default CasoAPS;
+export default CasoHospitalario;
