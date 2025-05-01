@@ -13,7 +13,6 @@ function TestearInterprete() {
         'preguntar al tens',
         'consultar antecedentes médicos',
         'preguntar a la familia',
-        'ver historial clínico'
       ];
     const [inputUsuario, setInputUsuario] = useState('');
     //const [resultado, setResultado] = useState<StrSimilarityResults | null>();
