@@ -44,7 +44,7 @@ function quitarTildes(texto: string): string {
 //retornara la frase valida que mas se asemeje a la frase del usuario (mejor obj StrSimilarityResults)
 //restringiendo a que la similitud sea mayor al ratingMinimo
 function Interprete(frasesValidas: string[], inputUsuario: string) : StrSimilarityResults | null {
-    const ratingMinimo = 0.60;// ← ajusta esto si quieres que sea mas o menos estricto(1 == imposible, 0 == permite todo xd)
+    const ratingMinimo = 0.38;// ← ajusta esto si quieres que sea mas o menos estricto(1 == imposible, 0 == permite todo xd)
 
     if(inputUsuario.length === 0) {
         return null;

@@ -11,6 +11,7 @@ import ListaCasosAPS from '../components/CasosST/ListaCasosAPS'
 import ListaCasosUrgencia from '../components/CasosST/ListaCasosUrgencia'
 import ListadoCasosHospitalarios from '../components/CasosST/ListaCasosHospitalarios'
 import TestearInterprete from '../components/Test/TestearInterprete'
+import Simulacion from '../components/Simulacion'
 
 
 function App() {
@@ -46,7 +47,7 @@ function App() {
           }> </Route>
 
 
-
+        <Route path="/simulacion/:id" element={<Simulacion />} />
 
 
         <Route path='/inicioDocente' element={
