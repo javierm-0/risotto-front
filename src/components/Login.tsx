@@ -1,6 +1,6 @@
 import { useGoogleLogin } from '@react-oauth/google';
 import ucnLogo from '../assets/ucnLogo.png';
-import enfLogo from '../assets/logo_limpio.png';
+import enfLogo from '../assets/logoMedUcn_circular.png';
 import { useNavigate } from 'react-router-dom';
 import Tostadas from '../utils/Tostadas';
 import { ToastContainer } from 'react-toastify';
