@@ -1,5 +1,6 @@
 import { useGoogleLogin } from '@react-oauth/google';
 import ucnLogo from '../assets/ucnLogo.png';
+import enfLogo from '../assets/logo_limpio.png';
 import { useNavigate } from 'react-router-dom';
 import Tostadas from '../utils/Tostadas';
 import { ToastContainer } from 'react-toastify';
@@ -58,12 +59,24 @@ function Login() {
   
   return (
     <div className="min-h-screen bg-[#0d5c71] flex items-center justify-center px-4">
-      <div className="w-full max-w-md bg-[#164a5f] rounded-2xl p-6 flex flex-col items-center">
-        <img
-          src={ucnLogo}
-          className="w-24 h-24 mb-6"
-          alt="Logo UCN"
-        />
+      <div className="w-full max-w-md bg-[#164a5f] rounded-2xl p-6 flex flex-col items-center shadow-lg">
+        <div className="flex items-center justify-center gap-6 mb-6">
+          <div className="w-36 h-36 bg-white rounded-full flex items-center justify-center">
+            <img
+              src={enfLogo}
+              className="max-w-full max-h-full object-contain"
+              alt="Logo ENF"
+            />
+          </div>
+          <div className="w-38 h-38 rounded-full p-2 flex items-center justify-center">
+            <img
+              src={ucnLogo}
+              className="max-w-full max-h-full object-contain"
+              alt="Logo UCN"
+            />
+          </div>
+        </div>
+  
         <h1 className="text-2xl sm:text-xl font-bold text-white mb-4 text-center">
           ¡Bienvenid@ al Sistema!
         </h1>
@@ -81,6 +94,8 @@ function Login() {
       <ToastContainer />
     </div>
   );
+  
+  
 }
 
 export default Login;
