@@ -1,5 +1,5 @@
 export interface Case {
-  _id: { $oid: string }; // ← corregido
+  _id: string;
   titulo: string;
   tipo_caso: 'APS' | 'Urgencia' | 'Hospitario';
   contexto_inicial: ContextoInicial;

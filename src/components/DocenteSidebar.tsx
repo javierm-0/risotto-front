@@ -3,86 +3,64 @@ import { useNavigate } from 'react-router-dom';
 import ucnLogo from '../assets/IsologoUCN.png';
 import iconClose from '../assets/arrow-reduce-tag.svg';
 import iconHome from '../assets/home.svg';
-import iconUser from '../assets/profile-circle.svg';
 import iconVista from '../assets/VistaDoc.png';
 import iconCrear from '../assets/CrearDoc.png';
 import iconDiagnostico from '../assets/VerDiagnostico.png';
 import iconProgram from '../assets/simulation.png';
 import { BsArrowLeftSquareFill, BsList } from 'react-icons/bs';
 
-const DocenteSidebar = () => {
+const DocenteSidebar = ({ onSidebarToggle }: { onSidebarToggle?: (open: boolean) => void }) => {
   const [isOpen, setIsOpen] = useState(true);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const navigate = useNavigate();
 
   const Menus = [
-    {
-      title: 'Inicio',
-      icon: iconHome,
-      link: '/inicioDocente',
-    },
-    {
-      title: 'Ver Casos Clínicos',
-      icon: iconVista,
-      link: '/inicioDocente/verCasos',
-    },
-    {
-      title: 'Crear Casos Clínicos',
-      icon: iconCrear,
-      link: '/inicioDocente/crearCasos',
-    },
-    {
-      title: 'Ver Diagnosticos finales',
-      icon: iconDiagnostico,
-      link: '/inicioDocente/Diagnosticos',
-    },    
-    {
-      title: 'Cerrar Sesión',
-      spacing: true,
-      icon: iconClose,
-      link: '/',
-      isExitButton: true,
-    },
+    { title: 'Inicio', icon: iconHome, link: '/inicioDocente' },
+    { title: 'Ver Casos Clínicos', icon: iconVista, link: '/inicioDocente/verCasos' },
+    { title: 'Crear Casos Clínicos', icon: iconCrear, link: '/inicioDocente/crearCasos' },
+    { title: 'Ver Diagnosticos finales', icon: iconDiagnostico, link: '/inicioDocente/Diagnosticos' },
+    { title: 'Cerrar Sesión', spacing: true, icon: iconClose, link: '/', isExitButton: true },
   ];
+
+  const toggleSidebar = () => {
+    setIsOpen(prev => {
+      const newState = !prev;
+      onSidebarToggle?.(newState);
+      return newState;
+    });
+  };
 
   const renderMenuItems = () =>
     Menus.map((menu, index) => (
       <li
         key={index}
-        className={`text-white text-sm flex items-center gap-4 cursor-pointer p-2 rounded-md hover:bg-[#0d5c71] ${
-          menu.spacing ? 'mt-48 bottom-2 absolute' : 'mt-2'
+        className={`text-white text-sm flex items-center gap-4 cursor-pointer p-2 rounded-md hover:bg-[#0d5c71] mt-2 ${
+          menu.spacing ? 'mt-48' : ''
         }`}
-        onClick={() =>
-          menu.isExitButton ? navigate('/logout') : navigate(menu.link)
-        }
+        onClick={() => navigate(menu.isExitButton ? '/logout' : menu.link)}
       >
         <img src={menu.icon} className="w-6 h-6" />
-        <p className="text-base font-medium flex-1 hover:text-blue-400">
-          {menu.title}
-        </p>
+        {isOpen && (
+          <p className="text-base font-medium flex-1 hover:text-blue-400">{menu.title}</p>
+        )}
       </li>
     ));
 
   const SidebarContentDesktop = () => (
     <div
       className={`bg-[#164a5f] h-full p-5 pt-8 ${
-        isOpen ? 'w-72' : 'w-24'
+        isOpen ? 'w-72' : 'w-16'
       } duration-300 relative rounded-tr-2xl`}
     >
       <BsArrowLeftSquareFill
         className={`bg-[#164a5f] text-gray-200 text-3xl rounded-full absolute -right-3.5 top-10 border border-[#3ab1b177] cursor-pointer hidden md:block ${
           !isOpen && 'rotate-180'
         }`}
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={toggleSidebar}
       />
-
-      <img
-        src={ucnLogo}
-        className="w-30 mb-8 rounded cursor-pointer block"
-        alt="UCN Logo"
-      />
+      <img src={ucnLogo} className="w-30 mb-8 rounded cursor-pointer block" alt="UCN Logo" />
       {isOpen && <p className="text-white font-semibold mb-4">Menú Docente</p>}
-      <ul className="pt-2">{isOpen && renderMenuItems()}</ul>
+      <ul className="pt-2">{renderMenuItems()}</ul>
     </div>
   );
 
@@ -94,11 +72,7 @@ const DocenteSidebar = () => {
       >
         ✕
       </button>
-      <img
-        src={ucnLogo}
-        className="w-30 mb-8 rounded cursor-pointer block"
-        alt="UCN Logo"
-      />
+      <img src={ucnLogo} className="w-30 mb-8 rounded cursor-pointer block" alt="UCN Logo" />
       <p className="text-white font-semibold mb-4">Menú Docente</p>
       <ul className="pt-2">{renderMenuItems()}</ul>
     </div>

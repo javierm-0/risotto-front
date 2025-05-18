@@ -23,7 +23,7 @@ const Pregunta: React.FC<PreguntaProps> = ({
 }) => {
   return (
     <div className="border border-gray-400 rounded p-4 mb-6 bg-gray-50">
-      <div className="flex justify-between items-center mb-3">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-3 gap-2">
         <h4 className="text-lg font-semibold text-gray-800">Pregunta</h4>
         <button
           className="text-red-500 text-sm hover:text-red-700"
@@ -37,21 +37,15 @@ const Pregunta: React.FC<PreguntaProps> = ({
         <Opcion
           key={opcion.id}
           opcion={opcion}
-          onChangeEnunciado={(val) =>
-            onChangeOpcion(index, 'enunciado', val)
-          }
-          onChangeRespuestaDelSistema={(val) =>
-            onChangeOpcion(index, 'respuestaDelSistema', val)
-          }
-          onToggleCorrecta={() =>
-            onChangeOpcion(index, 'esCorrecta', !opcion.esCorrecta)
-          }
+          onChangeEnunciado={(val) => onChangeOpcion(index, 'enunciado', val)}
+          onChangeRespuestaDelSistema={(val) => onChangeOpcion(index, 'respuestaDelSistema', val)}
+          onToggleCorrecta={() => onChangeOpcion(index, 'esCorrecta', !opcion.esCorrecta)}
           onEliminar={() => onEliminarOpcion(index)}
         />
       ))}
 
       <button
-        className="text-white px-3 py-1 rounded mt-2 bg-[#164a5f] hover:bg-[#0d5c71] mb-4 active:scale-95"
+        className="text-white px-4 py-2 rounded mt-2 bg-[#164a5f] hover:bg-[#0d5c71] mb-4 active:scale-95 w-full sm:w-auto"
         onClick={onAgregarOpcion}
       >
         Agregar opción

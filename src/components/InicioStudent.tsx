@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from 'react';
 import { useLocation } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import Tostadas from "../utils/Tostadas";
@@ -6,6 +6,7 @@ import StudentSidebar from "./StudentSidebar";
 
 function InicioStudent() {
   const location = useLocation();
+  const [sidebarAbierto, setSidebarAbierto] = useState(true);
 
   useEffect(() => {
     if (location.state?.showToast) {
@@ -15,12 +16,17 @@ function InicioStudent() {
 
   return (
     <div className="flex flex-col md:flex-row min-h-screen bg-gray-50">
-      <div className="w-full md:w-[21.25%] bg-white shadow-md">
-        <StudentSidebar />
-      </div>
+        <div className="fixed top-0 left-0 z-40 h-screen">
+          <StudentSidebar onSidebarToggle={setSidebarAbierto} />
+        </div>
+        <div
+        className={`flex-1 p-6 sm:p-8 mt-10 md:mt-0 transition-all duration-300 ${
+          sidebarAbierto ? 'md:ml-[18rem]' : 'md:ml-[4rem]'
+        }`}
+        >
 
-      <div className="flex-1 p-6 sm:p-8 mt-10 md:mt-0 md:pr-40">
-        <h1 className="text-2xl sm:text-xl font-bold text-[#164a5f] mb-4">
+
+        <h1 className="text-3xl sm:text-xl font-bold text-[#164a5f] mb-4">
           ¡Bienvenid@ al Sistema de Simulación!
         </h1>
         <div className="text-justify text-base sm:text-sm leading-relaxed lg:text-lg text-gray-700 mb-4">
@@ -45,8 +51,8 @@ function InicioStudent() {
           contribuyendo al desarrollo de una atención segura y centrada en el paciente.
         </p>
         <ToastContainer />
+        </div>
       </div>
-    </div>
   );
 }
 

@@ -40,7 +40,11 @@ function Simulacion() {
   }, [id]);
 
   const limpiarTexto = (texto: string) => {
-    return texto.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^\w\s]/g, '');
+    return texto
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^\w\s]/g, '');
   };
 
   const manejarPregunta = () => {
@@ -52,52 +56,52 @@ function Simulacion() {
 
     let respuesta = null;
 
-    const posiblesRoles = caso.interacciones.map(i => i.rol.toLowerCase());
+    const posiblesRoles = caso.interacciones.map((i) => i.rol.toLowerCase());
     const preguntaLimpia = limpiarTexto(pregunta);
 
-    const rolDetectado = posiblesRoles.find(rol =>
-      preguntaLimpia.includes(rol)
-    );
+    const rolDetectado = posiblesRoles.find((rol) => preguntaLimpia.includes(rol));
 
     if (rolDetectado) {
       const cambio = interpretarConContexto(posiblesRoles, preguntaLimpia, 'comando');
       if (cambio) {
-        const nuevoInterlocutor = caso.interacciones.find(i => i.rol.toLowerCase() === cambio.fraseValida)?.rol || null;
+        const nuevoInterlocutor =
+          caso.interacciones.find((i) => i.rol.toLowerCase() === cambio.fraseValida)?.rol || null;
         setInterlocutorActivo(nuevoInterlocutor);
-        setHistorial(prev => [...prev, `🔄 Cambiado interlocutor a: ${cambio.fraseValida}`]);
+        setHistorial((prev) => [...prev, `🔄 Cambiado interlocutor a: ${cambio.fraseValida}`]);
         setInput('');
         return;
       }
     }
 
-    const volverAEnfermera = ["volver a la enfermera", "hablar con la enfermera", "consultar a enfermera"];
-    if (volverAEnfermera.some(f => preguntaLimpia.includes("enfermera"))) {
+    const volverAEnfermera = ['volver a la enfermera', 'hablar con la enfermera', 'consultar a enfermera'];
+    if (volverAEnfermera.some((f) => preguntaLimpia.includes('enfermera'))) {
       setInterlocutorActivo(null);
-      setHistorial(prev => [...prev, '🔄 Has vuelto a hablar con la enfermera.']);
+      setHistorial((prev) => [...prev, '🔄 Has vuelto a hablar con la enfermera.']);
       setInput('');
       return;
     }
 
     if (!interlocutorActivo) {
-      const preguntasValidas = caso.entrega_urgencias.enfermera.informacion_condicional.map(e => e.pregunta_trigger);
+      const preguntasValidas = caso.entrega_urgencias.enfermera.informacion_condicional.map(
+        (e) => e.pregunta_trigger
+      );
       const interpretacion = interpretarConContexto(preguntasValidas, pregunta, 'clinica');
       if (interpretacion) {
         const obj = caso.entrega_urgencias.enfermera.informacion_condicional.find(
-          e => e.pregunta_trigger === interpretacion.fraseValida
+          (e) => e.pregunta_trigger === interpretacion.fraseValida
         );
         if (obj) respuesta = obj.respuesta;
       }
     }
 
     for (const interaccion of caso.interacciones) {
-      if (interlocutorActivo && interaccion.rol.toLowerCase() !== interlocutorActivo.toLowerCase()) {
-        continue;
-      }
-
+      if (interlocutorActivo && interaccion.rol.toLowerCase() !== interlocutorActivo.toLowerCase()) continue;
       if (respuesta) break;
 
       if (interaccion.informacion_condicional) {
-        const preguntasCond = interaccion.informacion_condicional.map((e: any) => e.pregunta_trigger).filter(Boolean);
+        const preguntasCond = interaccion.informacion_condicional
+          .map((e: any) => e.pregunta_trigger)
+          .filter(Boolean);
         const interpretacionCond = interpretarConContexto(preguntasCond, pregunta, 'clinica');
         if (interpretacionCond) {
           const cond = interaccion.informacion_condicional.find(
@@ -130,20 +134,27 @@ function Simulacion() {
 
     setHistorial((prev) => [
       ...prev,
-      respuesta ? `🩺 Respuesta: ${respuesta}` : '📝 No se encontró información para esa pregunta.'
+      respuesta ? `🩺 Respuesta: ${respuesta}` : '📝 No se encontró información para esa pregunta.',
     ]);
     setInput('');
   };
 
-  if (!caso) return <div className="text-center mt-10 text-gray-700">Cargando caso clínico...</div>;
+  if (!caso)
+    return <div className="text-center mt-10 text-gray-700">Cargando caso clínico...</div>;
 
   return (
     <div className="flex flex-col md:flex-row bg-white min-h-screen">
+      {/* Sidebar */}
       <div className="fixed top-0 left-0 z-40 h-screen">
         <SimulacionSidebar onSidebarToggle={setSidebarAbierto} />
       </div>
 
-      <div className={`flex-1 p-6 transition-all duration-300 ${sidebarAbierto ? 'md:ml-[18rem]' : 'md:ml-[4rem]'}`}>
+      {/* Contenido principal */}
+      <div
+        className={`flex-1 flex flex-col p-4 sm:p-6 transition-all duration-300 ${
+          sidebarAbierto ? 'md:ml-[18rem]' : 'md:ml-[4rem]'
+        } pt-16 sm:pt-0`}
+      >
         <h1 className="text-2xl font-bold text-[#164a5f] mb-4">Simulación</h1>
 
         {interlocutorActivo && (
@@ -152,7 +163,8 @@ function Simulacion() {
           </div>
         )}
 
-        <div className="mb-4 p-4 border border-gray-300 rounded-md whitespace-pre-wrap text-sm bg-gray-50">
+        {/* Información del paciente */}
+        <div className="mb-4 p-4 border border-gray-300 rounded-md bg-gray-50 text-sm overflow-auto max-h-[40vh] sm:max-h-none">
           <p><strong>📌 Descripción:</strong> {caso.contexto_inicial.descripcion}</p>
           <p className="mt-2"><strong>🧾 Información del paciente:</strong></p>
           <ul className="list-disc list-inside">
@@ -177,13 +189,15 @@ function Simulacion() {
           <p className="mt-4"><strong>🏥 Información inicial en urgencias:</strong> {caso.entrega_urgencias.enfermera.informacion_inicial}</p>
         </div>
 
-        <div className="mb-8 p-4 border border-gray-300 rounded-md bg-gray-100 h-[300px] overflow-y-auto">
+        {/* Historial */}
+        <div className="mb-6 p-4 border border-gray-300 rounded-md bg-gray-100 overflow-y-auto max-h-[30vh] sm:max-h-[300px]">
           {historial.map((linea, idx) => (
             <p key={idx} className="text-sm mb-1">{linea}</p>
           ))}
         </div>
 
-        <div className="sticky bottom-6 flex gap-2 z-10 bg-white py-4">
+        {/* Entrada de texto */}
+        <div className="flex flex-col sm:flex-row gap-2 bg-white pb-4">
           <input
             type="text"
             value={input}
@@ -196,7 +210,7 @@ function Simulacion() {
           />
           <button
             onClick={manejarPregunta}
-            className="bg-[#164a5f] text-white px-6 py-3 rounded-md text-sm hover:bg-[#143c4f]"
+            className="bg-[#164a5f] text-white px-6 py-3 rounded-md text-sm hover:bg-[#143c4f] w-full sm:w-auto"
           >
             Preguntar
           </button>

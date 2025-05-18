@@ -17,7 +17,7 @@ const Opcion: React.FC<OpcionProps> = ({
   onEliminar,
 }) => {
   return (
-    <div className="flex flex-col gap-2 border p-4 rounded mb-2 bg-white shadow-sm">
+    <div className="flex flex-col gap-3 border p-4 rounded mb-4 bg-white shadow-sm">
       <input
         type="text"
         placeholder="Enunciado de la opción"
@@ -25,6 +25,7 @@ const Opcion: React.FC<OpcionProps> = ({
         onChange={(e) => onChangeEnunciado(e.target.value)}
         className="p-2 border border-gray-300 rounded"
       />
+
       <textarea
         placeholder="Respuesta del sistema"
         value={opcion.respuestaDelSistema}
@@ -32,8 +33,9 @@ const Opcion: React.FC<OpcionProps> = ({
         className="p-2 border border-gray-300 rounded"
         rows={3}
       />
-      <div className="flex items-center justify-between">
-        <label className="flex items-center gap-2 text-sm">
+
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-sm">
+        <label className="flex items-center gap-2">
           <input
             type="checkbox"
             checked={opcion.esCorrecta}
@@ -42,7 +44,7 @@ const Opcion: React.FC<OpcionProps> = ({
           ¿Es correcta?
         </label>
         <button
-          className="text-red-500 hover:text-red-700 text-sm"
+          className="text-red-500 hover:text-red-700 text-sm w-full sm:w-auto text-left sm:text-right"
           onClick={onEliminar}
         >
           Eliminar opción ✕
