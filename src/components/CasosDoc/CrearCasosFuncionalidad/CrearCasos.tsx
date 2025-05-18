@@ -12,6 +12,7 @@ import {
   actualizarOpcion,
 } from "../../../utils/npcUtils";
 import { NPCType } from "../../../types/NPCTypes";
+import axios from "axios";
 
 function CrearCasos() {
   const [titulo, setTitulo] = useState("");
@@ -19,7 +20,10 @@ function CrearCasos() {
   const [npcs, setNpcs] = useState<NPCType[]>([]);
   const [sidebarAbierto, setSidebarAbierto] = useState(true);
 
-  const handleCrearCaso = () => {
+
+  const URL_BACKEND = "http://localhost:8080/placeholderxd"; //reemplazar luego
+
+  const handleCrearCaso = async () => {
     if (titulo.trim() === "" || contextoInicial.trim() === "" || npcs.length === 0) {
       alert("Por favor, complete todos los campos.");
       return;
@@ -28,8 +32,30 @@ function CrearCasos() {
     const json = {
       titulo,
       contextoInicial,
-    };
-    console.log("JSON:", json);
+      npcs: npcs.map((npc) => ({
+        id: npc.id,
+        nombre: npc.nombre,
+        preguntas: npc.Preguntas.map((pregunta) => ({
+          id: pregunta.id,
+          opciones: pregunta.opciones.map((opcion) => ({
+            id: opcion.id,
+            enunciado: opcion.enunciado,
+            respuestaDelSistema: opcion.respuestaDelSistema,
+            esCorrecta: opcion.esCorrecta,
+          })),
+        })),
+    }))}
+    console.log("Caso clínico creado:", JSON.stringify(json, null, 2));
+    
+    try {
+      const response = await axios.post(URL_BACKEND, json);
+      console.log("response: ", response);
+      if (response.status === 201) {
+        console.log("Caso clínico creado exitosamente");        
+      }
+    } catch (error) {
+      console.error("Error al crear el caso clínico:", error);
+    }
   };
 
   const handleAgregarNPC = () => setNpcs(agregarNPC(npcs));
