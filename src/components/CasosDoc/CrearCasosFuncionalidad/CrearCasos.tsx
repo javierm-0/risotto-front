@@ -16,6 +16,7 @@ import axios from "axios";
 
 function CrearCasos() {
   const [titulo, setTitulo] = useState("");
+  const [tipoCaso, setTipoCaso] = useState("");
   const [contextoInicial, setContextoInicial] = useState("");
   const [npcs, setNpcs] = useState<NPCType[]>([]);
   const [sidebarAbierto, setSidebarAbierto] = useState(true);
@@ -101,6 +102,24 @@ function CrearCasos() {
           className="w-full p-3 text-lg border border-gray-300 rounded mb-4"
           onChange={(e) => setTitulo(e.target.value)}
         />
+
+        <div className="mb-4">
+        <label className="block mb-2 font-semibold text-[#164a5f]">Tipo de caso clínico</label>
+        <div className="flex gap-4">
+          {["APS", "Urgencia", "Hospitalario"].map((tipo) => (
+            <button
+              key={tipo}
+              type="button"
+              className={`px-6 py-3 rounded border text-lg
+                ${tipoCaso === tipo ? "bg-[#164a5f] text-white border-[#164a5f]" : "bg-white text-[#164a5f] border-gray-300"}
+                transition-colors`}
+              onClick={() => setTipoCaso(tipo)}
+            >
+              {tipo}
+            </button>
+          ))}
+        </div>
+      </div>
 
         <textarea
           rows={6}
