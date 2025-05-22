@@ -186,7 +186,7 @@ function Simulacion() {
               ))}
           </ul>
           <p className="mt-4"><strong>🧍 Figuras presentes en la situación:</strong> {['Enfermera', ...caso.interacciones.map(i => i.rol)].join(', ')}</p>
-          <p className="mt-4"><strong>🏥 Información inicial en urgencias:</strong> {caso.entrega_urgencias.enfermera.informacion_inicial}</p>
+          {/* esto ya no existe xd<p className="mt-4"><strong>🏥 Información inicial en urgencias:</strong> {caso.entrega_urgencias.enfermera.informacion_inicial}</p>*/}
         </div>
 
         {/* Historial */}

@@ -16,6 +16,7 @@ interface NPCProps {
     campo: 'enunciado' | 'respuestaDelSistema' | 'esCorrecta',
     valor: string | boolean
   ) => void;
+  onChangeEnunciadoPregunta: (preguntaIndex: number, texto: string) => void;
 }
 
 const NPC: React.FC<NPCProps> = ({
@@ -27,8 +28,10 @@ const NPC: React.FC<NPCProps> = ({
   onAgregarOpcion,
   onEliminarOpcion,
   onChangeOpcion,
-}) => {
+  onChangeEnunciadoPregunta,
+  }) => {
   const [colapsado, setColapsado] = useState(false);
+  
 
   return (
     <div className="p-4 border border-gray-300 rounded mb-6 bg-white shadow">
@@ -59,15 +62,16 @@ const NPC: React.FC<NPCProps> = ({
         </button>
       </div>
 
-      {/* Contenido colapsable */}
+      {/* Contenido colapsable(con scroll) */}
       <div
-        className={`transition-all duration-300 ease-in-out overflow-hidden ${
-          colapsado ? 'max-h-0' : 'max-h-[1000px]'
+        className={`transition-all duration-300 ease-in-out ${
+          colapsado ? 'max-h-0 overflow-hidden' : 'max-h-[32rem] overflow-y-auto'
         }`}
       >
         {npc.Preguntas?.map((pregunta, preguntaIndex) => (
           <Pregunta
             key={pregunta.id}
+            enunciadoPregunta={pregunta.enunciadoPregunta}
             opciones={pregunta.opciones}
             onAgregarOpcion={() => onAgregarOpcion(preguntaIndex)}
             onEliminarOpcion={(opcionIndex) => onEliminarOpcion(preguntaIndex, opcionIndex)}
@@ -75,7 +79,10 @@ const NPC: React.FC<NPCProps> = ({
               onChangeOpcion(preguntaIndex, opcionIndex, campo, valor)
             }
             onEliminarPregunta={() => onEliminarPregunta(preguntaIndex)}
-          />
+            onChangeEnunciadoPregunta={(texto) =>
+              onChangeEnunciadoPregunta(preguntaIndex, texto)
+            }
+            />
         ))}
 
         <button
