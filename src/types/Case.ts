@@ -1,9 +1,8 @@
 export interface Case {
-  _id: string;
+  _id?: string;
   titulo: string;
   tipo_caso: 'APS' | 'Urgencia' | 'Hospitario';
   contexto_inicial: ContextoInicial;
-  entrega_urgencias: EntregaUrgencias; // ← ya no opcional
   interacciones: Interaccion[];
   informacion_final_caso: string;
 }
@@ -21,37 +20,25 @@ export interface InformacionPaciente {
   antecedentes_relevantes?: string[];
 }
 
-export interface EntregaUrgencias {
-  enfermera: EnfermeraUrgencias;
-}
-
-export interface EnfermeraUrgencias {
-  informacion_inicial: string;
-  informacion_condicional: InformacionCondicional[];
-}
-
 export interface Interaccion {
-  rol: string;
-  acciones_iniciales?: Accion[];
-  informacion_condicional?: InformacionCondicional[];
-  interacciones_posibles?: InteraccionPosible[];
-  acciones_si_solicita?: string[];
-  indicaciones_hospitalizacion?: Record<string, any>;
+  nombreNPC: string;
+  descripcion?: string;
+  preguntas: Relato[];
 }
 
-export interface Accion {
-  solicitud?: string;
-  informacion_entregada?: Record<string, any>;
+export interface Relato {
+  pregunta: string;  // Texto de la pregunta que el estudiante hace
+  texto: string;     // Relato o respuesta que da el interlocutor
+  opciones: Opcion[];
 }
 
-export interface InformacionCondicional {
-  pregunta_trigger?: string;
-  momento_trigger?: string;
-  respuesta: string;
+export interface Opcion {
+  texto: string; // texto de la opción para elegir
+  reaccion?: string; // opcional, reacción adicional del interlocutor (puedes ignorar si no usas)
+  OpcionesAsociadas: OpcionesAsociadas[]; // alternativas con sus consecuencias
 }
 
-export interface InteraccionPosible {
-  pregunta: string;
-  respuesta: string;
-  posibles_respuestas?: string[];
+export interface OpcionesAsociadas {
+  esCorrecta: boolean;
+  consecuencia?: string;
 }
