@@ -29,11 +29,10 @@ function Simulacion() {
   const [sidebarAbierto, setSidebarAbierto] = useState(true);
   const [npcActivo, setNpcActivo] = useState<string | null>(null);
   const [respuestas, setRespuestas] = useState<Record<string, string>>({});
-  // Ahora guardamos la lista de preguntas pendientes visibles para el usuario
+  // Preguntas pendientes por NPC, para mostrar solo las no respondidas
   const [preguntasPendientes, setPreguntasPendientes] = useState<
     { pregunta: string; texto: string; opciones: any[] }[]
   >([]);
-  // Índice dentro de preguntasPendientes para la pregunta activa actual
   const [preguntaActivaIndex, setPreguntaActivaIndex] = useState<number | null>(
     null
   );
@@ -102,7 +101,7 @@ function Simulacion() {
         return prev; // ya tiene historial
       }
 
-      // Mostrar presentación + listado de preguntas que puede hacer el estudiante (pendientes)
+      // Mostrar presentación + descripción + listado de preguntas pendientes
       const preguntasListadas = pendientes
         .map((p, i) => `${i + 1}. ${p.pregunta}`)
         .join("\n");
@@ -111,6 +110,7 @@ function Simulacion() {
         ...prev,
         [npc.nombreNPC]: [
           { tipo: "npc", texto: `${npc.nombreNPC} relata:` },
+          { tipo: "npc", texto: npc.descripcion || "" },  // Aquí la descripción visible
           {
             tipo: "sistema",
             texto:
@@ -147,7 +147,7 @@ function Simulacion() {
 
     setPreguntaActivaIndex(numPregunta - 1);
 
-    // Mostrar relato (respuesta del NPC) justo después de la pregunta
+    // Mostrar pregunta y relato (respuesta del NPC)
     setHistorialesPorNPC((prev) => ({
       ...prev,
       [npcActivo]: [
@@ -208,7 +208,7 @@ function Simulacion() {
       [pregunta.pregunta]: opcionElegida.texto,
     }));
 
-    // Actualizamos la lista de preguntas pendientes para el NPC (quitar la respondida)
+    // Actualizar lista de preguntas pendientes (quitar respondida)
     const nuevasPendientes = preguntasPendientes.filter(
       (_, i) => i !== preguntaActivaIndex
     );
@@ -219,11 +219,9 @@ function Simulacion() {
     setHistorialesPorNPC((prev) => {
       const nuevoHistorial = prev[npcActivo] ? [...prev[npcActivo]] : [];
 
-      nuevoHistorial.push(
-        { tipo: "respuesta", texto: `Respuesta: ${opcionElegida.texto}` }
-      );
+      nuevoHistorial.push({ tipo: "respuesta", texto: `Respuesta: ${opcionElegida.texto}` });
 
-      // Mensaje si la opción es correcta o incorrecta
+      // Mostrar si la opción es correcta o incorrecta
       if (opcionElegida.OpcionesAsociadas.some((oa: OpcionesAsociadas) => oa.esCorrecta)) {
         nuevoHistorial.push({ tipo: "info", texto: "✅ Opción correcta." });
       } else {
@@ -246,13 +244,13 @@ function Simulacion() {
 
         nuevoHistorial.push({
           tipo: "sistema",
-          texto:
-            "Puedes hacer otra pregunta con /pregunta <número>:\n" + preguntasListadas,
+          texto: "Puedes hacer otra pregunta con /pregunta <número>:\n" + preguntasListadas,
         });
       } else {
         nuevoHistorial.push({
           tipo: "interloc",
-          texto: "Has respondido todas las preguntas de este interlocutor. Para cambiar de interlocutor utilize /hablar <interlocutor>, Ej: /hablar enfermera",
+          texto:
+            "Has respondido todas las preguntas de este interlocutor. Para cambiar de interlocutor utilice /hablar <interlocutor>, Ej: /hablar enfermera",
         });
       }
 
