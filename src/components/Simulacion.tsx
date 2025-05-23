@@ -29,7 +29,6 @@ function Simulacion() {
   const [sidebarAbierto, setSidebarAbierto] = useState(true);
   const [npcActivo, setNpcActivo] = useState<string | null>(null);
   const [respuestas, setRespuestas] = useState<Record<string, string>>({});
-  // Preguntas pendientes por NPC, para mostrar solo las no respondidas
   const [preguntasPendientes, setPreguntasPendientes] = useState<
     { pregunta: string; texto: string; opciones: any[] }[]
   >([]);
@@ -49,7 +48,6 @@ function Simulacion() {
       });
   }, [id]);
 
-  // Verifica si todas las preguntas de todos los NPC están respondidas
   const todasLasPreguntasRespondidas = (
     respuestasEvaluar?: Record<string, string>
   ) => {
@@ -64,7 +62,6 @@ function Simulacion() {
     return totalPreguntas > 0 && totalPreguntas === totalRespondidas;
   };
 
-  // Iniciar conversación con un interlocutor
   const iniciarInterlocucion = (nombreNPC: string) => {
     if (!caso) return;
 
@@ -72,11 +69,10 @@ function Simulacion() {
       (i) => i.nombreNPC.toLowerCase() === nombreNPC.toLowerCase()
     );
     if (!npc) {
-      // Error: interlocutor no encontrado
       setHistorialesPorNPC((prev) => ({
         ...prev,
         global: [
-          ...(prev.global ?? []),
+          ...(prev.global ?? []).filter((m) => m.tipo !== "error"),
           {
             tipo: "error",
             texto: `No se encontró interlocutor con nombre "${nombreNPC}".`,
@@ -89,19 +85,16 @@ function Simulacion() {
     setNpcActivo(npc.nombreNPC);
     setPreguntaActivaIndex(null);
 
-    // Filtrar preguntas pendientes (las que no están respondidas)
     const pendientes = npc.preguntas.filter(
       (p) => !Object.keys(respuestas).includes(p.pregunta)
     );
     setPreguntasPendientes(pendientes);
 
-    // Inicializar historial del npc si no existe
     setHistorialesPorNPC((prev) => {
       if (prev[npc.nombreNPC] && prev[npc.nombreNPC].length > 0) {
-        return prev; // ya tiene historial
+        return prev;
       }
 
-      // Mostrar presentación + descripción + listado de preguntas pendientes
       const preguntasListadas = pendientes
         .map((p, i) => `${i + 1}. ${p.pregunta}`)
         .join("\n");
@@ -110,19 +103,27 @@ function Simulacion() {
         ...prev,
         [npc.nombreNPC]: [
           { tipo: "npc", texto: `${npc.nombreNPC} relata:` },
-          { tipo: "npc", texto: npc.descripcion || "" },  // Aquí la descripción visible
+          {
+            tipo: "npc",
+            texto: npc.descripcion || "",
+          },
           {
             tipo: "sistema",
             texto:
-              "Elige una pregunta para hacerle usando /pregunta <número>:\n" +
+              "Elige una pregunta para hacerle escribiendo /pregunta seguido del número de la pregunta. Por ejemplo: /pregunta 1\n" +
               preguntasListadas,
           },
         ],
       };
     });
+
+    // Limpiar errores previos
+    setHistorialesPorNPC((prev) => ({
+      ...prev,
+      global: (prev.global ?? []).filter((m) => m.tipo !== "error"),
+    }));
   };
 
-  // Manejar selección de pregunta para hacer
   const manejarPregunta = (numPregunta: number) => {
     if (!npcActivo || !caso) return;
 
@@ -133,7 +134,7 @@ function Simulacion() {
       setHistorialesPorNPC((prev) => ({
         ...prev,
         [npcActivo]: [
-          ...(prev[npcActivo] ?? []),
+          ...(prev[npcActivo] ?? []).filter((m) => m.tipo !== "error"),
           {
             tipo: "error",
             texto: `Número de pregunta inválido. Debe estar entre 1 y ${preguntasPendientes.length}.`,
@@ -147,24 +148,28 @@ function Simulacion() {
 
     setPreguntaActivaIndex(numPregunta - 1);
 
-    // Mostrar pregunta y relato (respuesta del NPC)
     setHistorialesPorNPC((prev) => ({
       ...prev,
       [npcActivo]: [
-        ...(prev[npcActivo] ?? []),
+        ...(prev[npcActivo] ?? []).filter((m) => m.tipo !== "error"),
         { tipo: "npc", texto: pregunta.pregunta },
-        { tipo: "npc", texto: pregunta.texto }, // relato
+        { tipo: "npc", texto: pregunta.texto },
         {
           tipo: "sistema",
           texto:
-            "Selecciona la opción correcta con /responder <número>:\n" +
+            "Selecciona la opción correcta escribiendo /responder seguido del número de la opción. Por ejemplo: /responder 2\n" +
             pregunta.opciones.map((op, i) => `${i + 1}. ${op.texto}`).join("\n"),
         },
       ],
     }));
+
+    // Limpiar error global al comando válido
+    setHistorialesPorNPC((prev) => ({
+      ...prev,
+      global: (prev.global ?? []).filter((m) => m.tipo !== "error"),
+    }));
   };
 
-  // Manejar respuesta a opción elegida
   const manejarRespuesta = (numOpcion: number) => {
     if (!npcActivo || !caso || preguntaActivaIndex === null) return;
 
@@ -178,7 +183,7 @@ function Simulacion() {
       setHistorialesPorNPC((prev) => ({
         ...prev,
         [npcActivo]: [
-          ...(prev[npcActivo] ?? []),
+          ...(prev[npcActivo] ?? []).filter((m) => m.tipo !== "error"),
           {
             tipo: "error",
             texto: `Número de opción inválido. Debe estar entre 1 y ${pregunta.opciones.length}.`,
@@ -195,20 +200,18 @@ function Simulacion() {
       setHistorialesPorNPC((prev) => ({
         ...prev,
         [npcActivo]: [
-          ...(prev[npcActivo] ?? []),
+          ...(prev[npcActivo] ?? []).filter((m) => m.tipo !== "error"),
           { tipo: "error", texto: "Esa pregunta ya fue respondida." },
         ],
       }));
       return;
     }
 
-    // Guardar respuesta
     setRespuestas((prev) => ({
       ...prev,
       [pregunta.pregunta]: opcionElegida.texto,
     }));
 
-    // Actualizar lista de preguntas pendientes (quitar respondida)
     const nuevasPendientes = preguntasPendientes.filter(
       (_, i) => i !== preguntaActivaIndex
     );
@@ -221,14 +224,12 @@ function Simulacion() {
 
       nuevoHistorial.push({ tipo: "respuesta", texto: `Respuesta: ${opcionElegida.texto}` });
 
-      // Mostrar si la opción es correcta o incorrecta
       if (opcionElegida.OpcionesAsociadas.some((oa: OpcionesAsociadas) => oa.esCorrecta)) {
         nuevoHistorial.push({ tipo: "info", texto: "✅ Opción correcta." });
       } else {
         nuevoHistorial.push({ tipo: "error", texto: "❌ Opción incorrecta." });
       }
 
-      // Agregar consecuencias de cada opción asociada
       opcionElegida.OpcionesAsociadas.forEach((oa: OpcionesAsociadas, i: number) => {
         nuevoHistorial.push({
           tipo: oa.esCorrecta ? "info" : "error",
@@ -236,7 +237,6 @@ function Simulacion() {
         });
       });
 
-      // Mostrar preguntas restantes sin repetir respondidas
       if (nuevasPendientes.length > 0) {
         const preguntasListadas = nuevasPendientes
           .map((p, i) => `${i + 1}. ${p.pregunta}`)
@@ -244,17 +244,17 @@ function Simulacion() {
 
         nuevoHistorial.push({
           tipo: "sistema",
-          texto: "Puedes hacer otra pregunta con /pregunta <número>:\n" + preguntasListadas,
+          texto:
+            "Puedes hacer otra pregunta escribiendo /pregunta seguido del número de la pregunta. Por ejemplo: /pregunta 1\n" + preguntasListadas,
         });
       } else {
         nuevoHistorial.push({
           tipo: "interloc",
           texto:
-            "Has respondido todas las preguntas de este interlocutor. Para cambiar de interlocutor utilice /hablar <interlocutor>, Ej: /hablar enfermera",
+            "Has respondido todas las preguntas de este interlocutor. Para cambiar de interlocutor escribe /hablar seguido del nombre del interlocutor, por ejemplo: /hablar enfermera",
         });
       }
 
-      // Mensaje para finalizar simulación
       if (todasLasPreguntasRespondidas()) {
         const mensajeFinal =
           "Has respondido todas las preguntas de todos los interlocutores. Usa el comando /finalizar para terminar la simulación.";
@@ -271,9 +271,14 @@ function Simulacion() {
         [npcActivo]: nuevoHistorial,
       };
     });
+
+    // Limpiar error global al comando válido
+    setHistorialesPorNPC((prev) => ({
+      ...prev,
+      global: (prev.global ?? []).filter((m) => m.tipo !== "error"),
+    }));
   };
 
-  // Manejo general de comandos de texto
   const manejarComandoRespuesta = () => {
     if (!caso) return;
 
@@ -290,16 +295,37 @@ function Simulacion() {
       if (!match) return;
       const interlocutor = match[1].trim();
       iniciarInterlocucion(interlocutor);
+
+      // Limpiar errores previos
+      setHistorialesPorNPC((prev) => ({
+        ...prev,
+        global: (prev.global ?? []).filter((m) => m.tipo !== "error"),
+      }));
+
     } else if (preguntaRegex.test(texto)) {
       const match = texto.match(preguntaRegex);
       if (!match) return;
       const numPregunta = parseInt(match[1], 10);
       manejarPregunta(numPregunta);
+
+      // Limpiar errores previos
+      setHistorialesPorNPC((prev) => ({
+        ...prev,
+        global: (prev.global ?? []).filter((m) => m.tipo !== "error"),
+      }));
+
     } else if (responderRegex.test(texto)) {
       const match = texto.match(responderRegex);
       if (!match) return;
       const numOpcion = parseInt(match[2], 10);
       manejarRespuesta(numOpcion);
+
+      // Limpiar errores previos
+      setHistorialesPorNPC((prev) => ({
+        ...prev,
+        global: (prev.global ?? []).filter((m) => m.tipo !== "error"),
+      }));
+
     } else if (finalizarRegex.test(texto)) {
       if (todasLasPreguntasRespondidas()) {
         alert("✅ Simulación finalizada correctamente.");
@@ -307,7 +333,7 @@ function Simulacion() {
         setHistorialesPorNPC((prev) => ({
           ...prev,
           global: [
-            ...(prev.global ?? []),
+            ...(prev.global ?? []).filter((m) => m.tipo !== "error"),
             { tipo: "error", texto: "No has respondido todas las preguntas aún." },
           ],
         }));
@@ -316,7 +342,7 @@ function Simulacion() {
       setHistorialesPorNPC((prev) => ({
         ...prev,
         global: [
-          ...(prev.global ?? []),
+          ...(prev.global ?? []).filter((m) => m.tipo !== "error"),
           { tipo: "error", texto: "Comando no reconocido." },
         ],
       }));
@@ -325,7 +351,6 @@ function Simulacion() {
     setInputRespuesta("");
   };
 
-  // Mostrar historial global y npc activo juntos
   const historialGlobal = historialesPorNPC.global ?? [];
   const historialNPC = npcActivo ? historialesPorNPC[npcActivo] ?? [] : [];
 
@@ -385,7 +410,7 @@ function Simulacion() {
               Escribe <code>/hablar &lt;nombre&gt;</code> para comenzar.
             </p>
           ) : (
-            [...historialGlobal, ...historialNPC].map((msg, idx) => {
+            [...historialNPC, ...historialGlobal].map((msg, idx) => {
               let estilo = "";
               let emoji = "";
               switch (msg.tipo) {
@@ -462,15 +487,15 @@ function Simulacion() {
           <p>
             <strong>Instrucciones:</strong>
           </p>
-          <p>
-            Primero escribe <code>/hablar &lt;nombre&gt;</code> para elegir interlocutor.
-          </p>
-          <p>
-            Luego usa <code>/pregunta &lt;número&gt;</code> para hacer una pregunta.
-          </p>
-          <p>
-            Finalmente responde con <code>/responder &lt;número de opción&gt;</code>.
-          </p>
+            <p>
+              Primero escribe <code>/hablar nombre</code> para elegir interlocutor (ejemplo: <code>/hablar hija</code>).
+            </p>
+            <p>
+              Luego usa <code>/pregunta 1</code> para hacer una pregunta (escribe el número sin símbolos).
+            </p>
+            <p>
+              Finalmente responde con <code>/responder 2</code> para elegir una opción.
+            </p>
           <p>
             Cuando hayas respondido todas las preguntas de todos los interlocutores, usa <code>/finalizar</code> para terminar.
           </p>
