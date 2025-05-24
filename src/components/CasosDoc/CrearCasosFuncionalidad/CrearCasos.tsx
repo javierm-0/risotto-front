@@ -67,7 +67,7 @@ function CrearCasos() {
     if(caso === undefined) return;
 
     setCreandoCaso(true);
-    const json = {
+    const json : Case = {
       titulo: caso.titulo,
       tipo_caso: caso.tipo_caso,
       contexto_inicial: {
