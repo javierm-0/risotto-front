@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import Pregunta from './Pregunta';
-import { NPCType } from '../../../types/NPCTypes';
+import { InteraccionType } from '../../../types/NPCTypes';
 
 interface NPCProps {
-  npc: NPCType;
+  npc: InteraccionType;
   onChangeNombre: (nuevoNombre: string) => void;
+  onChangeDescripcion: (nuevaDescripcion: string) => void;
   onEliminarNPC: () => void;
   onAgregarPregunta: () => void;
   onEliminarPregunta: (preguntaIndex: number) => void;
@@ -13,15 +14,17 @@ interface NPCProps {
   onChangeOpcion: (
     preguntaIndex: number,
     opcionIndex: number,
-    campo: 'enunciado' | 'respuestaDelSistema' | 'esCorrecta',
+    campo: "texto" | "reaccion" | "esCorrecta" | "consecuencia",
     valor: string | boolean
   ) => void;
   onChangeEnunciadoPregunta: (preguntaIndex: number, texto: string) => void;
+  onChangeTextoP: (preguntaIdx: number, nuevoTexto: string) => void;
 }
 
 const NPC: React.FC<NPCProps> = ({
   npc,
   onChangeNombre,
+  onChangeDescripcion,
   onEliminarNPC,
   onAgregarPregunta,
   onEliminarPregunta,
@@ -29,6 +32,7 @@ const NPC: React.FC<NPCProps> = ({
   onEliminarOpcion,
   onChangeOpcion,
   onChangeEnunciadoPregunta,
+  onChangeTextoP,
   }) => {
   const [colapsado, setColapsado] = useState(false);
   
@@ -38,10 +42,17 @@ const NPC: React.FC<NPCProps> = ({
       <div className="flex flex-col sm:flex-row gap-3 sm:items-center mb-2">
         <input
           type="text"
-          placeholder="Nombre del NPC"
+          placeholder="Nombre de esta persona"
           className="p-2 border border-gray-300 rounded flex-1"
-          value={npc.nombre}
+          value={npc.nombreNPC}
           onChange={(e) => onChangeNombre(e.target.value)}
+        />
+        <input 
+          type='text'
+          placeholder='Descripcion de esta persona(opcional)'
+          className='p-2 border border-gray-300 rounded flex-1'
+          value={npc.descripcionNPC}
+          onChange={(e) => onChangeDescripcion(e.target.value)}
         />
         <button
           className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 active:scale-95 w-full sm:w-auto"
@@ -68,11 +79,13 @@ const NPC: React.FC<NPCProps> = ({
           colapsado ? 'max-h-0 overflow-hidden' : 'max-h-[32rem] overflow-y-auto'
         }`}
       >
-        {npc.Preguntas?.map((pregunta, preguntaIndex) => (
+        {npc.preguntas?.map((preguntaMapeada, preguntaIndex) => (
           <Pregunta
-            key={pregunta.id}
-            enunciadoPregunta={pregunta.enunciadoPregunta}
-            opciones={pregunta.opciones}
+            key={preguntaIndex}
+            nombreNPC={npc.nombreNPC}
+            texto={preguntaMapeada.texto}
+            enunciadoPregunta={preguntaMapeada.pregunta}
+            opciones={preguntaMapeada.opciones}
             onAgregarOpcion={() => onAgregarOpcion(preguntaIndex)}
             onEliminarOpcion={(opcionIndex) => onEliminarOpcion(preguntaIndex, opcionIndex)}
             onChangeOpcion={(opcionIndex, campo, valor) =>
@@ -82,6 +95,7 @@ const NPC: React.FC<NPCProps> = ({
             onChangeEnunciadoPregunta={(texto) =>
               onChangeEnunciadoPregunta(preguntaIndex, texto)
             }
+            onChangeTextoP={(nuevoTexto) => onChangeTextoP(preguntaIndex,nuevoTexto)}
             />
         ))}
 

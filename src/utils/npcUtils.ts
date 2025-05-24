@@ -1,30 +1,31 @@
-import { NPCType } from "../types/NPCTypes";
+import { InteraccionType } from "../types/NPCTypes";
 import { v4 as uuidv4 } from 'uuid';
 
-export const agregarNPC = (npcs: NPCType[]) => {
+export const agregarNPC = (npcs: InteraccionType[]) : InteraccionType[] => {
   return [
     ...npcs.map(npc => ({
       ...npc,
-      Preguntas: npc.Preguntas.map(p => ({
+      preguntas: npc.preguntas.map(p => ({
         ...p,
         opciones: [...p.opciones]
       }))
     })),
     {
       id: uuidv4(),
-      nombre: '',
-      Preguntas: []
+      nombreNPC: '',
+      descripcionNPC: '',
+      preguntas: []
     }
   ];
 };
 
-export const actualizarNombre = (npcs: NPCType[], index: number, nuevoNombre: string) => {
+export const actualizarNombre = (npcs: InteraccionType[], index: number, nuevoNombre: string) : InteraccionType[] => {
   return npcs.map((npc, i) => {
     if (i !== index) return npc;
     return {
       ...npc,
-      nombre: nuevoNombre,
-      Preguntas: npc.Preguntas.map(p => ({
+      nombreNPC: nuevoNombre,
+      preguntas: npc.preguntas.map(p => ({
         ...p,
         opciones: [...p.opciones]
       }))
@@ -32,44 +33,60 @@ export const actualizarNombre = (npcs: NPCType[], index: number, nuevoNombre: st
   });
 };
 
-export const eliminarNPC = (npcs: NPCType[], index: number) => {
+export const actualizarDescripcionNPC = (npcs: InteraccionType[], index: number, nuevaDescripcion: string): InteraccionType[] => {
+  return npcs.map((npcMapeado, i) =>{
+    if(i !== index) return npcMapeado;
+    return {
+      ...npcMapeado,
+      descripcionNPC: nuevaDescripcion,
+      preguntas: npcMapeado.preguntas.map(p => ({
+        ...p,
+        opciones: [...p.opciones]
+      }))
+    }
+  })
+}
+
+export const eliminarNPC = (npcs: InteraccionType[], index: number): InteraccionType[] => {
   return npcs.filter((_npc, i) => i !== index);
 };
 
-export const agregarPregunta = (npcs: NPCType[], npcIndex: number): NPCType[] => {
+export const agregarPregunta = (npcs: InteraccionType[], npcIndex: number): InteraccionType[] => {
   return npcs.map((npc, i) => {
     if (i !== npcIndex) return npc;
 
     const nuevasPreguntas = [
-      ...(npc.Preguntas ?? []),
+      ...(npc.preguntas ?? []),
       {
         id: uuidv4(),
+        pregunta: '',
+        texto: '',
         opciones: [],
       }
     ];
 
     return {
       ...npc,
-      Preguntas: nuevasPreguntas
+      preguntas: nuevasPreguntas
     };
   });
 };
 
-export const eliminarPregunta = (npcs: NPCType[], npcIndex: number, preguntaIndex: number): NPCType[] => {
+export const eliminarPregunta = (npcs: InteraccionType[], npcIndex: number, preguntaIndex: number): InteraccionType[] => {
   return npcs.map((npc, i) => {
     if (i !== npcIndex) return npc;
     return {
       ...npc,
-      Preguntas: npc.Preguntas.filter((_, i) => i !== preguntaIndex)
+      preguntas: npc.preguntas.filter((_, i) => i !== preguntaIndex)
     };
   });
 };
 
-export const agregarOpcion = (npcs: NPCType[], npcIndex: number, preguntaIndex: number): NPCType[] => {
+export const agregarOpcion = (npcs: InteraccionType[], npcIndex: number, preguntaIndex: number): InteraccionType[] => {
   return npcs.map((npc, i) => {
     if (i !== npcIndex) return npc;
 
-    const nuevasPreguntas = npc.Preguntas.map((pregunta, j) => {
+    const nuevasPreguntas = npc.preguntas.map((pregunta, j) => {
       if (j !== preguntaIndex) return pregunta;
 
       return {
@@ -78,9 +95,15 @@ export const agregarOpcion = (npcs: NPCType[], npcIndex: number, preguntaIndex: 
           ...pregunta.opciones,
           {
             id: uuidv4(),
-            enunciado: '',
-            respuestaDelSistema: '',
-            esCorrecta: false
+            texto: '',
+            reaccion: '',
+            OpcionesAsociadas: [
+              {
+                id: uuidv4(),
+                esCorrecta: false,
+                consecuencia: ''
+              }
+            ]
           }
         ]
       };
@@ -88,21 +111,21 @@ export const agregarOpcion = (npcs: NPCType[], npcIndex: number, preguntaIndex: 
 
     return {
       ...npc,
-      Preguntas: nuevasPreguntas
+      preguntas: nuevasPreguntas
     };
   });
 };
 
 export const eliminarOpcion = (
-  npcs: NPCType[],
+  npcs: InteraccionType[],
   npcIndex: number,
   preguntaIndex: number,
   opcionIndex: number
-): NPCType[] => {
+): InteraccionType[] => {
   return npcs.map((npc, i) => {
     if (i !== npcIndex) return npc;
 
-    const nuevasPreguntas = npc.Preguntas.map((pregunta, j) => {
+    const nuevasPreguntas = npc.preguntas.map((pregunta, j) => {
       if (j !== preguntaIndex) return pregunta;
 
       return {
@@ -113,27 +136,45 @@ export const eliminarOpcion = (
 
     return {
       ...npc,
-      Preguntas: nuevasPreguntas
+      preguntas: nuevasPreguntas
     };
   });
 };
 
 export const actualizarOpcion = (
-  npcs: NPCType[],
+  npcs: InteraccionType[],
   npcIndex: number,
   preguntaIndex: number,
   opcionIndex: number,
-  campo: 'enunciado' | 'respuestaDelSistema' | 'esCorrecta',
+  campo: "texto" | "reaccion" | "esCorrecta" | "consecuencia",
   valor: string | boolean
-): NPCType[] => {
+): InteraccionType[] => {
   return npcs.map((npc, i) => {
     if (i !== npcIndex) return npc;
 
-    const nuevasPreguntas = npc.Preguntas.map((pregunta, j) => {
+    const nuevasPreguntas = npc.preguntas.map((pregunta, j) => {
       if (j !== preguntaIndex) return pregunta;
 
       const nuevasOpciones = pregunta.opciones.map((opcion, k) => {
         if (k !== opcionIndex) return opcion;
+
+        if (campo === 'esCorrecta'){
+          return {
+            ...opcion,
+            OpcionesAsociadas: opcion.OpcionesAsociadas.map((op, idx) =>
+              idx === 0 ? { ...op, esCorrecta: valor as boolean } : op
+            ),
+          };
+        }
+
+        if (campo === 'consecuencia') {
+          return {
+            ...opcion,
+            OpcionesAsociadas: opcion.OpcionesAsociadas.map((op, idx) =>
+              idx === 0 ? { ...op, consecuencia: valor as string } : op
+            ),
+          };
+        }
 
         return {
           ...opcion,
@@ -149,7 +190,32 @@ export const actualizarOpcion = (
 
     return {
       ...npc,
-      Preguntas: nuevasPreguntas
+      preguntas: nuevasPreguntas
+    };
+  });
+};
+
+export const actualizarTextoPregunta = (
+  interacciones: InteraccionType[],
+  npcIndex: number,
+  preguntaIndex: number,
+  nuevoTexto: string
+): InteraccionType[] => {
+  return interacciones.map((npc, i) => {
+    if (i !== npcIndex) return npc;
+
+    const nuevasPreguntas = npc.preguntas.map((pregunta, j) => {
+      if (j !== preguntaIndex) return pregunta;
+
+      return {
+        ...pregunta,
+        texto: nuevoTexto
+      };
+    });
+
+    return {
+      ...npc,
+      preguntas: nuevasPreguntas
     };
   });
 };
