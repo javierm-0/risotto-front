@@ -20,6 +20,7 @@ const DocenteSidebar = ({ onSidebarToggle }: { onSidebarToggle?: (open: boolean)
     { title: 'Crear Casos Clínicos', icon: iconCrear, link: '/inicioDocente/crearCasos' },
     { title: 'Ver Diagnosticos finales', icon: iconDiagnostico, link: '/inicioDocente/Diagnosticos' },
     { title: 'Cerrar Sesión', spacing: true, icon: iconClose, link: '/', isExitButton: true },
+    { title: 'Simulación', icon: iconProgram, link: '/simulacion/guia' }
   ];
 
   const toggleSidebar = () => {

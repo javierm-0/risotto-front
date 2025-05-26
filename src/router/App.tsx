@@ -12,14 +12,19 @@ import ListaCasosUrgencia from '../components/CasosST/ListaCasosUrgencia'
 import ListadoCasosHospitalarios from '../components/CasosST/ListaCasosHospitalarios'
 import TestearInterprete from '../components/Test/TestearInterprete'
 import Simulacion from '../components/Simulacion'
-
-
+import SimulacionGuia from '../components/GuiaSimulación'
 function App() {
   return (
     <div>
       <Routes>
         <Route path='/' element={<Login></Login>}></Route>
         <Route path="/logout" element={<Logout />} />
+        <Route path='/simulacion/guia' element={
+          <ProtectedRoute allowedRoles={['Estudiante', 'Docente']}>
+            <SimulacionGuia />
+          </ProtectedRoute>
+        }></Route>
+         
         <Route path='/inicioEstudiante' element={
           <ProtectedRoute allowedRoles={['Estudiante']}>
             <InicioStudent></InicioStudent>

@@ -5,7 +5,7 @@ import iconClose from '../assets/arrow-reduce-tag.svg';
 import iconHome from '../assets/home.svg';
 import iconProgram from '../assets/simulation.png';
 import { BsArrowLeftSquareFill, BsList } from 'react-icons/bs';
-
+import iconGuide  from '../assets/GuideIcon.png'; 
 const StudentSidebar = ({ onSidebarToggle }: { onSidebarToggle?: (open: boolean) => void }) => {
   const [isOpen, setIsOpen] = useState(true);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
@@ -13,11 +13,13 @@ const StudentSidebar = ({ onSidebarToggle }: { onSidebarToggle?: (open: boolean)
 
   const Menus = [
     { title: 'Inicio', icon: iconHome, link: '/inicioEstudiante' },
+    { title: 'Guia', icon: iconGuide , link: '/simulacion/guia' },
     { title: 'Casos de Urgencia', icon: iconProgram, link: '/inicioEstudiante/ListadoCasosUrgencia' },
     { title: 'Casos Hospitalarios', icon: iconProgram, link: '/inicioEstudiante/ListadoCasosHospitalarios' },
     { title: 'Casos APS', icon: iconProgram, link: '/inicioEstudiante/ListadoCasosAPS' },
     { title: 'Testear Interprete', icon: iconProgram, link: '/inicioEstudiante/testing' },
     { title: 'Cerrar Sesión', spacing: true, icon: iconClose, link: '/', isExitButton: true },
+
   ];
 
   const toggleSidebar = () => {
