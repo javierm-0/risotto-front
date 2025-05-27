@@ -31,20 +31,22 @@ const StudentSidebar = ({ onSidebarToggle }: { onSidebarToggle?: (open: boolean)
   };
 
   const renderMenuItems = () =>
-    Menus.map((menu, index) => (
-      <li
-        key={index}
-        className={`text-white text-sm flex items-center gap-4 cursor-pointer p-2 rounded-md hover:bg-[#0d5c71] mt-2 ${
-          menu.spacing ? 'mt-48' : ''
-        }`}
-        onClick={() => navigate(menu.isExitButton ? '/logout' : menu.link)}
-      >
-        <img src={menu.icon} className="w-6 h-6" />
-        {isOpen && (
+    Menus.map((menu, index) => {
+      if (!isOpen) return null; // No renderizar nada si está contraído
+
+      return (
+        <li
+          key={index}
+          className={`text-white text-sm flex items-center gap-4 cursor-pointer p-2 rounded-md hover:bg-[#0d5c71] mt-2 ${
+            menu.spacing ? 'mt-48' : ''
+          }`}
+          onClick={() => navigate(menu.isExitButton ? '/logout' : menu.link)}
+        >
+          <img src={menu.icon} className="w-6 h-6" />
           <p className="text-base font-medium flex-1 hover:text-blue-400">{menu.title}</p>
-        )}
-      </li>
-    ));
+        </li>
+      );
+    });
 
   const SidebarContentDesktop = () => (
     <div
@@ -58,8 +60,10 @@ const StudentSidebar = ({ onSidebarToggle }: { onSidebarToggle?: (open: boolean)
         }`}
         onClick={toggleSidebar}
       />
-      <img src={ucnLogo} className="w-30 mb-8 rounded cursor-pointer block" alt="UCN Logo" />
+
+      {isOpen && <img src={ucnLogo} className="w-30 mb-8 rounded cursor-pointer block" alt="UCN Logo" />}
       {isOpen && <p className="text-white font-semibold mb-4">Menú Alumno</p>}
+
       <ul className="pt-2">{renderMenuItems()}</ul>
     </div>
   );

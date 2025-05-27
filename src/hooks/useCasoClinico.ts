@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Case } from '../types/Case';
+import { Case } from '../types/NPCTypes';
 
 export function useCasoClinico(id: string | undefined) {
   const [caso, setCaso] = useState<Case | null>(null);

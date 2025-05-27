@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import SimulacionSidebar from "./SimulacionSidebar";
-import { Case, OpcionesAsociadas } from "../types/Case";
+import { Case, OpcionesAsociadas } from "../types/NPCTypes";
 
 type MensajeHistorialTipo =
   | "pregunta"
@@ -105,7 +105,7 @@ function Simulacion() {
           { tipo: "npc", texto: `${npc.nombreNPC} relata:` },
           {
             tipo: "npc",
-            texto: npc.descripcion || "",
+            texto: npc.descripcionNPC || "",
           },
           {
             tipo: "sistema",

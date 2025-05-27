@@ -27,34 +27,37 @@ const SimulacionSidebar = ({ onSidebarToggle }: { onSidebarToggle?: (open: boole
     <div
       className={`bg-[#164a5f] h-full p-5 pt-8 ${
         isOpen ? 'w-72' : 'w-16'
-      } duration-300 relative rounded-tr-2xl`}
+      } duration-300 relative rounded-tr-2xl overflow-visible`}
     >
       <BsArrowLeftSquareFill
-        className={`bg-[#164a5f] text-gray-200 text-3xl rounded-full absolute -right-3.5 top-10 border border-[#3ab1b177] cursor-pointer hidden md:block ${
-          !isOpen && 'rotate-180'
+        className={`bg-[#164a5f] text-gray-200 text-3xl rounded-full absolute -right-3.5 top-10 border border bg-[#3ab1b177] cursor-pointer hidden md:block ${
+          !isOpen ? 'rotate-180' : ''
         }`}
         onClick={toggleSidebar}
       />
 
-      <img
-        src={ucnLogo}
-        className="w-30 mb-8 rounded cursor-pointer block"
-        alt="UCN Logo"
-      />
-      {isOpen && <p className="text-white font-semibold mb-4">Simulación</p>}
-      <ul className="pt-2">
-        <li
-          className="text-white text-sm flex items-center gap-4 cursor-pointer p-2 rounded-md hover:bg-[#0d5c71] mt-2"
-          onClick={salirItem.action}
-        >
-          {salirItem.icon}
-          {isOpen && (
-            <p className="text-base font-medium flex-1 hover:text-blue-400">
-              {salirItem.title}
-            </p>
-          )}
-        </li>
-      </ul>
+
+      {isOpen && (
+        <>
+          <img
+            src={ucnLogo}
+            className="w-30 mb-8 rounded cursor-pointer block"
+            alt="UCN Logo"
+          />
+          <p className="text-white font-semibold mb-4">Simulación</p>
+          <ul className="pt-2">
+            <li
+              className="text-white text-sm flex items-center gap-4 cursor-pointer p-2 rounded-md hover:bg-[#0d5c71] mt-2"
+              onClick={salirItem.action}
+            >
+              {salirItem.icon}
+              <p className="text-base font-medium flex-1 hover:text-blue-400">
+                {salirItem.title}
+              </p>
+            </li>
+          </ul>
+        </>
+      )}
     </div>
   );
 

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Case } from '../../types/Case';
+import { Case } from '../../types/NPCTypes';
 import StudentSidebar from '../StudentSidebar';
 import { TablaGenerica } from '../../generic/TablaGenerica';
 import { useNavigate } from 'react-router-dom';

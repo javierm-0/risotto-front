@@ -1,8 +1,6 @@
 import { useState } from "react";
 import StudentSidebar from "./StudentSidebar";
 
-
-
 const pasosRaw = [
   `Para iniciar la simulación, elige en la barra lateral el tipo de caso clínico que deseas jugar. Al ingresar, se te entregará información inicial del paciente.`,
 
@@ -15,7 +13,7 @@ const pasosRaw = [
   `Finalmente, usa el comando /finalizar \n\nEsto te llevará a una pantalla para responder al caso, cuando hayas terminado.`
 ];
 
-function formatearTexto(texto: string):any {
+function formatearTexto(texto: string): any {
   const regex = /(\/[a-zA-Z]+(?:\s[^\s]*)?)/g;
   const partes = texto.split(regex);
 
@@ -32,8 +30,6 @@ function formatearTexto(texto: string):any {
     )
   );
 }
-
-
 
 const renderLinea = (linea: string, index: number) => {
   const trimmed = linea.trim();
@@ -56,40 +52,26 @@ const renderLinea = (linea: string, index: number) => {
   }
 };
 
-// ...existing code...
 const GuiaSimulacion = () => {
-  const [sidebarAbierto, setSidebarAbierto] = useState(false);
+  const [sidebarAbierto, setSidebarAbierto] = useState(true);
 
   return (
-    <div className="relative">
-      {/* Botón para abrir/cerrar sidebar en móviles */}
-      <button
-        className="md:hidden fixed top-4 left-4 z-50 bg-[#164a5f] text-white p-2 rounded shadow"
-        onClick={() => setSidebarAbierto(!sidebarAbierto)}
-        aria-label="Abrir menú"
-      >
-        {sidebarAbierto ? "✕" : "☰"}
-      </button>
-
-      {/* Sidebar */}
-      <div
-        className={`
-          fixed top-0 left-0 z-40 h-screen w-[250px] bg-white transition-transform duration-300
-          ${sidebarAbierto ? "translate-x-0" : "-translate-x-full"}
-          md:translate-x-0 md:block
-        `}
-      >
+    <div className="flex flex-col md:flex-row min-h-screen bg-gray-50">
+      {/* Sidebar fijo */}
+      <div className="fixed top-0 left-0 z-40 h-screen">
         <StudentSidebar onSidebarToggle={setSidebarAbierto} />
       </div>
 
-      {/* Contenido principal */}
+      {/* Contenido */}
       <div
-        className={`
-          p-4 md:p-6 transition-all duration-300
-          md:ml-[250px]
-        `}
+        className={`flex-1 p-6 sm:p-8 mt-10 md:mt-0 transition-all duration-300 ${
+          sidebarAbierto ? "md:ml-[18rem]" : "md:ml-[4rem]"
+        }`}
       >
-        <h2 className="text-2xl font-bold text-[#164a5f] mb-6">Guía para usar la simulación</h2>
+        <h2 className="text-3xl sm:text-xl font-bold text-[#164a5f] mb-6">
+          Guía para usar la simulación
+        </h2>
+
         <div className="space-y-4">
           {pasosRaw.map((paso, index) => (
             <div
@@ -100,7 +82,7 @@ const GuiaSimulacion = () => {
                 {index + 1}
               </div>
               <div className="space-y-2">
-                {paso.split("\n").some(line => line.trim().startsWith("- ")) ? (
+                {paso.split("\n").some((line) => line.trim().startsWith("- ")) ? (
                   <ul className="list-none pl-6 space-y-1">
                     {paso.split("\n").map((line, idx) => renderLinea(line, idx))}
                   </ul>
@@ -115,6 +97,5 @@ const GuiaSimulacion = () => {
     </div>
   );
 };
-// ...existing code...
 
 export default GuiaSimulacion;
