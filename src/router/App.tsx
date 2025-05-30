@@ -13,70 +13,79 @@ import ListadoCasosHospitalarios from '../components/CasosST/ListaCasosHospitala
 import TestearInterprete from '../components/Test/TestearInterprete'
 import Simulacion from '../components/Simulacion'
 import SimulacionGuia from '../components/GuiaSimulación'
+import { ReactFlowProvider } from 'reactflow'
+import TestearNodos from '../components/Test/TestearNodos'
 function App() {
   return (
-    <div>
-      <Routes>
-        <Route path='/' element={<Login></Login>}></Route>
-        <Route path="/logout" element={<Logout />} />
-        <Route path='/simulacion/guia' element={
-          <ProtectedRoute allowedRoles={['Estudiante', 'Docente']}>
-            <SimulacionGuia />
-          </ProtectedRoute>
-        }></Route>
-         
-        <Route path='/inicioEstudiante' element={
-          <ProtectedRoute allowedRoles={['Estudiante']}>
-            <InicioStudent></InicioStudent>
-          </ProtectedRoute>
-          }> </Route>
-        <Route path='/inicioEstudiante/ListadoCasosUrgencia' element={
-          <ProtectedRoute allowedRoles={['Estudiante']}>
-            <ListaCasosUrgencia></ListaCasosUrgencia>
-          </ProtectedRoute>
-          }> </Route>
-        <Route path='/inicioEstudiante/ListadoCasosAPS' element={
-          <ProtectedRoute allowedRoles={['Estudiante']}>
-            <ListaCasosAPS></ListaCasosAPS>
-          </ProtectedRoute>
-          }> </Route>
-        <Route path='/inicioEstudiante/ListadoCasosHospitalarios' element={
-          <ProtectedRoute allowedRoles={['Estudiante']}>
-            <ListadoCasosHospitalarios></ListadoCasosHospitalarios>
-          </ProtectedRoute>
-          }> </Route>
-        <Route path='/inicioEstudiante/testing' element={
-          <ProtectedRoute allowedRoles={['Estudiante']}>
-            <TestearInterprete></TestearInterprete>
-          </ProtectedRoute>
-          }> </Route>
+    <ReactFlowProvider>
+      <div>
+        <Routes>
+          <Route path='/' element={<Login></Login>}></Route>
+          <Route path="/logout" element={<Logout />} />
+          <Route path='/simulacion/guia' element={
+            <ProtectedRoute allowedRoles={['Estudiante', 'Docente']}>
+              <SimulacionGuia />
+            </ProtectedRoute>
+          }></Route>
+          
+          <Route path='/inicioEstudiante' element={
+            <ProtectedRoute allowedRoles={['Estudiante']}>
+              <InicioStudent></InicioStudent>
+            </ProtectedRoute>
+            }> </Route>
+          <Route path='/inicioEstudiante/ListadoCasosUrgencia' element={
+            <ProtectedRoute allowedRoles={['Estudiante']}>
+              <ListaCasosUrgencia></ListaCasosUrgencia>
+            </ProtectedRoute>
+            }> </Route>
+          <Route path='/inicioEstudiante/ListadoCasosAPS' element={
+            <ProtectedRoute allowedRoles={['Estudiante']}>
+              <ListaCasosAPS></ListaCasosAPS>
+            </ProtectedRoute>
+            }> </Route>
+          <Route path='/inicioEstudiante/ListadoCasosHospitalarios' element={
+            <ProtectedRoute allowedRoles={['Estudiante']}>
+              <ListadoCasosHospitalarios></ListadoCasosHospitalarios>
+            </ProtectedRoute>
+            }> </Route>
+          <Route path='/inicioEstudiante/testing' element={
+            <ProtectedRoute allowedRoles={['Estudiante']}>
+              <TestearInterprete></TestearInterprete>
+            </ProtectedRoute>
+            }> </Route>
 
 
-        <Route path="/simulacion/:id" element={<Simulacion />} />
+          <Route path="/simulacion/:id" element={<Simulacion />} />
 
 
-        <Route path='/inicioDocente' element={
-          <ProtectedRoute >
-            <InicioDocente></InicioDocente>
-          </ProtectedRoute>
-          }> </Route>
-        <Route path='/inicioDocente/verCasos' element={
-          <ProtectedRoute >
-            <VerCasos></VerCasos>
-          </ProtectedRoute>
-          }> </Route>
-        <Route path='/inicioDocente/crearCasos' element={
-          <ProtectedRoute >
-            <CrearCasos></CrearCasos>
-          </ProtectedRoute>
-          }> </Route>
-        <Route path='/inicioDocente/diagnosticos' element={
-          <ProtectedRoute >
-            <Diagnosticos></Diagnosticos>
-          </ProtectedRoute>
-          }> </Route>
-      </Routes>
-    </div>
+          <Route path='/inicioDocente' element={
+            <ProtectedRoute >
+              <InicioDocente></InicioDocente>
+            </ProtectedRoute>
+            }> </Route>
+          <Route path='/inicioDocente/verCasos' element={
+            <ProtectedRoute >
+              <VerCasos></VerCasos>
+            </ProtectedRoute>
+            }> </Route>
+          <Route path='/inicioDocente/crearCasos' element={
+            <ProtectedRoute >
+              <CrearCasos></CrearCasos>
+            </ProtectedRoute>
+            }> </Route>
+          <Route path='/inicioDocente/diagnosticos' element={
+            <ProtectedRoute >
+              <Diagnosticos></Diagnosticos>
+            </ProtectedRoute>
+            }> </Route>
+          <Route path='/inicioDocente/testearNodos' element={
+            <ProtectedRoute >
+              <TestearNodos></TestearNodos>
+            </ProtectedRoute>
+            }> </Route>
+        </Routes>
+      </div>
+    </ReactFlowProvider>
   )
 
 }
