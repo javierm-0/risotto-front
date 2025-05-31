@@ -2,7 +2,7 @@ import React from 'react';
 import { ReactFlow, Node, Edge, Controls, Handle, Position } from 'reactflow';
 import 'reactflow/dist/style.css';
 
-const CustomNode = ({ data }) => (
+const CustomNode = ({ data } : {data:any}) => (
   <div style={{ padding: 10, border: '1px solid black', borderRadius: 5, width: 100, textAlign: 'center' }}>
     <Handle type="source" position={Position.Top} id="solo 1 conexion" />
     <Handle type="target" position={Position.Bottom} id="solo 1 conexion" />

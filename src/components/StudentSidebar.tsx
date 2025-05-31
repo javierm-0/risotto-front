@@ -17,7 +17,6 @@ const StudentSidebar = ({ onSidebarToggle }: { onSidebarToggle?: (open: boolean)
     { title: 'Casos de Urgencia', icon: iconProgram, link: '/inicioEstudiante/ListadoCasosUrgencia' },
     { title: 'Casos Hospitalarios', icon: iconProgram, link: '/inicioEstudiante/ListadoCasosHospitalarios' },
     { title: 'Casos APS', icon: iconProgram, link: '/inicioEstudiante/ListadoCasosAPS' },
-    { title: 'Testear Interprete', icon: iconProgram, link: '/inicioEstudiante/testing' },
     { title: 'Cerrar Sesión', spacing: true, icon: iconClose, link: '/', isExitButton: true },
 
   ];

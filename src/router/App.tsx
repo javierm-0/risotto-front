@@ -10,7 +10,6 @@ import Diagnosticos from '../components/Diagnosticos'
 import ListaCasosAPS from '../components/CasosST/ListaCasosAPS'
 import ListaCasosUrgencia from '../components/CasosST/ListaCasosUrgencia'
 import ListadoCasosHospitalarios from '../components/CasosST/ListaCasosHospitalarios'
-import TestearInterprete from '../components/Test/TestearInterprete'
 import Simulacion from '../components/Simulacion'
 import SimulacionGuia from '../components/GuiaSimulación'
 import { ReactFlowProvider } from 'reactflow'
@@ -46,11 +45,6 @@ function App() {
           <Route path='/inicioEstudiante/ListadoCasosHospitalarios' element={
             <ProtectedRoute allowedRoles={['Estudiante']}>
               <ListadoCasosHospitalarios></ListadoCasosHospitalarios>
-            </ProtectedRoute>
-            }> </Route>
-          <Route path='/inicioEstudiante/testing' element={
-            <ProtectedRoute allowedRoles={['Estudiante']}>
-              <TestearInterprete></TestearInterprete>
             </ProtectedRoute>
             }> </Route>
 
