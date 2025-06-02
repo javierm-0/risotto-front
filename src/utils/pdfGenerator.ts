@@ -1,9 +1,7 @@
 // src/utils/pdfGenerator.ts
 import { PDFDocument, rgb, StandardFonts, PageSizes } from 'pdf-lib';
 
-
-// Importa tus imágenes. Asegúrate de que las rutas sean correctas
-import logoUniversidad from '../assets/logo_ucn.png';
+import logoUniversidad from '../assets/Escudo-UCN-Full-Color (1).png';
 import logoEscuela from '../assets/logoMedUcn_circular.png';
 /**
  * Función auxiliar para dividir texto en líneas que encajen en un ancho dado.
@@ -24,13 +22,12 @@ function wrapText(text: string, font: any, fontSize: number, maxWidth: number): 
         const testWidth = font.widthOfTextAtSize(testLine, fontSize);
 
         if (testWidth < maxWidth) {
-            currentLine = testLine;
-        } else {
-            lines.push(currentLine);
-            currentLine = word;
+            currentLine = testLine; 
+            lines.push(currentLine); 
+            currentLine = word; 
         }
     }
-    lines.push(currentLine); // Añadir la última línea
+    lines.push(currentLine);
     return lines;
 }
 
@@ -47,26 +44,23 @@ export async function generatePdfInFrontend(diagnosticData: pdfDiagnosticDto): P
     const textColor = rgb(0, 0, 0);
 
     const margin = 50;
-    let currentY = page.getHeight() - margin;
+   
+    let currentY: number;
     const textIndent = 20;
-    const lineHeight = 14; 
+    const lineHeight = 14;
+    const logoMarginBottom = 20; 
 
-    // --- Cargar e Incrustar Imágenes ---
+    
     let embeddedLogoUniversidad, embeddedLogoEscuela;
 
-    // Ajusta estos valores para controlar el tamaño de los logos
-    // Vamos a darle un ancho fijo y calcular la altura para mantener la proporción
-    const targetUniLogoWidth = 120; // Ancho deseado para el logo de la universidad (ajusta este)
-    let actualUniLogoHeight = 0; // Se calculará después de incrustar
-
-    const targetEscuelaLogoWidth = 80; // Ancho deseado para el logo de la escuela (ajusta este)
-    let actualEscuelaLogoHeight = 0; // Se calculará después de incrustar
+  
+    const targetLogoWidth = 90; 
+    let actualLogoHeight = 0; 
 
     try {
         const logoUniversidadBytes = await fetch(logoUniversidad).then(res => res.arrayBuffer());
         embeddedLogoUniversidad = await pdfDoc.embedPng(logoUniversidadBytes);
-       
-        actualUniLogoHeight = (embeddedLogoUniversidad.height / embeddedLogoUniversidad.width) * targetUniLogoWidth;
+        actualLogoHeight = (embeddedLogoUniversidad.height / embeddedLogoUniversidad.width) * targetLogoWidth;
     } catch (error) {
         console.warn('No se pudo cargar o incrustar el logo de la universidad:', error);
         embeddedLogoUniversidad = null;
@@ -76,36 +70,33 @@ export async function generatePdfInFrontend(diagnosticData: pdfDiagnosticDto): P
         const logoEscuelaBytes = await fetch(logoEscuela).then(res => res.arrayBuffer());
         embeddedLogoEscuela = await pdfDoc.embedPng(logoEscuelaBytes);
        
-        actualEscuelaLogoHeight = (embeddedLogoEscuela.height / embeddedLogoEscuela.width) * targetEscuelaLogoWidth;
+        
     } catch (error) {
         console.warn('No se pudo cargar o incrustar el logo de la escuela:', error);
         embeddedLogoEscuela = null;
     }
 
-    
-    // Posicionar el logo de la universidad en la parte superior izquierda
+    // --- Dibujar Imágenes (si se cargaron) ---
     if (embeddedLogoUniversidad) {
         page.drawImage(embeddedLogoUniversidad, {
             x: margin,
-            y: page.getHeight() - margin - actualUniLogoHeight, 
-            width: targetUniLogoWidth,
-            height: actualUniLogoHeight,
+            y: page.getHeight() - margin - actualLogoHeight,
+            width: targetLogoWidth,
+            height: actualLogoHeight,
         });
     }
 
-    // Posicionar el logo de la escuela en la parte superior derecha
     if (embeddedLogoEscuela) {
         page.drawImage(embeddedLogoEscuela, {
-            x: page.getWidth() - margin - targetEscuelaLogoWidth, 
-            y: page.getHeight() - margin - actualEscuelaLogoHeight, 
-            width: targetEscuelaLogoWidth,
-            height: actualEscuelaLogoHeight,
+            x: page.getWidth() - margin - targetLogoWidth,
+            y: page.getHeight() - margin - actualLogoHeight,
+            width: targetLogoWidth,
+            height: actualLogoHeight,
         });
     }
 
-    // Ajustar el currentY para que el texto comience debajo de los logos
-    const maxLogoContentHeight = Math.max(actualUniLogoHeight, actualEscuelaLogoHeight);
-    currentY = page.getHeight() - margin - maxLogoContentHeight - 40; // 40 es un espacio adicional
+ 
+    currentY = page.getHeight() - margin - actualLogoHeight - logoMarginBottom; 
 
     // --- Encabezado ---
     const titleText1 = 'Resultados de la Simulación';
@@ -117,23 +108,26 @@ export async function generatePdfInFrontend(diagnosticData: pdfDiagnosticDto): P
         color: textColor,
     });
     currentY -= 30;
+    const maxWidthForDiagnosticTitle = page.getWidth() - (2 * margin); 
+    const diagnosticTitleFontSize = 18; 
+   
+    const diagnosticFullText = `Detalle del Diagnóstico: ${diagnosticData.diagnostic}`;
+    const wrappedDiagnosticLines = wrapText(diagnosticFullText, font, diagnosticTitleFontSize, maxWidthForDiagnosticTitle);
 
-    const diagnosticSummary = diagnosticData.diagnostic.length > 70
-        ? `${diagnosticData.diagnostic.substring(0, 67)}...`
-        : diagnosticData.diagnostic;
-
-    const titleText2 = `Detalle del Diagnóstico: ${diagnosticSummary}`; // [cite: 1]
-    page.drawText(titleText2, {
-        x: page.getWidth() / 2 - font.widthOfTextAtSize(titleText2, 18) / 2, // Centrar
-        y: currentY,
-        font: font,
-        size: 18,
-        color: textColor,
-    });
-    currentY -= 40;
+    for (const line of wrappedDiagnosticLines) {
+        page.drawText(line, {
+            x: page.getWidth() / 2 - font.widthOfTextAtSize(line, diagnosticTitleFontSize) / 2, 
+            font: font,
+            size: diagnosticTitleFontSize,
+            color: textColor,
+        });
+        currentY -= (diagnosticTitleFontSize + 5); 
+    }
+    
+    currentY -= 10; 
 
     // --- Nombre y Fecha (del DTO) ---
-    page.drawText(`Nombre: ${diagnosticData.user_name}`, { // [cite: 1]
+    page.drawText(`Nombre: ${diagnosticData.user_name}`, {
         x: margin,
         y: currentY,
         font: font,
@@ -150,7 +144,7 @@ export async function generatePdfInFrontend(diagnosticData: pdfDiagnosticDto): P
         month: '2-digit',
         day: '2-digit',
     });
-    page.drawText(`Fecha: ${formattedDate}`, { // [cite: 1]
+    page.drawText(`Fecha: ${formattedDate}`, {
         x: page.getWidth() - margin - 100,
         y: currentY,
         font: font,
@@ -160,7 +154,7 @@ export async function generatePdfInFrontend(diagnosticData: pdfDiagnosticDto): P
     currentY -= 40;
 
     // --- Sección "Resultados" ---
-    page.drawText('Resultados', { // [cite: 1]
+    page.drawText('Resultados', {
         x: margin,
         y: currentY,
         font: boldFont,
@@ -199,23 +193,21 @@ export async function generatePdfInFrontend(diagnosticData: pdfDiagnosticDto): P
     drawWrappedKeyValue('Diagnóstico', diagnosticData.diagnostic, margin + textIndent, margin + textIndent + 60, contentWidth);
     drawWrappedKeyValue('Respuesta del Estudiante', diagnosticData.case_info, margin + textIndent, margin + textIndent + 60, contentWidth);
 
-
     const pdfBytes = await pdfDoc.save();
-const blob = new Blob([pdfBytes], { type: 'application/pdf' });
-const url = URL.createObjectURL(blob);
+    const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+    const url = URL.createObjectURL(blob);
 
-// Solo la descarga, sin abrir ventana nueva
-const a = document.createElement('a');
-a.href = url;
-a.download = `resultados_simulacion_${diagnosticData.diagnostic}.pdf`; 
-document.body.appendChild(a); 
-a.click(); 
-document.body.removeChild(a); 
+    // Solo la descarga, sin abrir ventana nueva
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `resultados_simulacion_${diagnosticData.diagnostic}.pdf`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
 
-
-setTimeout(() => {
-    URL.revokeObjectURL(url);
-}, 100);
+    setTimeout(() => {
+        URL.revokeObjectURL(url);
+    }, 100);
 }
 
 /**
