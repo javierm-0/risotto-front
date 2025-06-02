@@ -14,6 +14,7 @@ import Simulacion from '../components/Simulacion'
 import SimulacionGuia from '../components/GuiaSimulación'
 import { ReactFlowProvider } from 'reactflow'
 import TestearNodos from '../components/Test/TestearNodos'
+import PdfTestViewer from '../components/pdfTest'
 function App() {
   return (
     <ReactFlowProvider>
@@ -26,6 +27,11 @@ function App() {
               <SimulacionGuia />
             </ProtectedRoute>
           }></Route>
+          <Route path='/pdftest' element={
+            
+              <PdfTestViewer />
+            
+            }> </Route>
           
           <Route path='/inicioEstudiante' element={
             <ProtectedRoute allowedRoles={['Estudiante']}>

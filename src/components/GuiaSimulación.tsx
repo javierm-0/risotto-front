@@ -57,12 +57,12 @@ const GuiaSimulacion = () => {
 
   return (
     <div className="flex flex-col md:flex-row min-h-screen bg-gray-50">
-      {/* Sidebar fijo */}
+    
       <div className="fixed top-0 left-0 z-40 h-screen">
         <StudentSidebar onSidebarToggle={setSidebarAbierto} />
       </div>
 
-      {/* Contenido */}
+      
       <div
         className={`flex-1 p-6 sm:p-8 mt-10 md:mt-0 transition-all duration-300 ${
           sidebarAbierto ? "md:ml-[18rem]" : "md:ml-[4rem]"
