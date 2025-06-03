@@ -4,15 +4,31 @@ import ucnLogo from '../assets/IsologoUCN.png';
 import { BsArrowLeftSquareFill, BsList } from 'react-icons/bs';
 import { IoArrowBack } from 'react-icons/io5';
 
-const SimulacionSidebar = ({ onSidebarToggle }: { onSidebarToggle?: (open: boolean) => void }) => {
+type SimulacionSidebarProps = {
+  onSidebarToggle?: (open: boolean) => void;
+  modoDiagnosticoFinal?: boolean;
+  navigateBack?: () => void;
+};
+
+const SimulacionSidebar = ({
+  onSidebarToggle,
+  modoDiagnosticoFinal,
+  navigateBack
+}: SimulacionSidebarProps) => {
   const [isOpen, setIsOpen] = useState(true);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const navigate = useNavigate();
 
   const salirItem = {
-    title: 'Salir',
+    title: modoDiagnosticoFinal ? 'Atrás' : 'Salir',
     icon: <IoArrowBack className="w-6 h-6" />,
-    action: () => navigate('/inicioEstudiante'),
+    action: () => {
+      if (modoDiagnosticoFinal && navigateBack) {
+        navigateBack();
+      } else {
+        navigate('/inicioEstudiante');
+      }
+    },
   };
 
   const toggleSidebar = () => {
@@ -30,12 +46,11 @@ const SimulacionSidebar = ({ onSidebarToggle }: { onSidebarToggle?: (open: boole
       } duration-300 relative rounded-tr-2xl overflow-visible`}
     >
       <BsArrowLeftSquareFill
-        className={`bg-[#164a5f] text-gray-200 text-3xl rounded-full absolute -right-3.5 top-10 border border bg-[#3ab1b177] cursor-pointer hidden md:block ${
+        className={`text-white text-4xl rounded-full absolute -right-4 top-6 border-2 border-white bg-[#164a5f] cursor-pointer hidden md:block ${
           !isOpen ? 'rotate-180' : ''
         }`}
         onClick={toggleSidebar}
       />
-
 
       {isOpen && (
         <>

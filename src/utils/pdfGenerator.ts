@@ -1,7 +1,7 @@
 // src/utils/pdfGenerator.ts
 import { PDFDocument, rgb, StandardFonts, PageSizes } from 'pdf-lib';
 
-import logoUniversidad from '../assets/Escudo-UCN-Full-Color (1).png';
+import logoUniversidad from '../assets/Escudo-UCN-Full-Color.png';
 import logoEscuela from '../assets/logoMedUcn_circular.png';
 /**
  * Función auxiliar para dividir texto en líneas que encajen en un ancho dado.
@@ -193,21 +193,6 @@ export async function generatePdfInFrontend(diagnosticData: pdfDiagnosticDto): P
     drawWrappedKeyValue('Diagnóstico', diagnosticData.diagnostic, margin + textIndent, margin + textIndent + 60, contentWidth);
     drawWrappedKeyValue('Respuesta del Estudiante', diagnosticData.case_info, margin + textIndent, margin + textIndent + 60, contentWidth);
 
-    const pdfBytes = await pdfDoc.save();
-    const blob = new Blob([pdfBytes], { type: 'application/pdf' });
-    const url = URL.createObjectURL(blob);
-
-    // Solo la descarga, sin abrir ventana nueva
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `resultados_simulacion_${diagnosticData.diagnostic}.pdf`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-
-    setTimeout(() => {
-        URL.revokeObjectURL(url);
-    }, 100);
 }
 
 /**

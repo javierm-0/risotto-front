@@ -24,7 +24,7 @@ export interface Case {
 export interface InteraccionType {
   id?: string;
   nombreNPC: string;
-  descripcionNPC: string;
+  descripcion: string;
   preguntas: RelatoType[];
 }
 

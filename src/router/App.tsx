@@ -11,6 +11,7 @@ import ListaCasosAPS from '../components/CasosST/ListaCasosAPS'
 import ListaCasosUrgencia from '../components/CasosST/ListaCasosUrgencia'
 import ListadoCasosHospitalarios from '../components/CasosST/ListaCasosHospitalarios'
 import Simulacion from '../components/Simulacion'
+import DiagnosticoFinal from '../components/DiagnosticoFinal'
 import SimulacionGuia from '../components/GuiaSimulación'
 import { ReactFlowProvider } from 'reactflow'
 import TestearNodos from '../components/Test/TestearNodos'
@@ -56,6 +57,8 @@ function App() {
 
 
           <Route path="/simulacion/:id" element={<Simulacion />} />
+
+          <Route path="/simulacion/:id/diagnostico" element={<DiagnosticoFinal />} />
 
 
           <Route path='/inicioDocente' element={
