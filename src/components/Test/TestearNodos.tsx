@@ -29,6 +29,9 @@ import { getLayoutedElements } from "../../utils/layoutDagre";
 import CaseNodeType from "../nodeTypes/CaseNodeType";
 import InteraccionNodeType from "../nodeTypes/InteraccionNodeType";
 import RelatoNodeType from "../nodeTypes/RelatoNodeType";
+import { createCasePayload } from "../CasosDoc/CrearCasosFuncionalidad/CrearCasosPrincipal";
+import { validateCaseData } from "../../utils/validationUtils";
+import { CrearCaso } from "../../api/crearCasoAux";
 
 export const nodeTypes = {
   caseNode: CaseNodeType,
@@ -38,32 +41,25 @@ export const nodeTypes = {
 
 //const DEBOUNCE_DELAY = 300;
 
-const TestearNodos: React.FC = () => {
+interface TestearNodosProps {
+  caseData: Case;
+  setCaseData: React.Dispatch<React.SetStateAction<Case>>;
+}
+
+const TestearNodos: React.FC<TestearNodosProps> = ({
+  caseData,
+  setCaseData,
+}) => {
+  const [alreadySent, setAlreadySent] = useState<boolean>(false);
+  const isFormValid : boolean = validateCaseData(caseData);
   const wrapperRef = useRef<HTMLDivElement>(null);
   //const timerRef = useRef<number | null>(null);
 
   const [canvasWidth, setCanvasWidth] = useState<number>(800);
 
-  const [caseData, setCaseData] = useState<Case>({
-    _id: "case-temp-id",
-    titulo: "",
-    tipo_caso: "Urgencia",
-    contexto_inicial: {
-      descripcion: "",
-      informacion_paciente: {
-        nombre: "",
-        edad: 0,
-        diagnostico_previo: "",
-        diagnostico_actual: [],
-        antecedentes_relevantes: [],
-      },
-    },
-    interacciones: [],
-    informacion_final_caso: "",
-  });
-
   const [nodes, setNodes, onNodesChange] = useNodesState<RFNode>([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState<RFEdge[]>([]);
+  const backurl: string = "http://localhost:3001/simulation/case/create";
 
   // Controla cuándo ejecutar el layout con Dagre
   const [needsLayout, setNeedsLayout] = useState<boolean>(true);
@@ -206,10 +202,19 @@ const TestearNodos: React.FC = () => {
           Mostrar JSON del caso
         </button>
         <button
-          className="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700"
+          className="bg-[#164a5f] text-white py-2 px-4 rounded hover:bg-[#0d5c71]"
           onClick={() => setNeedsLayout(true)}
         >
           Actualizar diagrama
+        </button>
+
+        <button disabled={!isFormValid || alreadySent} className={`text-white py-2 px-4 rounded 
+                          ${isFormValid && !alreadySent? 'bg-[#164a5f hover: bg-[#0d5c71]' : 'bg-gray-400' } `}
+                    onClick={() => {
+                      CrearCaso(backurl,caseData);
+                      setAlreadySent(true);//con esto deberia apagarse hasta recargar la pagina, prevenimos spam de casos
+                      }}>
+                        Enviar Cambios
         </button>
       </div>
 
@@ -223,7 +228,7 @@ const TestearNodos: React.FC = () => {
             nodeTypes={nodeTypes}
             nodesDraggable={true}
             nodesConnectable={false}
-            elementsSelectable={false}
+            elementsSelectable={true}
             zoomOnScroll
             panOnDrag
             fitView
@@ -233,7 +238,10 @@ const TestearNodos: React.FC = () => {
             }}
           >
             <Background gap={16} color="#888" />
-            <Controls />
+            <Controls 
+              showInteractive={true}
+              
+            />
           </ReactFlow>
         </ReactFlowProvider>
       </div>

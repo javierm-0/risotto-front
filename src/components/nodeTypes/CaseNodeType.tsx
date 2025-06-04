@@ -179,6 +179,17 @@ const CaseNodeType: React.FC<CaseNodeProps> = ({ data }) => {
       >
         + Agregar entidad (NPC)
       </button>
+
+      {/* Info final del caso */}
+      <input
+        type="text"
+        placeholder="Información final de caso"
+        value={nodeData.informacion_final_caso}
+        onChange={(e: ChangeEvent<HTMLInputElement>) =>
+          onChangeFieldCase("informacion_final_caso", e.target.value)
+        }
+        className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+      />
     </div>
   );
 };

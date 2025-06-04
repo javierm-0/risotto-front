@@ -5,7 +5,6 @@ import InicioDocente from '../components/InicioDocente'
 import ProtectedRoute from '../auth/ProtectedRoute'
 import Logout from '../components/Logout'
 import VerCasos from '../components/VerCasos'
-import CrearCasos from '../components/CasosDoc/CrearCasosFuncionalidad/CrearCasos'
 import Diagnosticos from '../components/Diagnosticos'
 import ListaCasosAPS from '../components/CasosST/ListaCasosAPS'
 import ListaCasosUrgencia from '../components/CasosST/ListaCasosUrgencia'
@@ -14,8 +13,8 @@ import Simulacion from '../components/Simulacion'
 import DiagnosticoFinal from '../components/DiagnosticoFinal'
 import SimulacionGuia from '../components/GuiaSimulación'
 import { ReactFlowProvider } from 'reactflow'
-import TestearNodos from '../components/Test/TestearNodos'
 import PdfTestViewer from '../components/pdfTest'
+import CrearCasosPrincipal from '../components/CasosDoc/CrearCasosFuncionalidad/CrearCasosPrincipal'
 function App() {
   return (
     <ReactFlowProvider>
@@ -73,17 +72,12 @@ function App() {
             }> </Route>
           <Route path='/inicioDocente/crearCasos' element={
             <ProtectedRoute >
-              <CrearCasos></CrearCasos>
+              <CrearCasosPrincipal></CrearCasosPrincipal>
             </ProtectedRoute>
             }> </Route>
           <Route path='/inicioDocente/diagnosticos' element={
             <ProtectedRoute >
               <Diagnosticos></Diagnosticos>
-            </ProtectedRoute>
-            }> </Route>
-          <Route path='/inicioDocente/testearNodos' element={
-            <ProtectedRoute >
-              <TestearNodos></TestearNodos>
             </ProtectedRoute>
             }> </Route>
         </Routes>
