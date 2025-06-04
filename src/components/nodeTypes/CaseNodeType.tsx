@@ -34,7 +34,7 @@ const CaseNodeType: React.FC<CaseNodeProps> = ({ data }) => {
   } = data;
 
   return (
-    <div className="w-56 bg-white border border-gray-800 rounded-md p-3 shadow-md space-y-2">
+    <div className="w-[60%] bg-white border border-gray-800 rounded-md p-4 shadow-md space-y-3">
       {/* 1) Definimos el Handle “source” que va a estar anclado en la parte inferior */}
       <Handle
         type="source"

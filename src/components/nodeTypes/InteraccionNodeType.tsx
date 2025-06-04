@@ -6,7 +6,7 @@ import { Handle, Position } from "reactflow";
 interface InteraccionNodeProps {
   data: {
     nodeData: InteraccionType;
-    onChangeField: (campo: "nombreNPC" | "descripcionNPC", valor: any) => void;
+    onChangeField: (campo: "nombreNPC" | "descripcion", valor: any) => void;
     onDelete: () => void;
     onAddRelato: () => void;
   };
@@ -16,12 +16,12 @@ const InteraccionNodeType: React.FC<InteraccionNodeProps> = ({ data }) => {
   const { nodeData, onChangeField, onDelete, onAddRelato } = data;
 
   return (
-    <div className="w-44 bg-teal-50 border border-teal-700 rounded-md p-3 space-y-2 shadow-sm">
+    <div className="w-52 bg-teal-50 border border-teal-700 rounded-md p-3 space-y-2 shadow-sm">
        {/* 1) Handle “target” en la parte superior para conectar desde Case */}
       <Handle type="target" position={Position.Top} id="inter-target" />
       <input
         type="text"
-        placeholder="Nombre NPC"
+        placeholder="Nombre de persona"
         value={nodeData.nombreNPC}
         onChange={(e: ChangeEvent<HTMLInputElement>) =>
           onChangeField("nombreNPC", e.target.value)
@@ -30,10 +30,10 @@ const InteraccionNodeType: React.FC<InteraccionNodeProps> = ({ data }) => {
       />
       <input
         type="text"
-        placeholder="Descripción NPC"
-        value={nodeData.descripcionNPC}
+        placeholder="Descripción(Opcional)"
+        value={nodeData.descripcion}
         onChange={(e: ChangeEvent<HTMLInputElement>) =>
-          onChangeField("descripcionNPC", e.target.value)
+          onChangeField("descripcion", e.target.value)
         }
         className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-teal-400"
       />

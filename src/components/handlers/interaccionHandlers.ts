@@ -8,7 +8,7 @@ export function handleAddInteraccion(prevCase: Case): Case {
   const nuevaInter: InteraccionType = {
     id: uuidv4(),
     nombreNPC: "",
-    descripcionNPC: "",
+    descripcion: "",
     preguntas: [],
   };
   return { ...prevCase, interacciones: [...prevCase.interacciones, nuevaInter] };
@@ -26,14 +26,14 @@ export function handleDeleteInteraccion(prevCase: Case, interId: string): Case {
   };
 }
 
-// Actualiza un campo (nombreNPC o descripcionNPC) de la interaccion con interId
+// Actualiza un campo (nombreNPC o descripcion) de la interaccion con interId
 export function handleChangeInteraccionField(
   prevCase: Case,
   interId: string,
-  campo: "nombreNPC" | "descripcionNPC",
+  campo: "nombreNPC" | "descripcion",
   valor: any
 ): Case {
-  if (campo === "nombreNPC" || campo === "descripcionNPC") {
+  if (campo === "nombreNPC" || campo === "descripcion") {
     if (typeof valor !== "string") {
       console.warn(`Se esperaba string para interaccion.${campo}. Cambio ignorado.`);
       return prevCase;

@@ -1,20 +1,23 @@
-import React, { useEffect, useRef, useState } from "react";
+// src/components/TestearNodos.tsx
+import React, { useEffect, useRef, useState, useCallback} from 'react';
 import ReactFlow, {
-  Background,
-  Controls,
   ReactFlowProvider,
   useNodesState,
-} from "reactflow";
-import "reactflow/dist/style.css";
+  useEdgesState,
+  NodeDragHandler,
+  Background,
+  Controls
+} from 'reactflow';
+import 'reactflow/dist/style.css';
 
-import { Case } from "../../types/NPCTypes";
-import { RFNode, RFEdge } from "../../types/ReactFlowTypes";
-import { createEnrichedElements } from "../../utils/reactflowHelpers";
-import { createFlowHandlers } from "../../utils/createFlowHandlers";
+import { Case} from '../../types/NPCTypes';
+import { RFNode, RFEdge } from '../../types/ReactFlowTypes';
+import { createEnrichedElements } from '../../utils/reactflowHelpers';
+import { createFlowHandlers } from '../../utils/createFlowHandlers';
 
-import CaseNodeType from "../nodeTypes/CaseNodeType";
-import InteraccionNodeType from "../nodeTypes/InteraccionNodeType";
-import RelatoNodeType from "../nodeTypes/RelatoNodeType";
+import CaseNodeType from '../nodeTypes/CaseNodeType';
+import InteraccionNodeType from '../nodeTypes/InteraccionNodeType';
+import RelatoNodeType from '../nodeTypes/RelatoNodeType';
 
 export const nodeTypes = {
   caseNode: CaseNodeType,
@@ -22,54 +25,69 @@ export const nodeTypes = {
   relatoNode: RelatoNodeType,
 };
 
+const DEBOUNCE_DELAY = 300; // milisegundos
+
 const TestearNodos: React.FC = () => {
   const wrapperRef = useRef<HTMLDivElement>(null);
+  const timerRef = useRef<number | null>(null);
+
   const [canvasWidth, setCanvasWidth] = useState<number>(800);
 
-  // 1) Estado principal que representa el “Case” completo
+  // 1) Estado principal “Case”
   const [caseData, setCaseData] = useState<Case>({
-    _id: "case-temp-id",
-    titulo: "",
-    tipo_caso: "Urgencia",
+    _id: 'case-temp-id',
+    titulo: '',
+    tipo_caso: 'Urgencia',
     contexto_inicial: {
-      descripcion: "",
+      descripcion: '',
       informacion_paciente: {
-        nombre: "",
+        nombre: '',
         edad: 0,
-        diagnostico_previo: "",
+        diagnostico_previo: '',
         diagnostico_actual: [],
         antecedentes_relevantes: [],
       },
     },
     interacciones: [],
-    informacion_final_caso: "",
+    informacion_final_caso: '',
   });
 
-  // 2) Estados que React Flow consumirá (nodos + aristas)
+  // 2) Hooks de React Flow
   const [nodes, setNodes, onNodesChange] = useNodesState<RFNode>([]);
-  const [edges, setEdges] = useState<RFEdge[]>([]);
+  const [edges, setEdges, onEdgesChange] = useEdgesState<RFEdge[]>([]);
 
-  // Flag para saber cuándo reconstruir TODO el layout
+  // Flag para reconstruir el layout
   const [needsRecalc, setNeedsRecalc] = useState<boolean>(true);
 
-  // Al montar, capturo el ancho del contenedor para centrar nodos
+  // Capturamos ancho real del contenedor al montar
   useEffect(() => {
     if (wrapperRef.current) {
-      const { width } = wrapperRef.current.getBoundingClientRect();
-      setCanvasWidth(width);
+      const rect = wrapperRef.current.getBoundingClientRect();
+      setCanvasWidth(rect.width);
     }
   }, []);
 
-  //obj handlers llama a modulo createFlowHandlers y nos ahorra poner +400 lineas aca
+  // Handler que lanza recálculo al soltar un nodo (debounce)
+  const onNodeDragStop: NodeDragHandler = useCallback(() => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+    }
+    timerRef.current = window.setTimeout(() => {
+      setNeedsRecalc(true);
+      timerRef.current = null;
+    }, DEBOUNCE_DELAY);
+  }, []);
+
+  // Creamos “handlers” que actualizan caseData + marcan needsRecalc
   const handlers = createFlowHandlers(
     caseData,
     setCaseData,
-    nodes,//aca sale un 'error' pero es psicologico xdd
+    nodes,
     setNodes,
     setNeedsRecalc
   );
 
-  // 1) Reconstruir TODO cuando cambie needsRecalc o canvasWidth
+  // 1) Reconstruir TODO el layout cuando cambie needsRecalc o canvasWidth
   useEffect(() => {
     if (!needsRecalc) return;
 
@@ -80,19 +98,20 @@ const TestearNodos: React.FC = () => {
     );
     setNodes(enrichedNodes);
     setEdges(rawEdges);
-    console.log("=== rawEdges =", rawEdges);
     setNeedsRecalc(false);
   }, [needsRecalc, caseData, canvasWidth, handlers, setNodes, setEdges]);
 
   return (
     <div className="flex flex-col h-screen">
       <div className="p-4 bg-gray-100 border-b flex gap-2">
+        {/* Muestra el JSON actual */}
         <button
           className="bg-[#164a5f] text-white py-2 px-4 rounded hover:bg-[#0d5c71]"
           onClick={() => console.log(JSON.stringify(caseData, null, 2))}
         >
-          Generar JSON
+          Mostrar JSON del caso
         </button>
+        {/* Fuerza recálculo manual */}
         <button
           className="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700"
           onClick={() => setNeedsRecalc(true)}
@@ -107,8 +126,10 @@ const TestearNodos: React.FC = () => {
             nodes={nodes}
             edges={edges}
             onNodesChange={onNodesChange}
+            onEdgesChange={onEdgesChange}
+            onNodeDragStop={onNodeDragStop}
             nodeTypes={nodeTypes}
-            nodesDraggable={false}
+            nodesDraggable={true}
             nodesConnectable={false}
             elementsSelectable={false}
             zoomOnScroll
