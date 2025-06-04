@@ -1,4 +1,3 @@
-// src/nodeTypes/RelatoNodeComponent.tsx
 import React, { ChangeEvent } from "react";
 import { RelatoType } from "../../types/NPCTypes";
 import { Handle, Position } from "reactflow";
@@ -15,6 +14,7 @@ interface RelatoNodeProps {
       campo: "texto" | "reaccion" | "esCorrecta" | "consecuencia",
       valor: any
     ) => void;
+    nodeRef : (el: HTMLDivElement | null) => void;
   };
 }
 
@@ -26,10 +26,11 @@ const RelatoNodeType: React.FC<RelatoNodeProps> = ({ data }) => {
     onAddOpcion,
     onDeleteOpcion,
     onChangeOpcionField,
+    //nodeRef,
   } = data;
 
   return (
-    <div className="w-52 bg-orange-50 border border-orange-700 rounded-md p-3 space-y-2 shadow-sm">
+    <div ref={data.nodeRef} className="w-52 bg-orange-50 border border-orange-700 rounded-md p-3 space-y-2 shadow-sm">
       {/* 1) Handle “target” en la parte superior: recibe conexión de “inter-source” */}
       <Handle type="target" position={Position.Top} id="rel-target" />
       <input

@@ -69,7 +69,7 @@ export type AllHandlers = {
 export function createFlowHandlers(
   caseData: Case,
   setCaseData: React.Dispatch<React.SetStateAction<Case>>,
-  nodes: RFNode[],
+  _nodes: RFNode[],
   setNodes: React.Dispatch<React.SetStateAction<RFNode[]>>,
   setNeedsRecalc: React.Dispatch<React.SetStateAction<boolean>>
 ): AllHandlers {

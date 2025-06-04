@@ -17,7 +17,7 @@ export type CaseHandlers = {
 };
 
 export type InteraccionHandlers = {
-  onChangeInteraccionField: (interId: string, campo: "nombreNPC" | "descripcionNPC", valor: string) => void;
+  onChangeInteraccionField: (interId: string, campo: "nombreNPC" | "descripcion", valor: string) => void;
   onDeleteInteraccion: (interId: string) => void;
   onAddRelato: (interId: string) => void;
 };
@@ -119,7 +119,7 @@ export function createEnrichedElements(
         ...node,
         data: {
           ...node.data,
-          onChangeField: (campo: "nombreNPC" | "descripcionNPC", valor: string) => {
+          onChangeField: (campo: "nombreNPC" | "descripcion", valor: string) => {
             handlers.onChangeInteraccionField(node.id, campo, valor);
           },
           onDelete: () => {

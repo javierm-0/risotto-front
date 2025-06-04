@@ -15,6 +15,7 @@ interface CaseNodeProps {
     onDeleteAntecedente: (idx: number) => void;
     onChangeAntecedente: (idx: number, valor: string) => void;
     onAddInteraccion: () => void;
+    nodeRef : (el: HTMLDivElement | null) => void;
   };
 }
 
@@ -31,10 +32,11 @@ const CaseNodeType: React.FC<CaseNodeProps> = ({ data }) => {
     onDeleteAntecedente,
     onChangeAntecedente,
     onAddInteraccion,
+    //nodeRef
   } = data;
 
   return (
-    <div className="w-[60%] bg-white border border-gray-800 rounded-md p-4 shadow-md space-y-3">
+    <div ref={data.nodeRef} className="w-[60%] bg-white border border-gray-800 rounded-md p-4 shadow-md space-y-3">
       {/* 1) Definimos el Handle “source” que va a estar anclado en la parte inferior */}
       <Handle
         type="source"
