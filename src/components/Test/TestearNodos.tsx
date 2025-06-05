@@ -29,9 +29,8 @@ import { getLayoutedElements } from "../../utils/layoutDagre";
 import CaseNodeType from "../nodeTypes/CaseNodeType";
 import InteraccionNodeType from "../nodeTypes/InteraccionNodeType";
 import RelatoNodeType from "../nodeTypes/RelatoNodeType";
-import { createCasePayload } from "../CasosDoc/CrearCasosFuncionalidad/CrearCasosPrincipal";
-import { validateCaseData } from "../../utils/validationUtils";
-import { CrearCaso } from "../../api/crearCasoAux";
+//import { createCasePayload } from "../CasosDoc/CrearCasosFuncionalidad/CrearCasosPrincipal";
+import { useNavigate } from "react-router-dom";
 
 export const nodeTypes = {
   caseNode: CaseNodeType,
@@ -42,16 +41,17 @@ export const nodeTypes = {
 //const DEBOUNCE_DELAY = 300;
 
 interface TestearNodosProps {
+  caseId: string;
   caseData: Case;
   setCaseData: React.Dispatch<React.SetStateAction<Case>>;
 }
 
 const TestearNodos: React.FC<TestearNodosProps> = ({
+  caseId,
   caseData,
   setCaseData,
 }) => {
-  const [alreadySent, setAlreadySent] = useState<boolean>(false);
-  const isFormValid : boolean = validateCaseData(caseData);
+  const navigate = useNavigate();
   const wrapperRef = useRef<HTMLDivElement>(null);
   //const timerRef = useRef<number | null>(null);
 
@@ -59,9 +59,9 @@ const TestearNodos: React.FC<TestearNodosProps> = ({
 
   const [nodes, setNodes, onNodesChange] = useNodesState<RFNode>([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState<RFEdge[]>([]);
-  const backurl: string = "http://localhost:3001/simulation/case/create";
+  
 
-  // Controla cuándo ejecutar el layout con Dagre
+  // Controla cuando ejecutar el layout con Dagre
   const [needsLayout, setNeedsLayout] = useState<boolean>(true);
 
   // Mapa de refs para cada nodo
@@ -156,6 +156,10 @@ const TestearNodos: React.FC<TestearNodosProps> = ({
       type: n.type,
       data: {
         ...n.data,
+        onEnfocar: () => {
+              console.log("→ Enfocar: caseId =", caseId, " interId =", n.id);
+              navigate(`/inicioDocente/crearCasos/${caseId}/interacciones/${n.id}`);
+            },
         nodeRef: (el: HTMLDivElement | null) => {
           nodeRefs.current[n.id] = el;
         },
@@ -206,15 +210,6 @@ const TestearNodos: React.FC<TestearNodosProps> = ({
           onClick={() => setNeedsLayout(true)}
         >
           Actualizar diagrama
-        </button>
-
-        <button disabled={!isFormValid || alreadySent} className={`text-white py-2 px-4 rounded 
-                          ${isFormValid && !alreadySent? 'bg-[#164a5f hover: bg-[#0d5c71]' : 'bg-gray-400' } `}
-                    onClick={() => {
-                      CrearCaso(backurl,caseData);
-                      setAlreadySent(true);//con esto deberia apagarse hasta recargar la pagina, prevenimos spam de casos
-                      }}>
-                        Enviar Cambios
         </button>
       </div>
 

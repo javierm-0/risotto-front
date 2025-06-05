@@ -1,5 +1,5 @@
 import { useState } from "react";
-import StudentSidebar from "./StudentSidebar";
+import StudentSidebar from "./Estudiantes/StudentSidebar";
 
 const pasosRaw = [
   `Para iniciar la simulación, elige en la barra lateral el tipo de caso clínico que deseas jugar. Al ingresar, se te entregará información inicial del paciente.`,

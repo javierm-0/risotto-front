@@ -9,15 +9,16 @@ interface InteraccionNodeProps {
     onChangeField: (campo: "nombreNPC" | "descripcion", valor: any) => void;
     onDelete: () => void;
     onAddRelato: () => void;
+    onEnfocar: () => void;
     nodeRef : (el: HTMLDivElement | null) => void;
   };
 }
 
 const InteraccionNodeType: React.FC<InteraccionNodeProps> = ({ data }) => {
-  const { nodeData, onChangeField, onDelete, onAddRelato} = data;
+  const { nodeData, onChangeField, onDelete, onAddRelato, onEnfocar} = data;
 
   return (
-    <div ref={data.nodeRef} className="w-52 bg-teal-50 border border-teal-700 rounded-md p-3 space-y-2 shadow-sm">
+    <div ref={data.nodeRef} className="w-60 bg-teal-50 border border-teal-700 rounded-md p-3 space-y-2 shadow-sm">
        {/* 1) Handle “target” en la parte superior para conectar desde Case */}
       <Handle type="target" position={Position.Top} id="inter-target" />
       <input
@@ -52,6 +53,13 @@ const InteraccionNodeType: React.FC<InteraccionNodeProps> = ({ data }) => {
           className="text-teal-600 hover:underline text-xs font-medium"
         >
           + Relato
+        </button>
+
+        <button
+          onClick={onEnfocar}
+          className="text-teal-600 hover:underline text-xs font-medium"
+        >
+          →Enfocar
         </button>
       </div>
     </div>

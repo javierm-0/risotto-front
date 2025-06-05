@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import ucnLogo from '../assets/IsologoUCN.png';
-import iconClose from '../assets/arrow-reduce-tag.svg';
-import iconHome from '../assets/home.svg';
-import iconProgram from '../assets/simulation.png';
+import ucnLogo from '../../assets/IsologoUCN.png';
+import iconClose from '../../assets/arrow-reduce-tag.svg';
+import iconHome from '../../assets/home.svg';
+import iconProgram from '../../assets/simulation.png';
 import { BsArrowLeftSquareFill, BsList } from 'react-icons/bs';
-import iconGuide  from '../assets/GuideIcon.png'; 
+import iconGuide  from '../../assets/GuideIcon.png'; 
 const StudentSidebar = ({ onSidebarToggle }: { onSidebarToggle?: (open: boolean) => void }) => {
   const [isOpen, setIsOpen] = useState(true);
   const [showMobileMenu, setShowMobileMenu] = useState(false);

@@ -17,9 +17,9 @@ export function getLayoutedElements(
       const sz = nodeSizes[n.id];
       return sz ? sz.height : 142;
     });
-
+  const PADDING_VERTICAL = 35;
   const maxRelatoHeight = relatoHeights.length > 0 ? Math.max(...relatoHeights) : 0;//if >0 -> toma altura maxima del nodo, sino 0
-  const ranksepValue = maxRelatoHeight > 0 ? maxRelatoHeight : 120;//if maxHeight >0 -> maxHeight +50
+  const ranksepValue = Math.min(maxRelatoHeight + PADDING_VERTICAL, 200);
 
   dagreGraph.setGraph({
     rankdir: direction,

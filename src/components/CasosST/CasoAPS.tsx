@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import Tostadas from "../../utils/Tostadas";
-import StudentSidebar from "../StudentSidebar";
+import StudentSidebar from "../Estudiantes/StudentSidebar";
 
 
 

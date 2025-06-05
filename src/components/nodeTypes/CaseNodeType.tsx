@@ -51,7 +51,7 @@ const CaseNodeType: React.FC<CaseNodeProps> = ({ data }) => {
         onChange={(e: ChangeEvent<HTMLInputElement>) =>
           onChangeFieldCase("titulo", e.target.value)
         }
-        className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+        className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-[#164a5f]"
       />
 
       {/* Tipo de caso */}
@@ -60,7 +60,7 @@ const CaseNodeType: React.FC<CaseNodeProps> = ({ data }) => {
         <select
           value={nodeData.tipo_caso}
           onChange={(e) => onChangeFieldCase("tipo_caso", e.target.value)}
-          className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+          className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-[#164a5f]"
         >
           <option value="APS">APS</option>
           <option value="Urgencia">Urgencia</option>
@@ -77,7 +77,7 @@ const CaseNodeType: React.FC<CaseNodeProps> = ({ data }) => {
             onChangeContextoInicial("descripcion", e.target.value)
           }
           rows={2}
-          className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+          className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-[#164a5f]"
         />
       </div>
 
@@ -90,7 +90,7 @@ const CaseNodeType: React.FC<CaseNodeProps> = ({ data }) => {
           onChange={(e) =>
             onChangeInfoPaciente("nombre", e.target.value)
           }
-          className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+          className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-[#164a5f]"
         />
 
         <label className="text-xs font-medium text-gray-700">Edad:</label>
@@ -100,7 +100,7 @@ const CaseNodeType: React.FC<CaseNodeProps> = ({ data }) => {
           onChange={(e) =>
             onChangeInfoPaciente("edad", parseInt(e.target.value, 10))
           }
-          className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+          className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-[#164a5f]"
         />
 
         <label className="text-xs font-medium text-gray-700">Diagnóstico previo:</label>
@@ -110,7 +110,7 @@ const CaseNodeType: React.FC<CaseNodeProps> = ({ data }) => {
           onChange={(e) =>
             onChangeInfoPaciente("diagnostico_previo", e.target.value)
           }
-          className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+          className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-[#164a5f]"
         />
       </div>
 
@@ -124,7 +124,7 @@ const CaseNodeType: React.FC<CaseNodeProps> = ({ data }) => {
                 type="text"
                 value={diag}
                 onChange={(e) => onChangeDiagnostico(idx, e.target.value)}
-                className="flex-1 px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                className="flex-1 px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-[#164a5f]"
               />
               <button
                 onClick={() => onDeleteDiagnostico(idx)}
@@ -137,7 +137,7 @@ const CaseNodeType: React.FC<CaseNodeProps> = ({ data }) => {
         )}
         <button
           onClick={onAddDiagnostico}
-          className="text-indigo-600 hover:underline text-xs font-medium"
+          className="text-[#164a5f] hover:underline text-xs font-medium"
         >
           + Agregar diagnóstico
         </button>
@@ -153,7 +153,7 @@ const CaseNodeType: React.FC<CaseNodeProps> = ({ data }) => {
                 type="text"
                 value={ant}
                 onChange={(e) => onChangeAntecedente(idx, e.target.value)}
-                className="flex-1 px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                className="flex-1 px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-[#164a5f]"
               />
               <button
                 onClick={() => onDeleteAntecedente(idx)}
@@ -166,7 +166,7 @@ const CaseNodeType: React.FC<CaseNodeProps> = ({ data }) => {
         )}
         <button
           onClick={onAddAntecedente}
-          className="text-indigo-600 hover:underline text-xs font-medium"
+          className="text-[#164a5f] hover:underline text-xs font-medium"
         >
           + Agregar antecedente
         </button>
@@ -175,7 +175,7 @@ const CaseNodeType: React.FC<CaseNodeProps> = ({ data }) => {
       {/* Botón para agregar una nueva Interacción */}
       <button
         onClick={onAddInteraccion}
-        className="mt-2 w-full bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-medium py-1 rounded"
+        className="mt-2 w-full bg-[#0F3F52] hover:bg-[#164a5f] hover:underline text-white text-xs font-medium py-1 rounded"
       >
         + Agregar entidad (NPC)
       </button>
@@ -188,7 +188,7 @@ const CaseNodeType: React.FC<CaseNodeProps> = ({ data }) => {
         onChange={(e: ChangeEvent<HTMLInputElement>) =>
           onChangeFieldCase("informacion_final_caso", e.target.value)
         }
-        className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+        className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-[#164a5f]"
       />
     </div>
   );

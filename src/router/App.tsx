@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom'
 import Login from '../components/Login'
-import InicioStudent from '../components/InicioStudent'
+import InicioStudent from '../components/Estudiantes/InicioStudent'
 import InicioDocente from '../components/InicioDocente'
 import ProtectedRoute from '../auth/ProtectedRoute'
 import Logout from '../components/Logout'
@@ -70,7 +70,7 @@ function App() {
               <VerCasos></VerCasos>
             </ProtectedRoute>
             }> </Route>
-          <Route path='/inicioDocente/crearCasos' element={
+          <Route path='/inicioDocente/crearCasos/:caseId/*' element={
             <ProtectedRoute >
               <CrearCasosPrincipal></CrearCasosPrincipal>
             </ProtectedRoute>
