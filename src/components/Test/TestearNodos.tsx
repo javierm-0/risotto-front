@@ -1,5 +1,3 @@
-// src/components/TestearNodos.tsx
-
 import React, {
   useEffect,
   useRef,

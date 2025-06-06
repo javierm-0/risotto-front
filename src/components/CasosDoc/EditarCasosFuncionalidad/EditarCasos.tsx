@@ -1,6 +1,6 @@
 // src/components/CasosDoc/EditarCasosFuncionalidad/EditarCasos.tsx
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, Routes, Route } from "react-router-dom";
 import {
   Case,
@@ -29,15 +29,21 @@ const EditarCasos: React.FC<EditarCasosProps> = ({caseData,setCaseData}) => {
   const [alreadySent, setAlreadySent] = useState(false);
   const backurl = "http://localhost:3001/simulation/case/update";
 
+  useEffect(() => {
+  if(!caseData)
+    {
+    navigate("/inicioDocente/verCasos/");
+    }
+  }, [caseData, navigate]);
+
   if(!caseData){
     return null;
   }
+  //rellenar con id es clave, sino no dibuja nodos
   const caseDataWithIDs = injectIdsIntoCase(caseData);
   
-  // 4) Validación de formulario
+  //Validacion de formulario
   const isFormValid = validateCaseData(caseData);
-
-  // 5) HANDLERS de Interacción / Relato / Opción (idénticos a CrearCasosPrincipal)
 
   const onChangeInteraccionField = (
     interId: string,
@@ -240,8 +246,6 @@ const EditarCasos: React.FC<EditarCasosProps> = ({caseData,setCaseData}) => {
       } as Case;
     });
   };
-
-  // 6) Render principal con rutas hijas, igual que en CrearCasosPrincipal
 
   return (
     <div className="flex flex-col h-screen">

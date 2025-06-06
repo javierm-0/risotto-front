@@ -1,5 +1,3 @@
-// src/components/CasosDoc/CrearCasosFuncionalidad/InteraccionDetalle.tsx
-import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import InteraccionNodeType from "../../nodeTypes/InteraccionNodeType";
 import RelatoNodeType from "../../nodeTypes/RelatoNodeType";
