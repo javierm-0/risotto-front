@@ -285,7 +285,7 @@ const EditarCasos: React.FC<EditarCasosProps> = ({caseData,setCaseData}) => {
             element={
               <TestearNodos
                 caseId={caseData._id!}
-                caseData={caseData}
+                caseData={caseDataWithIDs}
                 setCaseData={setCaseData as React.Dispatch<React.SetStateAction<Case>>}
                 basePath="/inicioDocente/verCasos/editarCasos"
               />
@@ -297,7 +297,7 @@ const EditarCasos: React.FC<EditarCasosProps> = ({caseData,setCaseData}) => {
             path="interacciones/:idInteraccion"
             element={
               <InteraccionDetalle
-                basePath="/inicioDocente/editarCasos"
+                basePath="/inicioDocente/verCasos/editarCasos"
                 caseData={caseDataWithIDs}
                 actualizarCampoInteraccion={onChangeInteraccionField}
                 eliminarInteraccion={(id) => {
