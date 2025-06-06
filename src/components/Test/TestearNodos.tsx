@@ -26,17 +26,10 @@ import { createEnrichedElements } from "../../utils/reactflowHelpers";
 import { createFlowHandlers } from "../../utils/createFlowHandlers";
 import { getLayoutedElements } from "../../utils/layoutDagre";
 
-import CaseNodeType from "../nodeTypes/CaseNodeType";
-import InteraccionNodeType from "../nodeTypes/InteraccionNodeType";
-import RelatoNodeType from "../nodeTypes/RelatoNodeType";
 //import { createCasePayload } from "../CasosDoc/CrearCasosFuncionalidad/CrearCasosPrincipal";
 import { useNavigate } from "react-router-dom";
 
-export const nodeTypes = {
-  caseNode: CaseNodeType,
-  interaccionNode: InteraccionNodeType,
-  relatoNode: RelatoNodeType,
-};
+import { nodeTypes as memoNodeTypes } from "../nodeTypes/CteNodos";
 
 //const DEBOUNCE_DELAY = 300;
 
@@ -44,16 +37,20 @@ interface TestearNodosProps {
   caseId: string;
   caseData: Case;
   setCaseData: React.Dispatch<React.SetStateAction<Case>>;
+  basePath: string;
 }
 
 const TestearNodos: React.FC<TestearNodosProps> = ({
   caseId,
   caseData,
   setCaseData,
+  basePath,
 }) => {
   const navigate = useNavigate();
   const wrapperRef = useRef<HTMLDivElement>(null);
   //const timerRef = useRef<number | null>(null);
+  const nodeTypesRef = useRef(memoNodeTypes);
+  const nodeTypes = nodeTypesRef.current;
 
   const [canvasWidth, setCanvasWidth] = useState<number>(800);
 
@@ -150,6 +147,7 @@ const TestearNodos: React.FC<TestearNodosProps> = ({
       handlers
     );
 
+
     // 5.2) Inyectar nodeRef en cada nodo y posición inicial {x:0, y:0}
     const nodesForRender: Node[] = enrichedRawNodes.map((n) => ({
       id: n.id,
@@ -157,8 +155,7 @@ const TestearNodos: React.FC<TestearNodosProps> = ({
       data: {
         ...n.data,
         onEnfocar: () => {
-              console.log("→ Enfocar: caseId =", caseId, " interId =", n.id);
-              navigate(`/inicioDocente/crearCasos/${caseId}/interacciones/${n.id}`);
+              navigate(`${basePath}/${caseId}/interacciones/${n.id}` ,{state: {caseData}});
             },
         nodeRef: (el: HTMLDivElement | null) => {
           nodeRefs.current[n.id] = el;

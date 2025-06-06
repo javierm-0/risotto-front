@@ -40,6 +40,7 @@ interface InteraccionDetalleProps {
     opcionId: string
   ) => void;
   agregarOpcion: (interId: string, relatoId: string) => void;
+  basePath: string;
 }
 
 const InteraccionDetalle: React.FC<InteraccionDetalleProps> = ({
@@ -52,6 +53,7 @@ const InteraccionDetalle: React.FC<InteraccionDetalleProps> = ({
   actualizarCampoOpcion,
   eliminarOpcion,
   agregarOpcion,
+  basePath,
 }) => {
   const { idInteraccion } = useParams<{ idInteraccion: string }>();
   const navigate = useNavigate();
@@ -74,7 +76,7 @@ const InteraccionDetalle: React.FC<InteraccionDetalleProps> = ({
         <button
           className="text-teal-600 hover:underline text-sm"
           onClick={() =>
-            navigate(`/inicioDocente/crearCasos/${caseData._id}`)
+            navigate(`${basePath}/${caseData._id}`,{state: {caso: caseData}})
           }
         >
           ← Volver a vista general
@@ -95,12 +97,10 @@ const InteraccionDetalle: React.FC<InteraccionDetalleProps> = ({
                 actualizarCampoInteraccion(interaccion.id!, campo, valor),
               onDelete: () => {
                 eliminarInteraccion(interaccion.id!);
-                navigate(`/inicioDocente/crearCasos/${caseData._id}`);
+                navigate(`${basePath}/${caseData._id}`);
               },
               onAddRelato: () => agregarRelato(interaccion.id!),
-              onEnfocar: () => {
-                /* No hace nada aquí porque ya estamos en “detalle” */
-              },
+              onEnfocar: () => {},
               nodeRef: () => {},
             }}
           />

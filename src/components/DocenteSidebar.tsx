@@ -16,7 +16,7 @@ const DocenteSidebar = ({ onSidebarToggle }: { onSidebarToggle?: (open: boolean)
 
   const Menus = [
     { title: 'Inicio', icon: iconHome, link: '/inicioDocente' },
-    { title: 'Ver Casos Clínicos', icon: iconVista, link: '/inicioDocente/verCasos' },
+    { title: 'Editar Casos Clínicos', icon: iconVista, link: '/inicioDocente/verCasos' },
     { title: 'Crear Casos Clínicos', icon: iconCrear, link: '/inicioDocente/crearCasos/nuevoCaso' },
     { title: 'Ver Diagnosticos finales', icon: iconDiagnostico, link: '/inicioDocente/Diagnosticos' },
     { title: 'Cerrar Sesión', spacing: true, icon: iconClose, link: '/', isExitButton: true },

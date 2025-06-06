@@ -221,7 +221,7 @@ const CrearCasosPrincipal: React.FC = () => {
                               setAlreadySent(true);//con esto deberia apagarse hasta recargar la pagina, prevenimos spam de casos
                               }}>
                                 →Enviar Cambios
-                </button>
+          </button>
       </header>
 
       <div className="flex-1">
@@ -234,9 +234,11 @@ const CrearCasosPrincipal: React.FC = () => {
             index
             element={
               <TestearNodos
-                caseId={caseId!}
+                caseId={caseData._id!}
                 caseData={caseData}
                 setCaseData={setCaseData}
+                basePath="/inicioDocente/crearCasos"
+                
               />
             }
           />
@@ -245,11 +247,12 @@ const CrearCasosPrincipal: React.FC = () => {
             2) Ruta DETALLE: /inicioDocente/crearCasos/:caseId/interacciones/:idInteraccion
                → Renderiza InteraccionDetalle con todos los handlers
           */}
-          <Route
+         <Route
             path="interacciones/:idInteraccion"
             element={
               <InteraccionDetalle
                 caseData={caseData}
+                basePath="/inicioDocente/crearCasos"
                 actualizarCampoInteraccion={onChangeInteraccionField}
                 eliminarInteraccion={onDeleteInteraccion}
                 agregarRelato={onAddRelato}

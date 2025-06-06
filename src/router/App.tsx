@@ -4,7 +4,6 @@ import InicioStudent from '../components/Estudiantes/InicioStudent'
 import InicioDocente from '../components/InicioDocente'
 import ProtectedRoute from '../auth/ProtectedRoute'
 import Logout from '../components/Logout'
-import VerCasos from '../components/VerCasos'
 import Diagnosticos from '../components/Diagnosticos'
 import ListaCasosAPS from '../components/CasosST/ListaCasosAPS'
 import ListaCasosUrgencia from '../components/CasosST/ListaCasosUrgencia'
@@ -15,7 +14,13 @@ import SimulacionGuia from '../components/GuiaSimulación'
 import { ReactFlowProvider } from 'reactflow'
 import PdfTestViewer from '../components/pdfTest'
 import CrearCasosPrincipal from '../components/CasosDoc/CrearCasosFuncionalidad/CrearCasosPrincipal'
+import { useState } from 'react'
+import ListaGeneralCasos from '../components/CasosDoc/EditarCasosFuncionalidad/ListaGeneralCasos'
+import { Case } from '../types/NPCTypes'
+import EditarCasos from '../components/CasosDoc/EditarCasosFuncionalidad/EditarCasos'
 function App() {
+  const [casosGenerales, setCasosGenerales] = useState<Case[]>([]);
+  const [caseData, setCaseData] = useState<Case | null>(null);
   return (
     <ReactFlowProvider>
       <div>
@@ -65,9 +70,23 @@ function App() {
               <InicioDocente></InicioDocente>
             </ProtectedRoute>
             }> </Route>
-          <Route path='/inicioDocente/verCasos' element={
+          <Route path='/inicioDocente/verCasos/' element={
             <ProtectedRoute >
-              <VerCasos></VerCasos>
+              <ListaGeneralCasos
+                caseData={caseData}
+                casosGenerales={casosGenerales}
+                setCasosGenerales={setCasosGenerales}
+                setCaseData={setCaseData}
+              ></ListaGeneralCasos>
+            </ProtectedRoute>
+            }> </Route>
+
+          <Route path='/inicioDocente/verCasos/editarCasos/:caseId/*' element={
+            <ProtectedRoute >
+              <EditarCasos
+                caseData={caseData}
+                setCaseData={setCaseData}
+              ></EditarCasos>
             </ProtectedRoute>
             }> </Route>
           <Route path='/inicioDocente/crearCasos/:caseId/*' element={
