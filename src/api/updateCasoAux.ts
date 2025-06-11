@@ -1,25 +1,24 @@
 import axios from "axios";
 import { Case } from "../types/NPCTypes";
 
+
 export async function UpdateCasoAux(backurl: string, updatedCase: Case) : Promise<boolean>{
     try {
-        const response = await axios.patch(backurl,updatedCase);
+        const token = localStorage.getItem("token");
+        const response = await axios.patch(backurl+updatedCase._id,updatedCase,{headers: { Authorization: `Bearer ${token}` }});
         if(response.status === 200 ){
             console.log("UpdateCasoAux: Data actualizada");
             console.log("por si acaso(200): ",response.data);
             return true;
         }
-        else if (response.status === 204){
-            console.warn("UpdateCasoAux: No context");
-            console.log("por si acaso (204): ",response.data);
-            return true;
+        console.warn(`UpdateCasoAux: Unexpected status ${response.status}`);
+        return false;
+    } catch (error: any) {
+        if (axios.isAxiosError(error)) {
+            console.error("UpdateCasoAux: Axios error", error.response?.data || error.message);
+        } else {
+            console.error("UpdateCasoAux: Unknown error", error);
         }
-        else{
-            return false;
-        }
-    } catch (error) {
-        console.error(error);
         return false;
     }
-    return false;
 }

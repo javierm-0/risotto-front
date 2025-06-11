@@ -27,8 +27,8 @@ interface EditarCasosProps{
 const EditarCasos: React.FC<EditarCasosProps> = ({caseData,setCaseData}) => {
   const navigate = useNavigate();
   const [alreadySent, setAlreadySent] = useState(false);
-  const backurl = "http://localhost:3001/simulation/case/update";
-
+  const backurl = "http://localhost:3001/simulation/case/update:";
+  
   useEffect(() => {
   if(!caseData)
     {

@@ -25,13 +25,13 @@ const PdfTestViewer: React.FC = () => {
     };
 
     return (
-        <div style={{ padding: '20px', fontFamily: 'Arial, sans-serif' }}>
-            <h1>Generador de PDF de Prueba</h1>
-            <p>Haz clic en el botón para generar un PDF de prueba con datos simulados y ver el diseño.</p>
+        <div style={{ padding: '20px', fontFamily: 'Myriad Pro, Arial, sans-serif' }}>
+            <h1 style={{ fontFamily: 'Myriad Pro, Arial, sans-serif' }}>Generador de PDF de Prueba</h1>
+            <p style={{ fontFamily: 'Myriad Pro, Arial, sans-serif' }}>Haz clic en el botón para generar un PDF de prueba con datos simulados y ver el diseño.</p>
             
-            <div style={{ border: '1px solid #ccc', padding: '15px', borderRadius: '8px', marginBottom: '20px' }}>
-                <h2>Datos de Prueba (JSON)</h2>
-                <pre style={{ backgroundColor: '#f4f4f4', padding: '10px', borderRadius: '4px', overflowX: 'auto' }}>
+            <div style={{ border: '1px solid #ccc', padding: '15px', borderRadius: '8px', marginBottom: '20px', fontFamily: 'Myriad Pro, Arial, sans-serif' }}>
+                <h2 style={{ fontFamily: 'Myriad Pro, Arial, sans-serif' }}>Datos de Prueba (JSON)</h2>
+                <pre style={{ backgroundColor: '#f4f4f4', padding: '10px', borderRadius: '4px', overflowX: 'auto', fontFamily: 'Myriad Pro, monospace' }}>
                     <code>{JSON.stringify(testDiagnosticData, null, 2)}</code>
                 </pre>
             </div>
@@ -46,7 +46,8 @@ const PdfTestViewer: React.FC = () => {
                     border: 'none',
                     borderRadius: '5px',
                     cursor: 'pointer',
-                    boxShadow: '0 2px 5px rgba(0,0,0,0.2)'
+                    boxShadow: '0 2px 5px rgba(0,0,0,0.2)',
+                    fontFamily: 'Myriad Pro, Arial, sans-serif'
                 }}
             >
                 Generar y Visualizar PDF de Prueba
