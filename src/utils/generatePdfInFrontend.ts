@@ -1,12 +1,11 @@
 import jsPDF from 'jspdf';
-import ucnLogo from '../assets/Escudo-UCN-Full-Color.png';
-import medicinaLogo from '../assets/logoMedUcn_circular.png';
 
 export type pdfDiagnosticDto = {
   case_id: string;
   user_name: string;
   case_info: string;
   date: string;
+  case_title: string;
   logos?: {
     ucn: string;
     medicina: string;
@@ -16,25 +15,30 @@ export type pdfDiagnosticDto = {
 export async function generatePdfInFrontend(data: pdfDiagnosticDto) {
   const doc = new jsPDF();
 
-  // Logos
-  const logoUCN = data.logos?.ucn || ucnLogo;
-  const logoMed = data.logos?.medicina || medicinaLogo;
-
-  const logoSize = 35;
+  const logoUCN = data.logos?.ucn || '/assets/Escudo-UCN-Full-Color.png';
+  const logoMed = data.logos?.medicina || '/assets/logoMedUcn_circular.png';
 
   const ucnImg = new Image();
-  ucnImg.src = logoUCN;
-
   const medImg = new Image();
-  medImg.src = logoMed;
+  const logoSize = 35;
 
-  await Promise.all([
-    new Promise((res) => (ucnImg.onload = res)),
-    new Promise((res) => (medImg.onload = res)),
-  ]);
+  const cargarImagen = (img: HTMLImageElement, src: string) =>
+    new Promise((resolve, reject) => {
+      img.src = src;
+      img.onload = () => resolve(true);
+      img.onerror = () => reject(`No se pudo cargar la imagen: ${src}`);
+    });
 
-  doc.addImage(ucnImg, 'PNG', 15, 10, logoSize, logoSize);
-  doc.addImage(medImg, 'PNG', 160, 10, logoSize, logoSize);
+  try {
+    await Promise.all([
+      cargarImagen(ucnImg, logoUCN),
+      cargarImagen(medImg, logoMed),
+    ]);
+    doc.addImage(ucnImg, 'PNG', 15, 10, logoSize, logoSize);
+    doc.addImage(medImg, 'PNG', 160, 10, logoSize, logoSize);
+  } catch (e) {
+    console.warn(e);
+  }
 
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(16);
@@ -43,7 +47,8 @@ export async function generatePdfInFrontend(data: pdfDiagnosticDto) {
   doc.setFontSize(12);
   doc.setFont('helvetica', 'normal');
   doc.text(`Nombre del Estudiante: ${data.user_name}`, 20, 60);
-  doc.text(`Fecha: ${new Date(data.date).toLocaleDateString()}`, 20, 84);
+  doc.text(`Fecha: ${new Date(data.date).toLocaleDateString('es-CL')}`, 20, 72);
+  doc.text(`Título del Caso: ${data.case_title}`, 20, 84);
 
   doc.setFont('helvetica', 'bold');
   doc.text('Diagnóstico Final:', 20, 100);
@@ -52,5 +57,10 @@ export async function generatePdfInFrontend(data: pdfDiagnosticDto) {
   const splitText = doc.splitTextToSize(data.case_info, 170);
   doc.text(splitText, 20, 110);
 
-  doc.save(`diagnostico_final_${data.case_id}.pdf`);
+  // 🎯 Nombre de archivo más único y descriptivo
+  const nombre = data.user_name.toLowerCase().replace(/\s+/g, '_');
+  const fecha = new Date(data.date).toLocaleDateString('es-CL').replace(/\//g, '-');
+  const titulo = data.case_title.toLowerCase().replace(/\s+/g, '_').substring(0, 30);
+
+  doc.save(`diagnostico_${nombre}_${titulo}_${fecha}.pdf`);
 }
