@@ -1,1 +1,12 @@
+@font-face {
+  font-family: 'Myriad Pro';
+  src: url('/MYRIADPRO-REGULAR.OTF') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body, html, #root {
+  font-family: 'Myriad Pro', Arial, Helvetica, sans-serif;
+}
+
 @import "tailwindcss";
