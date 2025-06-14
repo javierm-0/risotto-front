@@ -9,7 +9,8 @@ import { User } from "../types/User";
   const BACKEND_IP = import.meta.env.VITE_BACKEND_IP;
   export async function verificarUsuario(email: string, userInfoFromGoogle: any, tipo: "Estudiante" | "Docente") : Promise<boolean> {
     try {
-      const response = await axios.get<User>(`http://"+${BACKEND_IP}+":3001/users/user/${email}`);
+      const response = await axios.get<User>(`http://${BACKEND_IP}:3001/users/user/${email}`);
+      console.log("user: "+`http://"+${BACKEND_IP}+":3001/users/user/${email}`);
       const userExists = response.data;
       if (userExists) {
         //usuario existe, se guarda en localStorage y se permite el acceso
