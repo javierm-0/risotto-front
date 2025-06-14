@@ -4,6 +4,7 @@ import { Case } from '../../../types/NPCTypes';
 import { TablaGenerica } from '../../../generic/TablaGenerica';
 import { useNavigate } from 'react-router-dom';
 import DocenteSidebar from '../../DocenteSidebar';
+import { injectIdsIntoCase } from '../../../utils/injectID';
 
 interface ListaGeneralCasosProps {
   casosGenerales : Case[];
@@ -70,12 +71,12 @@ const ListaGeneralCasos : React.FC<ListaGeneralCasosProps> = ({
                 render: (caso) => (
                   <button
                     onClick={() => {
-                        setCaseData(caso);
+                        setCaseData(injectIdsIntoCase(caso));
                         navigate(`/inicioDocente/verCasos/editarCasos/${caso._id}`)}
                     }
                     className="bg-[#164a5f] text-white py-4 px-2 hover:bg-[#164a5fd2] font-bold transition w-full h-full"
                   >
-                    Elegir este caso
+                    Elegir este caso para editar
                   </button>
                 )
               }
@@ -100,7 +101,7 @@ const ListaGeneralCasos : React.FC<ListaGeneralCasosProps> = ({
               </p>
               <button
                 onClick={() => {
-                    setCaseData(caso);
+                    setCaseData(injectIdsIntoCase(caso));
                     navigate(`/inicioDocente/verCasos/editarCasos/${caso._id}`);
                 }}
                 className="w-full bg-[#164a5f] text-white py-2 rounded-md hover:bg-[#143c4f] transition"

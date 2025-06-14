@@ -83,7 +83,6 @@ export function injectIdsIntoCase(originalCase: Case): Case {
   return {
     // Copiamos _id → id en la raíz del caso
     _id: caseId,
-    id: caseId,
     titulo: originalCase.titulo,
     tipo_caso: originalCase.tipo_caso,
     contexto_inicial: originalCase.contexto_inicial,

@@ -16,7 +16,6 @@ import InteraccionDetalle from "../CrearCasosFuncionalidad/InteraccionDetalle";
 import { UpdateCasoAux } from "../../../api/updateCasoAux";
 import { validateCaseData } from "../../../utils/validationUtils";
 import { injectIdsIntoCase } from "../../../utils/injectID";
-import axios from "axios";
 
 
 interface EditarCasosProps{
