@@ -11,7 +11,7 @@ export function useCasoClinico(id: string | undefined) {
     if (!id) return;
     const fetchCaso = async () => {
       try {
-        const res = await axios.get(`http://"+${BACKEND_IP}+":3001/simulation/case/${id}`);
+        const res = await axios.get(`http://${BACKEND_IP}:3001/simulation/case/${id}`);
         setCaso(res.data);
       } catch (err) {
         setError('Error al cargar el caso clínico');
