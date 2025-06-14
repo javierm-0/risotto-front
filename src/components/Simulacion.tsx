@@ -234,10 +234,10 @@ function Simulacion() {
           </button>
           {mostrarDetalles && (
             <div className="p-4">
-              <p><strong>📌 Descripción:</strong> {caso?.contexto_inicial.descripcion}</p>
+              <p><strong>📌 Descripción:</strong> {caso?.contexto_inicial?.descripcion}</p>
               <p className="mt-2"><strong>🧾 Información del paciente:</strong></p>
               <ul className="list-disc list-inside">
-                {caso && Object.entries(caso.contexto_inicial.informacion_paciente).filter(([clave]) => clave !== "_id" && clave !== "antecedentes_relevantes").map(([clave, valor]) => (
+                {caso && Object.entries(caso.contexto_inicial?.informacion_paciente).filter(([clave]) => clave !== "_id" && clave !== "antecedentes_relevantes").map(([clave, valor]) => (
                   <li key={clave}>
                     <strong>{formatearClave(clave)}:</strong> {Array.isArray(valor) ? <ul className="list-disc ml-6">{valor.map((item, i) => <li key={i}>{item}</li>)}</ul> : String(valor)}
                   </li>

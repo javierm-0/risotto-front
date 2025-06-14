@@ -55,7 +55,7 @@ export function validateCaseData(caseData: Case): boolean {
       }
     }
   }
-  if (!Array.isArray(caseData.interacciones)) {
+  if (!Array.isArray(caseData.interacciones) || caseData.interacciones.length === 0) {
     return false;
   }
   for (const inter of caseData.interacciones) {
@@ -74,7 +74,7 @@ function validateInteraccion(inter: InteraccionType): boolean {
   if (inter.descripcion != null && typeof inter.descripcion !== "string") {
     return false;
   }
-  if (!Array.isArray(inter.preguntas)) {
+  if (!Array.isArray(inter.preguntas) || inter.preguntas.length === 0) {
     return false;
   }
   for (const rel of inter.preguntas) {

@@ -27,7 +27,7 @@ const BACKEND_IP = import.meta.env.VITE_BACKEND_IP;
 const EditarCasos: React.FC<EditarCasosProps> = ({caseData,setCaseData}) => {
   const navigate = useNavigate();
   const [alreadySent, setAlreadySent] = useState(false);
-  const backurl = "http://"+BACKEND_IP+":3001/simulation/case/update:";
+  const backurl = "http://"+BACKEND_IP+":3001/simulation/case/update/";
   
   useEffect(() => {
   if(!caseData)
