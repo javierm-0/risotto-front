@@ -5,17 +5,19 @@ import StudentSidebar from '../Estudiantes/StudentSidebar';
 import { TablaGenerica } from '../../generic/TablaGenerica';
 import { useNavigate } from 'react-router-dom';
 
+const BACKEND_IP = import.meta.env.VITE_BACKEND_IP;
+
 const ListaCasosUrgencia = () => {
   const [casos, setCasos] = useState<Case[]>([]);
   const [cargando, setCargando] = useState(true);
   const [sidebarAbierto, setSidebarAbierto] = useState(true);
   const [error, setError] = useState(false);
   const navigate = useNavigate();
-
+  const backurl : string = "http://"+BACKEND_IP+":3001/simulation/case"
   useEffect(() => {
     const obtenerCasos = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/simulation/case');
+        const response = await axios.get(backurl);
         const todos = response.data;
 
         const filtrados = todos

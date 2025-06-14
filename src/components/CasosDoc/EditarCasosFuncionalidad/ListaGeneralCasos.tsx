@@ -13,6 +13,8 @@ interface ListaGeneralCasosProps {
   setCaseData: React.Dispatch<React.SetStateAction<Case|null>>;
 }
 
+const BACKEND_IP = import.meta.env.VITE_BACKEND_IP;
+
 const ListaGeneralCasos : React.FC<ListaGeneralCasosProps> = ({
   casosGenerales,
   setCasosGenerales,
@@ -22,11 +24,12 @@ const ListaGeneralCasos : React.FC<ListaGeneralCasosProps> = ({
   const [error, setError] = useState(false);
   const [sidebarAbierto, setSidebarAbierto] = useState(true);
   const navigate = useNavigate();
+  const backurl = "http://"+BACKEND_IP+":3001/simulation/case"
 
   useEffect(() => {
     const obtenerCasos = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/simulation/case');
+        const response = await axios.get(backurl);
         const todos: Case[] = response.data;
         setCasosGenerales(todos);
       } catch (err) {

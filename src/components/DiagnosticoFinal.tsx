@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import SimulacionSidebar from "./SimulacionSidebar";
 import { jwtDecode } from "jwt-decode";
 
-
+const BACKEND_IP = import.meta.env.VITE_BACKEND_IP;
 
 
   const DiagnosticoFinal = () => {
@@ -12,6 +12,7 @@ import { jwtDecode } from "jwt-decode";
     const [sidebarAbierto, setSidebarAbierto] = useState(true);
     const [diagnostico, setDiagnostico] = useState("");
     const [nombreEstudiante, setNombreEstudiante] = useState("");
+    const backurl:string = "http://"+BACKEND_IP+":3001/diagnostic/create"
 
     useEffect(() => {
       const token = localStorage.getItem("token");
@@ -34,7 +35,7 @@ import { jwtDecode } from "jwt-decode";
       };
 
       try {
-        const res = await fetch("http://localhost:3001/diagnostic/create", {
+        const res = await fetch(backurl, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

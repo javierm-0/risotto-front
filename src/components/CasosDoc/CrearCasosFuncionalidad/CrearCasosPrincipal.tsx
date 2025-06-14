@@ -14,13 +14,16 @@ import {
 } from "../../../types/NPCTypes";
 import { validateCaseData } from "../../../utils/validationUtils";
 import { CrearCaso } from "../../../api/crearCasoAux";
+const BACKEND_IP = import.meta.env.VITE_BACKEND_IP;
+
 
 const CrearCasosPrincipal: React.FC = () => {
   // 1) Extraer caseId de la URL padre: /inicioDocente/crearCasos/:caseId/*
   const { caseId } = useParams<{ caseId: string }>();
   const navigate = useNavigate();
   const [alreadySent,setAlreadySent] = useState<boolean>(false);
-  const backurl: string = "http://localhost:3001/simulation/case/create";
+  const backurl: string = "http://"+BACKEND_IP+":3001/simulation/case/create";
+  
 
   // 2) Estado principal `caseData`
   const [caseData, setCaseData] = useState<Case>({

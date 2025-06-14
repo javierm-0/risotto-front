@@ -2,12 +2,14 @@ import axios from "axios";
 import Tostadas from "../utils/Tostadas";
 import { User } from "../types/User";
 
+
   //verifica si los datos de Google coinciden con los del back
   //si coinciden, se guarda en localStorage y retorna true
   //si no coinciden, se intenta agregar, si se logra agregar, retorna true
+  const BACKEND_IP = import.meta.env.VITE_BACKEND_IP;
   export async function verificarUsuario(email: string, userInfoFromGoogle: any, tipo: "Estudiante" | "Docente") : Promise<boolean> {
     try {
-      const response = await axios.get<User>(`http://localhost:3001/users/user/${email}`);
+      const response = await axios.get<User>(`http://"+${BACKEND_IP}+":3001/users/user/${email}`);
       const userExists = response.data;
       if (userExists) {
         //usuario existe, se guarda en localStorage y se permite el acceso
@@ -33,11 +35,12 @@ import { User } from "../types/User";
     }
   }
 
+  
   //agrega un nuevo usuario a la base de datos del back
   //retorna true si logra agregar, false si no, false si algo falla
   export async function AgregarNuevoUsuario(userInfoFromGoogle: any, tipo: "Estudiante" | "Docente") : Promise<boolean> {
     try {
-      const response = await axios.post('http://localhost:3001/users/user/create', {
+      const response = await axios.post('http://'+BACKEND_IP +':3001/users/user/create', {
         name: userInfoFromGoogle.name,
         email: userInfoFromGoogle.email,
         type: tipo,

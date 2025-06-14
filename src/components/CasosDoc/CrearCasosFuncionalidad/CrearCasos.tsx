@@ -21,7 +21,7 @@ import { addItem, removeItemAt, updateItemAt } from "../../../utils/arrayUtils";
 
 type TipoCaso = Case['tipo_caso'];
 const TIPOS_CASO: TipoCaso[] = ["APS", "Urgencia", "Hospitalario"];
-
+const BACKEND_IP = import.meta.env.VITE_BACKEND_IP;
 
 function CrearCasos() {
   const [caso, setCaso] = useState<Case>({
@@ -45,7 +45,7 @@ function CrearCasos() {
 
 
 
-  const URL_BACKEND = "http://localhost:3001/simulation/case/create";
+  const URL_BACKEND = "http://"+BACKEND_IP+":3001/simulation/case/create";
 
    const isFormValid = () => {
     return (
@@ -83,7 +83,7 @@ function CrearCasos() {
       interacciones: caso.interacciones?.map(interaccion => ({
       id: interaccion.id,
       nombreNPC: interaccion.nombreNPC,
-      descripcionNPC: interaccion.descripcionNPC,
+      descripcionNPC: interaccion.descripcion,
       preguntas: interaccion.preguntas?.map(pregunta => ({
         id: pregunta.id,
         pregunta: pregunta.pregunta,

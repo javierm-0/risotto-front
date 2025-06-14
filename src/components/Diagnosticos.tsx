@@ -15,15 +15,18 @@ type Diagnostic = {
   date: string;
 };
 
+const BACKEND_IP = import.meta.env.VITE_BACKEND_IP;
+
 function Diagnosticos() {
   const [sidebarAbierto, setSidebarAbierto] = useState(true);
   const [diagnosticos, setDiagnosticos] = useState<Diagnostic[]>([]);
   const [busqueda, setBusqueda] = useState("");
+  const backurl : string = "http://"+BACKEND_IP+":3001/diagnostic";
 
   useEffect(() => {
     const fetchDiagnosticos = async () => {
       try {
-        const res = await fetch("http://localhost:3001/diagnostic");
+        const res = await fetch(backurl);
         if (!res.ok) throw new Error(`Error ${res.status}: ${res.statusText}`);
         const data = await res.json();
         setDiagnosticos(data);
@@ -55,7 +58,7 @@ function Diagnosticos() {
     if (!confirmar) return;
 
     try {
-      const res = await fetch(`http://localhost:3001/diagnostic/${id}`, {
+      const res = await fetch(`${backurl}+"/"+${id}`, {
         method: "DELETE",
       });
 

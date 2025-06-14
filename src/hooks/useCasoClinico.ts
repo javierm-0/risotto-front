@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Case } from '../types/NPCTypes';
-
+const BACKEND_IP = import.meta.env.VITE_BACKEND_IP;
 export function useCasoClinico(id: string | undefined) {
   const [caso, setCaso] = useState<Case | null>(null);
   const [loading, setLoading] = useState(true);
@@ -11,7 +11,7 @@ export function useCasoClinico(id: string | undefined) {
     if (!id) return;
     const fetchCaso = async () => {
       try {
-        const res = await axios.get(`http://localhost:3001/simulation/case/${id}`);
+        const res = await axios.get(`http://"+${BACKEND_IP}+":3001/simulation/case/${id}`);
         setCaso(res.data);
       } catch (err) {
         setError('Error al cargar el caso clínico');

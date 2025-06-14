@@ -23,6 +23,8 @@ function formatearClave(clave: string): string {
     .replace(/(?:^|\s)\S/g, (l) => l.toUpperCase());
 }
 
+const BACKEND_IP = import.meta.env.VITE_BACKEND_IP;
+
 function Simulacion() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -40,8 +42,10 @@ function Simulacion() {
   >({});
   const [mostrarDetalles, setMostrarDetalles] = useState(false);
 
+  const backurl = "http://"+BACKEND_IP+":3001/simulation/case/"
+
   useEffect(() => {
-    fetch(`http://localhost:3001/simulation/case/${id}`)
+    fetch(`${backurl}+${id}`)
       .then((res) => res.json())
       .then((data) => setCaso(data));
   }, [id]);
