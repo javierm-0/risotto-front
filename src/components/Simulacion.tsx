@@ -45,7 +45,7 @@ function Simulacion() {
   const backurl = "http://"+BACKEND_IP+":3001/simulation/case/"
 
   useEffect(() => {
-    fetch(`${backurl}+${id}`)
+    fetch(`${backurl}${id}`)
       .then((res) => res.json())
       .then((data) => setCaso(data));
   }, [id]);
