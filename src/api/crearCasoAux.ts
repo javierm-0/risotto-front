@@ -1,5 +1,6 @@
 import axios from "axios";
 import { Case } from "../types/NPCTypes";
+import Tostadas from "../utils/Tostadas";
 
     export async function CrearCaso(backUrl: string, caseData:Case) : Promise<boolean> {
         const jsonCase = {
@@ -34,20 +35,19 @@ import { Case } from "../types/NPCTypes";
         })),
         informacion_final_caso: caseData.informacion_final_caso
       };
-
-
         try {
             const response = await axios.post(backUrl,jsonCase)
             if(response.status === 201){
-                console.log("Caso creado, epico");
+                Tostadas.ToastSuccess("Caso creado exitosamente");
                 return true;
             }
             else{
+                Tostadas.ToastWarning("No se pudo crear el caso");
                 return false;
             }
             
         } catch (error) {
-            console.error(error);
+            Tostadas.ToastError("Error, No se pudo crear el caso");
             return false;
         }
 

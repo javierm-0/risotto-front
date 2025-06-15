@@ -15,6 +15,8 @@ import InteraccionDetalle from "../CrearCasosFuncionalidad/InteraccionDetalle";
 
 import { UpdateCasoAux } from "../../../api/updateCasoAux";
 import { validateCaseData } from "../../../utils/validationUtils";
+import Tostadas from "../../../utils/Tostadas";
+import { ToastContainer } from "react-toastify";
 
 
 interface EditarCasosProps{
@@ -266,10 +268,11 @@ const EditarCasos: React.FC<EditarCasosProps> = ({caseData,setCaseData}) => {
           }`}
           onClick={async () => {
             setAlreadySent(true);
-            try {
-              await UpdateCasoAux(backurl, caseData);
-            } catch (err) {
-              console.error("Error al actualizar caso:", err);
+            const wasUpdated : boolean = await UpdateCasoAux(backurl, caseData);
+            if(wasUpdated){
+              setAlreadySent(true);
+            }
+            else{
               setAlreadySent(false);
             }
           }}
@@ -316,6 +319,7 @@ const EditarCasos: React.FC<EditarCasosProps> = ({caseData,setCaseData}) => {
           />
         </Routes>
       </div>
+      <ToastContainer />
     </div>
   );
 };

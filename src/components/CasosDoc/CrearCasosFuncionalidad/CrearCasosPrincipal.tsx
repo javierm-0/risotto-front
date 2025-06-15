@@ -14,6 +14,7 @@ import {
 } from "../../../types/NPCTypes";
 import { validateCaseData } from "../../../utils/validationUtils";
 import { CrearCaso } from "../../../api/crearCasoAux";
+import { ToastContainer } from "react-toastify";
 const BACKEND_IP = import.meta.env.VITE_BACKEND_IP;
 
 
@@ -204,6 +205,16 @@ const CrearCasosPrincipal: React.FC = () => {
   
   const isFormValid : boolean = validateCaseData(caseData);
 
+  const onCreateCaseClick = async () =>{
+    const hasCreatedCase = await CrearCaso(backurl, caseData);
+    if(hasCreatedCase){
+      setAlreadySent(true);
+    }
+    else{
+      setAlreadySent(false);
+    }
+  };
+
   return (
     <div className="flex flex-col h-screen">
       <header className="bg-[#164a5f] p-4 border-b flex items-center justify-between">
@@ -220,8 +231,8 @@ const CrearCasosPrincipal: React.FC = () => {
          <button disabled={!isFormValid || alreadySent} className={`text-xl py-2 px-4 rounded 
                                   ${isFormValid && !alreadySent? 'text-[#ffffff] hover:text-gray-400 hover:underline' : 'text-[#164a5f]' } `}
                             onClick={() => {
-                              CrearCaso(backurl,caseData);
-                              setAlreadySent(true);//con esto deberia apagarse hasta recargar la pagina, prevenimos spam de casos
+                              setAlreadySent(true);//con esto deberia apagarse hasta recargar la pagina, prevenimos spam de casos                              
+                              onCreateCaseClick();
                               }}>
                                 →Enviar Cambios
           </button>
@@ -269,6 +280,7 @@ const CrearCasosPrincipal: React.FC = () => {
           />
         </Routes>
       </div>
+      <ToastContainer />
     </div>
   );
 };

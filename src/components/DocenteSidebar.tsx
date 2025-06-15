@@ -37,7 +37,7 @@ const DocenteSidebar = ({ onSidebarToggle }: { onSidebarToggle?: (open: boolean)
         <li
           key={index}
           className={`text-white text-sm flex items-center gap-4 cursor-pointer p-2 rounded-md hover:bg-[#0d5c71] mt-2 ${
-            menu.spacing ? 'mt-48' : ''
+            menu.spacing ? 'mt-60' : ''
           }`}
           onClick={() => navigate(menu.isExitButton ? '/logout' : menu.link)}
         >

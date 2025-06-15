@@ -1,5 +1,6 @@
 import axios from "axios";
 import { Case } from "../types/NPCTypes";
+import Tostadas from "../utils/Tostadas";
 
 
 export async function UpdateCasoAux(backurl: string, caseData: Case) : Promise<boolean>{
@@ -41,13 +42,14 @@ export async function UpdateCasoAux(backurl: string, caseData: Case) : Promise<b
         const token = localStorage.getItem("token");
         const response = await axios.patch(backurl+updatedCase._id,updatedCase,{headers: { Authorization: `Bearer ${token}` }});
         if(response.status === 200 ){
-            console.log("UpdateCasoAux: Data actualizada");
-            console.log("por si acaso(200): ",response.data);
+            Tostadas.ToastSuccess("Caso actualizado exitosamente");
             return true;
         }
+        Tostadas.ToastWarning("No se pudo actualizar el caso");
         console.warn(`UpdateCasoAux: Unexpected status ${response.status}`);
         return false;
     } catch (error: any) {
+        Tostadas.ToastError("Error durante el envío del caso a actualizar, no se harán cambios");
         if (axios.isAxiosError(error)) {
             console.error("UpdateCasoAux: Axios error", error.response?.data || error.message);
         } else {
