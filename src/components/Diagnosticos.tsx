@@ -58,7 +58,7 @@ function Diagnosticos() {
     if (!confirmar) return;
 
     try {
-      const res = await fetch(`${backurl}+"/"+${id}`, {
+      const res = await fetch(`${backurl}/${id}`, {
         method: "DELETE",
       });
 

@@ -6,7 +6,6 @@ import iconHome from '../assets/home.svg';
 import iconVista from '../assets/VistaDoc.png';
 import iconCrear from '../assets/CrearDoc.png';
 import iconDiagnostico from '../assets/VerDiagnostico.png';
-import iconProgram from '../assets/simulation.png';
 import { BsArrowLeftSquareFill, BsList } from 'react-icons/bs';
 
 const DocenteSidebar = ({ onSidebarToggle }: { onSidebarToggle?: (open: boolean) => void }) => {
@@ -20,7 +19,6 @@ const DocenteSidebar = ({ onSidebarToggle }: { onSidebarToggle?: (open: boolean)
     { title: 'Crear Casos Clínicos', icon: iconCrear, link: '/inicioDocente/crearCasos/nuevoCaso' },
     { title: 'Ver Diagnosticos finales', icon: iconDiagnostico, link: '/inicioDocente/Diagnosticos' },
     { title: 'Cerrar Sesión', spacing: true, icon: iconClose, link: '/', isExitButton: true },
-    { title: 'Simulación', icon: iconProgram, link: '/simulacion/guia' }
   ];
 
   const toggleSidebar = () => {
