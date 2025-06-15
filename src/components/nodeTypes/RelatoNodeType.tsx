@@ -74,7 +74,7 @@ const RelatoNodeType: React.FC<RelatoNodeProps> = ({ data }) => {
             className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
           />
           <textarea
-            placeholder="Reacción"
+            placeholder="Reacción(opcional)"
             value={opc.reaccion}
             onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
               onChangeOpcionField(opc.id!, "reaccion", e.target.value)
@@ -99,7 +99,7 @@ const RelatoNodeType: React.FC<RelatoNodeProps> = ({ data }) => {
 
           <input
             type="text"
-            placeholder="Consecuencia (opcional)"
+            placeholder="Consecuencia"
             value={opc.OpcionesAsociadas[0]?.consecuencia || ""}
             onChange={(e) =>
               onChangeOpcionField(opc.id!, "consecuencia", e.target.value)

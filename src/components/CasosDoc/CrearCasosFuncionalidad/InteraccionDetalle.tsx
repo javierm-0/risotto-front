@@ -91,15 +91,34 @@ const InteraccionDetalle: React.FC<InteraccionDetalleProps> = ({
           <InteraccionNodeType
             data={{
               nodeData: interaccion,
-              onChangeField: (campo, valor) =>
-                actualizarCampoInteraccion(interaccion.id!, campo, valor),
+              onChangeField: (campo, valor) =>{
+                if (!interaccion.id) {
+                  console.error("No id al editar interacción");
+                  return;
+                }
+                  console.log("actualizarCampoInteraccion : interID: ",interaccion.id, "campo: "+campo, "valor: "+valor);
+                  actualizarCampoInteraccion(interaccion.id, campo, valor);
+                },
               onDelete: () => {
-                eliminarInteraccion(interaccion.id!);
+                console.log("eliminarInteraccion : interID: ",interaccion.id);
+                if (!interaccion.id) {
+                  console.error("No id al editar interacción");
+                  return;
+                }
+                eliminarInteraccion(interaccion.id);
                 navigate(`${basePath}/${caseData._id}`);
+               },
+              onAddRelato: () => {
+                console.log("agregarRelato : interID: ",interaccion.id);
+                if (!interaccion.id) {
+                  console.error("No id al editar interacción");
+                  return;
+                }
+                agregarRelato(interaccion.id)
               },
-              onAddRelato: () => agregarRelato(interaccion.id!),
               onEnfocar: () => {},
               nodeRef: () => {},
+              showHandles: false,
             }}
           />
         </div>

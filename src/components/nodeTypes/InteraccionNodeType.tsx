@@ -1,4 +1,4 @@
-// src/nodeTypes/InteraccionNodeComponent.tsx
+// src/nodeTypes/InteraccionNodeType.tsx
 import React, { ChangeEvent } from "react";
 import { InteraccionType } from "../../types/NPCTypes";
 import { Handle, Position } from "reactflow";
@@ -11,16 +11,19 @@ interface InteraccionNodeProps {
     onAddRelato: () => void;
     onEnfocar: () => void;
     nodeRef : (el: HTMLDivElement | null) => void;
+    showHandles?: boolean,
   };
 }
 
 const InteraccionNodeType: React.FC<InteraccionNodeProps> = ({ data }) => {
-  const { nodeData, onChangeField, onDelete, onAddRelato, onEnfocar} = data;
+  const { nodeData, onChangeField, onDelete, onAddRelato, onEnfocar, showHandles = true} = data;
 
   return (
     <div ref={data.nodeRef} className="w-60 bg-teal-50 border border-teal-700 rounded-md p-3 space-y-2 shadow-sm">
        {/* 1) Handle “target” en la parte superior para conectar desde Case */}
-      <Handle type="target" position={Position.Top} id="inter-target" />
+       {showHandles && (
+        <Handle type="target" position={Position.Top} id="inter-target" />
+      )}
       <input
         type="text"
         placeholder="Nombre de persona"
@@ -47,7 +50,9 @@ const InteraccionNodeType: React.FC<InteraccionNodeProps> = ({ data }) => {
           Eliminar NPC
         </button>
          {/* 2) Handle “source” en la parte inferior para conectar al primer Relato */}
-        <Handle type="source" position={Position.Bottom} id="inter-source" />
+        {showHandles && (
+          <Handle type="source" position={Position.Bottom} id="inter-source" />
+        )}
         <button
           onClick={onAddRelato}
           className="text-teal-600 hover:underline text-xs font-medium"

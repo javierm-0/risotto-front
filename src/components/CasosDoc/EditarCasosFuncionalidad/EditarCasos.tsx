@@ -15,7 +15,6 @@ import InteraccionDetalle from "../CrearCasosFuncionalidad/InteraccionDetalle";
 
 import { UpdateCasoAux } from "../../../api/updateCasoAux";
 import { validateCaseData } from "../../../utils/validationUtils";
-import { injectIdsIntoCase } from "../../../utils/injectID";
 
 
 interface EditarCasosProps{
@@ -39,8 +38,6 @@ const EditarCasos: React.FC<EditarCasosProps> = ({caseData,setCaseData}) => {
   if(!caseData){
     return null;
   }
-  //rellenar con id es clave, sino no dibuja nodos
-  const caseDataWithIDs = injectIdsIntoCase(caseData);
   
   //Validacion de formulario
   const isFormValid = validateCaseData(caseData);
@@ -55,8 +52,8 @@ const EditarCasos: React.FC<EditarCasosProps> = ({caseData,setCaseData}) => {
       return {
         ...prev,
         interacciones: prev.interacciones.map((i) => {
-          const inter = i as InteraccionType & { _id: string };
-          if (inter._id !== interId) return inter;
+          const inter = i as InteraccionType & { id: string };
+          if (inter.id !== interId) return inter;
           return { ...inter, [campo]: valor } as InteraccionType;
         }),
       } as Case;
@@ -69,8 +66,8 @@ const EditarCasos: React.FC<EditarCasosProps> = ({caseData,setCaseData}) => {
       return {
         ...prev,
         interacciones: prev.interacciones.filter((i) => {
-          const inter = i as InteraccionType & { _id: string };
-          return inter._id !== interId;
+          const inter = i as InteraccionType & { id: string };
+          return inter.id !== interId;
         }),
       } as Case;
     });
@@ -82,10 +79,10 @@ const EditarCasos: React.FC<EditarCasosProps> = ({caseData,setCaseData}) => {
       return {
         ...prev,
         interacciones: prev.interacciones.map((i) => {
-          const inter = i as InteraccionType & { _id: string };
-          if (inter._id !== interId) return inter;
+          const inter = i as InteraccionType;
+          if (inter.id !== interId) return inter;
           const nuevaPregunta: RelatoType = {
-            _id: `${interId}-rel-${Date.now()}`,
+            id: `${interId}-rel-${Date.now()}`,
             pregunta: "",
             texto: "",
             opciones: [],
@@ -107,13 +104,13 @@ const EditarCasos: React.FC<EditarCasosProps> = ({caseData,setCaseData}) => {
       return {
         ...prev,
         interacciones: prev.interacciones.map((i) => {
-          const inter = i as InteraccionType & { _id: string };
-          if (inter._id !== interId) return inter;
+          const inter = i as InteraccionType & { id: string };
+          if (inter.id !== interId) return inter;
           return {
             ...inter,
             preguntas: inter.preguntas.map((r) => {
-              const rel = r as RelatoType & { _id: string };
-              if (rel._id !== relatoId) return rel;
+              const rel = r as RelatoType & { id: string };
+              if (rel.id !== relatoId) return rel;
               return { ...rel, [campo]: valor } as RelatoType;
             }),
           } as InteraccionType;
@@ -128,13 +125,13 @@ const EditarCasos: React.FC<EditarCasosProps> = ({caseData,setCaseData}) => {
       return {
         ...prev,
         interacciones: prev.interacciones.map((i) => {
-          const inter = i as InteraccionType & { _id: string };
-          if (inter._id !== interId) return inter;
+          const inter = i as InteraccionType & { id: string };
+          if (inter.id !== interId) return inter;
           return {
             ...inter,
             preguntas: inter.preguntas.filter((r) => {
-              const rel = r as RelatoType & { _id: string };
-              return rel._id !== relatoId;
+              const rel = r as RelatoType & { id: string };
+              return rel.id !== relatoId;
             }),
           } as InteraccionType;
         }),
@@ -148,15 +145,15 @@ const EditarCasos: React.FC<EditarCasosProps> = ({caseData,setCaseData}) => {
       return {
         ...prev,
         interacciones: prev.interacciones.map((i) => {
-          const inter = i as InteraccionType & { _id: string };
-          if (inter._id !== interId) return inter;
+          const inter = i as InteraccionType & { id: string };
+          if (inter.id !== interId) return inter;
           return {
             ...inter,
             preguntas: inter.preguntas.map((r) => {
-              const rel = r as RelatoType & { _id: string };
-              if (rel._id !== relatoId) return rel;
-              const nuevaOpcion: OpcionType & { _id: string } = {
-                _id: `${relatoId}-opc-${Date.now()}`,
+              const rel = r as RelatoType & { id: string };
+              if (rel.id !== relatoId) return rel;
+              const nuevaOpcion: OpcionType & { id: string } = {
+                id: `${relatoId}-opc-${Date.now()}`,
                 texto: "",
                 reaccion: "",
                 OpcionesAsociadas: [{ esCorrecta: false, consecuencia: "" }],
@@ -179,18 +176,18 @@ const EditarCasos: React.FC<EditarCasosProps> = ({caseData,setCaseData}) => {
       return {
         ...prev,
         interacciones: prev.interacciones.map((i) => {
-          const inter = i as InteraccionType & { _id: string };
-          if (inter._id !== interId) return inter;
+          const inter = i as InteraccionType;
+          if (inter.id !== interId) return inter;
           return {
             ...inter,
             preguntas: inter.preguntas.map((r) => {
-              const rel = r as RelatoType & { _id: string };
-              if (rel._id !== relatoId) return rel;
+              const rel = r as RelatoType;
+              if (rel.id !== relatoId) return rel;
               return {
                 ...rel,
                 opciones: rel.opciones.filter((o) => {
-                  const opc = o as OpcionType & { _id: string };
-                  return opc._id !== opcionId;
+                  const opc = o as OpcionType;
+                  return opc.id !== opcionId;
                 }),
               } as RelatoType;
             }),
@@ -212,18 +209,18 @@ const EditarCasos: React.FC<EditarCasosProps> = ({caseData,setCaseData}) => {
       return {
         ...prev,
         interacciones: prev.interacciones.map((i) => {
-          const inter = i as InteraccionType & { _id: string };
-          if (inter._id !== interId) return inter;
+          const inter = i as InteraccionType;
+          if (inter.id !== interId) return inter;
           return {
             ...inter,
             preguntas: inter.preguntas.map((r) => {
-              const rel = r as RelatoType & { _id: string };
-              if (rel._id !== relatoId) return rel;
+              const rel = r as RelatoType;
+              if (rel.id !== relatoId) return rel;
               return {
                 ...rel,
                 opciones: rel.opciones.map((o) => {
-                  const opc = o as OpcionType & { _id: string };
-                  if (opc._id !== opcionId) return opc;
+                  const opc = o as OpcionType;
+                  if (opc.id !== opcionId) return opc;
                   if (campo === "texto" || campo === "reaccion") {
                     return { ...opc, [campo]: valor } as OpcionType;
                   }
@@ -289,7 +286,7 @@ const EditarCasos: React.FC<EditarCasosProps> = ({caseData,setCaseData}) => {
             element={
               <TestearNodos
                 caseId={caseData._id!}
-                caseData={caseDataWithIDs}
+                caseData={caseData}
                 setCaseData={setCaseData as React.Dispatch<React.SetStateAction<Case>>}
                 basePath="/inicioDocente/verCasos/editarCasos"
               />
@@ -302,7 +299,7 @@ const EditarCasos: React.FC<EditarCasosProps> = ({caseData,setCaseData}) => {
             element={
               <InteraccionDetalle
                 basePath="/inicioDocente/verCasos/editarCasos"
-                caseData={caseDataWithIDs}
+                caseData={caseData}
                 actualizarCampoInteraccion={onChangeInteraccionField}
                 eliminarInteraccion={(id) => {
                   onDeleteInteraccion(id);
