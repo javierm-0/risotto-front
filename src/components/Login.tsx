@@ -17,7 +17,6 @@ function Login() {
       return;
     }
     localStorage.setItem('token', idToken);
-    console.log('ID Token:', idToken);
     const decoded: any = jwtDecode(idToken);
 
     if (!decoded.email) {

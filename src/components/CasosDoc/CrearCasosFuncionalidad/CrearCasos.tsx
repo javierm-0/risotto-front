@@ -103,14 +103,10 @@ function CrearCasos() {
     informacion_final_caso: caso.informacion_final_caso ?? ''
   }
 
-
-    console.log("Caso clínico creado:", JSON.stringify(json, null, 2));
     
     try {
       const response = await axios.post(URL_BACKEND, json);
-      console.log("response: ", response);
       if (response.status === 201) {
-        console.log("Caso clínico creado exitosamente");
         Tostadas.ToastSuccess("Caso clínico creado exitosamente");
         setCreandoCaso(true);
       }

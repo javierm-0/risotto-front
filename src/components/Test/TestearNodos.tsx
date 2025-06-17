@@ -196,7 +196,6 @@ const TestearNodos: React.FC<TestearNodosProps> = ({
       <div className="p-4 bg-gray-100 border-b flex gap-2">
         <button
           className="bg-[#164a5f] text-white py-2 px-4 rounded hover:bg-[#0d5c71]"
-          onClick={() => console.log(JSON.stringify(caseData, null, 2))}
         >
           Mostrar JSON del caso
         </button>

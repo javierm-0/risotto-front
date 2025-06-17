@@ -52,10 +52,6 @@ function Interprete(
 
   const resultados: StrSimilarityResults[] = evaluarSimilitud(frasesValidas, inputUsuario);
 
-  console.log('🔍 Evaluando input:', inputUsuario);
-  resultados.forEach((strRes) => {
-    console.log(`✔ "${strRes.fraseValida}" ⟶ Similitud: ${strRes.similarityRating.toFixed(3)}`);
-  });
 
   const frasesAprobadas = resultados.filter((r) => r.similarityRating >= ratingMinimo);
   if (frasesAprobadas.length > 0) {

@@ -96,11 +96,9 @@ const InteraccionDetalle: React.FC<InteraccionDetalleProps> = ({
                   console.error("No id al editar interacción");
                   return;
                 }
-                  console.log("actualizarCampoInteraccion : interID: ",interaccion.id, "campo: "+campo, "valor: "+valor);
                   actualizarCampoInteraccion(interaccion.id, campo, valor);
                 },
               onDelete: () => {
-                console.log("eliminarInteraccion : interID: ",interaccion.id);
                 if (!interaccion.id) {
                   console.error("No id al editar interacción");
                   return;
@@ -109,7 +107,6 @@ const InteraccionDetalle: React.FC<InteraccionDetalleProps> = ({
                 navigate(`${basePath}/${caseData._id}`);
                },
               onAddRelato: () => {
-                console.log("agregarRelato : interID: ",interaccion.id);
                 if (!interaccion.id) {
                   console.error("No id al editar interacción");
                   return;

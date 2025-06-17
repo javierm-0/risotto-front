@@ -19,7 +19,7 @@ const ListaCasosAPS = () => {
   useEffect(() => {
     const obtenerCasos = async () => {
       try {
-        const response = await axios.get(backurl);
+        const response = await axios.get(backurl, {headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem('token') } });
         const todos = response.data;
         const filtrados = todos
           .filter((caso: any) => caso.tipo_caso === 'APS')

@@ -17,7 +17,6 @@ const PdfTestViewer: React.FC = () => {
         try {
            
             await generatePdfInFrontend(testDiagnosticData);
-            console.log('PDF de prueba generado y abierto en una nueva pestaña.');
         } catch (error) {
             console.error('Error al generar el PDF de prueba:', error);
             alert('Hubo un error al generar el PDF de prueba. Revisa la consola.');

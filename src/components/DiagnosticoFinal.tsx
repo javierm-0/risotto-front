@@ -2,6 +2,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import SimulacionSidebar from "./SimulacionSidebar";
 import { jwtDecode } from "jwt-decode";
+import Tostadas from "../utils/Tostadas";
+import { ToastContainer } from "react-toastify";
 
 const BACKEND_IP = import.meta.env.VITE_BACKEND_IP;
 
@@ -45,11 +47,11 @@ const BACKEND_IP = import.meta.env.VITE_BACKEND_IP;
 
         if (!res.ok) throw new Error("Error al guardar diagnóstico");
 
-        alert("✅ Diagnóstico final guardado exitosamente.");
-        navigate("/inicioEstudiante");
+        Tostadas.ToastSuccess("✅ Diagnóstico final guardado exitosamente.");
+        navigate("/inicioEstudiante", { state: { showToast: true } });
       } catch (error) {
         console.error("Error al guardar el diagnóstico:", error);
-        alert("Hubo un problema al guardar el diagnóstico");
+        Tostadas.ToastError("Hubo un problema al guardar el diagnóstico");
       }
     };
 
@@ -84,6 +86,7 @@ const BACKEND_IP = import.meta.env.VITE_BACKEND_IP;
           Listo
         </button>
       </div>
+      <ToastContainer></ToastContainer>
     </div>
   );
 };

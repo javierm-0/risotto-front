@@ -36,7 +36,7 @@ import Tostadas from "../utils/Tostadas";
         informacion_final_caso: caseData.informacion_final_caso
       };
         try {
-            const response = await axios.post(backUrl,jsonCase)
+            const response = await axios.post(backUrl,jsonCase,{headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem('token') } });
             if(response.status === 201){
                 Tostadas.ToastSuccess("Caso creado exitosamente");
                 return true;

@@ -36,7 +36,6 @@ export async function UpdateCasoAux(backurl: string, caseData: Case) : Promise<b
         })),
         informacion_final_caso: caseData.informacion_final_caso
       };
-      console.log("por actualizar: ", updatedCase);
 
     try {
         const token = localStorage.getItem("token");

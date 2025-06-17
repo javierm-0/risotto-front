@@ -65,7 +65,6 @@ export function createEnrichedElements(
     caseData,
     canvasWidth
   );
-  console.log("computeFlowElements → rawNodes:", rawNodes.map(n => n.id));
   // 2) transformamos rawNodes → enrichedNodes inyectando callbacks
   const enrichedNodes: RFNode[] = rawNodes.map((node) => {
     // ——— Caso “CaseNode” ———

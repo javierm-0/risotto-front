@@ -10,7 +10,7 @@ const clientId = import.meta.env.VITE_OAUTH_CLIENT_ID;
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <GoogleOAuthProvider clientId = {clientId}>
       <BrowserRouter>
-        <App />
+          <App />
       </BrowserRouter>
   </GoogleOAuthProvider>
 )

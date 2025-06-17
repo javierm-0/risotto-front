@@ -10,7 +10,6 @@ import { User } from "../types/User";
   export async function verificarUsuario(email: string, userInfoFromGoogle: any, tipo: "Estudiante" | "Docente") : Promise<boolean> {
     try {
       const response = await axios.get<User>(`http://${BACKEND_IP}:3001/users/user/${email}`);
-      console.log("user: "+`http://"+${BACKEND_IP}+":3001/users/user/${email}`);
       const userExists = response.data;
       if (userExists) {
         //usuario existe, se guarda en localStorage y se permite el acceso
@@ -24,9 +23,6 @@ import { User } from "../types/User";
       } else {
         //usuario no existe, se agrega a la base de datos del back y luego ingresa
         Tostadas.ToastInfo('Cuenta no registrada en el sistema. Agregando usuario...');
-
-        console.log("Usuario no encontrado, se intentara agregar...");
-        console.warn('Usuario no encontrado en base de datos(se intentara agregar...):', email);
         return await AgregarNuevoUsuario(userInfoFromGoogle, tipo);//retorna true si logra agregar, false si no, false si algo falla
       }
     } catch (error) {
