@@ -3,9 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import ucnLogo from '../assets/IsologoUCN.png';
 import iconClose from '../assets/arrow-reduce-tag.svg';
 import iconHome from '../assets/home.svg';
-import iconVista from '../assets/VistaDoc.png';
-import iconCrear from '../assets/CrearDoc.png';
-import iconDiagnostico from '../assets/VerDiagnostico.png';
+import iconVista from '../assets/VistaDoc-1-white.png';
+import iconCrear from '../assets/CrearDoc-1-white.png';
+import iconDiagnostico from '../assets/VerDiagnostico-1-white.png';
 import { BsArrowLeftSquareFill, BsList } from 'react-icons/bs';
 
 const DocenteSidebar = ({ onSidebarToggle }: { onSidebarToggle?: (open: boolean) => void }) => {
