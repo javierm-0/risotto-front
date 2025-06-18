@@ -193,19 +193,6 @@ const TestearNodos: React.FC<TestearNodosProps> = ({
 
   return (
     <div className="flex flex-col h-screen">
-      <div className="p-4 bg-gray-100 border-b flex gap-2">
-        <button
-          className="bg-[#164a5f] text-white py-2 px-4 rounded hover:bg-[#0d5c71]"
-        >
-          Mostrar JSON del caso
-        </button>
-        <button
-          className="bg-[#164a5f] text-white py-2 px-4 rounded hover:bg-[#0d5c71]"
-          onClick={() => setNeedsLayout(true)}
-        >
-          Actualizar diagrama
-        </button>
-      </div>
 
       <div ref={wrapperRef} className="flex-1">
         <ReactFlowProvider>

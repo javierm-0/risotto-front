@@ -177,7 +177,7 @@ const CaseNodeType: React.FC<CaseNodeProps> = ({ data }) => {
         onClick={onAddInteraccion}
         className="mt-2 w-full bg-[#0F3F52] hover:bg-[#164a5f] hover:underline text-white text-xs font-medium py-1 rounded"
       >
-        + Agregar entidad (NPC)
+        + Agregar entidad
       </button>
 
       {/* Info final del caso */}
