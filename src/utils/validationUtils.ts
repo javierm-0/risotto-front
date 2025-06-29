@@ -17,9 +17,6 @@ export function validateCaseData(caseData: Case): boolean {
   if (!VALID_TIPOS.includes(caseData.tipo_caso)) {
     return false;
   }
-  if (typeof caseData.informacion_final_caso !== "string" || caseData.informacion_final_caso.trim() === "") {
-    return false;
-  }
 
   const ctx = caseData.contexto_inicial;
   if (!ctx || typeof ctx.descripcion !== "string" || ctx.descripcion.trim() === "") {
