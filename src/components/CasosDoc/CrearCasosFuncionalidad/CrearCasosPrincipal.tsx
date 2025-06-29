@@ -234,7 +234,7 @@ const CrearCasosPrincipal: React.FC = () => {
                               setAlreadySent(true);//con esto deberia apagarse hasta recargar la pagina, prevenimos spam de casos                              
                               onCreateCaseClick();
                               }}>
-                                →Enviar Cambios
+                                →Finalizar Creación de Caso
           </button>
       </header>
 

@@ -58,7 +58,7 @@ const NPC: React.FC<NPCProps> = ({
           className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 active:scale-95 w-full sm:w-auto"
           onClick={onEliminarNPC}
         >
-          Eliminar NPC
+          Eliminar entidad
         </button>
       </div>
 

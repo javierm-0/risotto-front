@@ -71,7 +71,7 @@ function validateInteraccion(inter: InteraccionType): boolean {
   if (typeof inter.nombreNPC !== "string" || inter.nombreNPC.trim() === "") {
     return false;
   }
-  if (inter.descripcion != null && typeof inter.descripcion !== "string") {
+  if (inter.descripcion != null && typeof inter.descripcion !== "string" || inter.descripcion.trim() === "") {
     return false;
   }
   if (!Array.isArray(inter.preguntas) || inter.preguntas.length === 0) {

@@ -277,7 +277,7 @@ const EditarCasos: React.FC<EditarCasosProps> = ({caseData,setCaseData}) => {
             }
           }}
         >
-          → Enviar Cambios para editar
+          → Guardar Cambios
         </button>
       </header>
 

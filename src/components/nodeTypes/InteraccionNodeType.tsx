@@ -26,7 +26,7 @@ const InteraccionNodeType: React.FC<InteraccionNodeProps> = ({ data }) => {
       )}
       <input
         type="text"
-        placeholder="Nombre de persona"
+        placeholder="Nombre de persona(entidad)"
         value={nodeData.nombreNPC}
         onChange={(e: ChangeEvent<HTMLInputElement>) =>
           onChangeField("nombreNPC", e.target.value)
@@ -35,7 +35,7 @@ const InteraccionNodeType: React.FC<InteraccionNodeProps> = ({ data }) => {
       />
       <input
         type="text"
-        placeholder="Descripción(Opcional)"
+        placeholder="Relato"
         value={nodeData.descripcion}
         onChange={(e: ChangeEvent<HTMLInputElement>) =>
           onChangeField("descripcion", e.target.value)
@@ -47,7 +47,7 @@ const InteraccionNodeType: React.FC<InteraccionNodeProps> = ({ data }) => {
           onClick={onDelete}
           className="text-red-500 hover:text-red-700 text-xs font-medium"
         >
-          Eliminar NPC
+          Eliminar entidad
         </button>
          {/* 2) Handle “source” en la parte inferior para conectar al primer Relato */}
         {showHandles && (
@@ -57,7 +57,7 @@ const InteraccionNodeType: React.FC<InteraccionNodeProps> = ({ data }) => {
           onClick={onAddRelato}
           className="text-teal-600 hover:underline text-xs font-medium"
         >
-          + Relato
+          + Añadir Preguntas
         </button>
 
         <button
