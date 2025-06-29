@@ -15,8 +15,8 @@ export type pdfDiagnosticDto = {
 export async function generatePdfInFrontend(data: pdfDiagnosticDto) {
   const doc = new jsPDF();
 
-  const logoUCN = data.logos?.ucn || '/assets/Escudo-UCN-Full-Color.png';
-  const logoMed = data.logos?.medicina || '/assets/logoMedUcn_circular.png';
+  const logoUCN = data.logos?.ucn || '/logos/Escudo-UCN-Full-Color.png';
+  const logoMed = data.logos?.medicina || '/logos/logoMedUcn_circular.png';
 
   const ucnImg = new Image();
   const medImg = new Image();
