@@ -12,7 +12,6 @@ import Simulacion from '../components/Simulacion'
 import DiagnosticoFinal from '../components/DiagnosticoFinal'
 import SimulacionGuia from '../components/GuiaSimulación'
 import { ReactFlowProvider } from 'reactflow'
-import PdfTestViewer from '../components/pdfTest'
 import CrearCasosPrincipal from '../components/CasosDoc/CrearCasosFuncionalidad/CrearCasosPrincipal'
 import { useState } from 'react'
 import ListaGeneralCasos from '../components/CasosDoc/EditarCasosFuncionalidad/ListaGeneralCasos'
@@ -32,11 +31,6 @@ function App() {
               <SimulacionGuia />
             </ProtectedRoute>
           }></Route>
-          <Route path='/pdftest' element={
-            
-              <PdfTestViewer />
-            
-            }> </Route>
           
           <Route path='/inicioEstudiante' element={
             <ProtectedRoute allowedRoles={['Estudiante']}>
@@ -66,7 +60,7 @@ function App() {
 
 
           <Route path='/inicioDocente' element={
-            <ProtectedRoute >
+            <ProtectedRoute>
               <InicioDocente></InicioDocente>
             </ProtectedRoute>
             }> </Route>
