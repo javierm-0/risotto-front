@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ucnLogo from '../assets/IsologoUCN.png';
 import { BsArrowLeftSquareFill, BsList } from 'react-icons/bs';

@@ -15,7 +15,6 @@ import InteraccionDetalle from "../CrearCasosFuncionalidad/InteraccionDetalle";
 
 import { UpdateCasoAux } from "../../../api/updateCasoAux";
 import { validateCaseData } from "../../../utils/validationUtils";
-import Tostadas from "../../../utils/Tostadas";
 import { ToastContainer } from "react-toastify";
 
 
