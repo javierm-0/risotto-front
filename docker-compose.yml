@@ -1,62 +1,18 @@
 services:
-  mongo:
-    image: mongo:6
-    container_name: mongo-db
-    ports:
-      - "27017:27017"
-    volumes:
-      - mongo-data:/data/db
-    environment:
-      MONGO_INITDB_DATABASE: miappdb
-    networks:
-      - app-network
-
-  backend:
-    build:
-      context: ./backend
-      dockerfile: DockerFile
-    image: risotto-backend:latest
-    container_name: backend-app
-    ports:
-      - "3001:3001"
-    depends_on:
-      - mongo
-    networks:
-      - app-network
-    env_file:
-      - ./backend/.env  
 
   frontend:
     build:
-      context: ./risotto-front
+      context: .
       dockerfile: Dockerfile
     image: risotto-frontend:latest
     container_name: frontend-app
     ports:
-      - "5173:80"
-    depends_on:
-      - backend
+      - "5173:5173"
     networks:
       - app-network
     env_file:
-      - ./risotto-front/.env
-
-  nginx:
-    image: nginx:alpine
-    container_name: nginx-proxy
-    ports:
-      - "80:80"
-    volumes:
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf
-    depends_on:
-      - frontend
-      - backend
-    networks:
-      - app-network
-
-volumes:
-  mongo-data:
+      - .env
 
 networks:
   app-network:
-    driver: bridge
+    external: true
