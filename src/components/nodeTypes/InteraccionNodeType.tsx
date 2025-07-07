@@ -33,11 +33,11 @@ const InteraccionNodeType: React.FC<InteraccionNodeProps> = ({ data }) => {
         }
         className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-teal-400"
       />
-      <input
-        type="text"
+      <textarea
         placeholder="Relato"
+        rows={10}
         value={nodeData.descripcion}
-        onChange={(e: ChangeEvent<HTMLInputElement>) =>
+        onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
           onChangeField("descripcion", e.target.value)
         }
         className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-teal-400"

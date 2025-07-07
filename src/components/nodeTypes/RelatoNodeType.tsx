@@ -48,7 +48,7 @@ const RelatoNodeType: React.FC<RelatoNodeProps> = ({ data }) => {
         onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
           onChangeRelatoField("texto", e.target.value)
         }
-        rows={2}
+        rows={8}
         className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
       />
       <button
@@ -67,11 +67,11 @@ const RelatoNodeType: React.FC<RelatoNodeProps> = ({ data }) => {
             className="border border-gray-300 rounded p-2 space-y-1 bg-white "
           >
             
-            <input
-              type="text"
+            <textarea
+              rows={3}
               placeholder={"Alternativa "+ counter +" de respuesta"}
               value={opc.texto}
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
                 onChangeOpcionField(opc.id!, "texto", e.target.value)
               }
               className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
@@ -91,8 +91,8 @@ const RelatoNodeType: React.FC<RelatoNodeProps> = ({ data }) => {
               </label>
             </div>
   
-            <input
-              type="text"
+            <textarea
+              rows={6}
               placeholder="Consecuencia"
               value={opc.OpcionesAsociadas[0]?.consecuencia || ""}
               onChange={(e) =>
