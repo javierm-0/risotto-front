@@ -60,12 +60,14 @@ function App() {
 
 
           <Route path='/inicioDocente' element={
-            <ProtectedRoute>
+            <ProtectedRoute
+            allowedRoles={['Docente']}>
               <InicioDocente></InicioDocente>
             </ProtectedRoute>
             }> </Route>
           <Route path='/inicioDocente/verCasos/' element={
-            <ProtectedRoute >
+            <ProtectedRoute 
+            allowedRoles={['Docente']}>
               <ListaGeneralCasos
                 caseData={caseData}
                 casosGenerales={casosGenerales}
@@ -76,7 +78,8 @@ function App() {
             }> </Route>
 
           <Route path='/inicioDocente/verCasos/editarCasos/:caseId/*' element={
-            <ProtectedRoute >
+            <ProtectedRoute 
+            allowedRoles={['Docente']}>
               <EditarCasos
                 caseData={caseData}
                 setCaseData={setCaseData}
@@ -84,12 +87,16 @@ function App() {
             </ProtectedRoute>
             }> </Route>
           <Route path='/inicioDocente/crearCasos/:caseId/*' element={
-            <ProtectedRoute >
+            <ProtectedRoute 
+            allowedRoles={['Docente']}>
+              
               <CrearCasosPrincipal></CrearCasosPrincipal>
             </ProtectedRoute>
             }> </Route>
           <Route path='/inicioDocente/diagnosticos' element={
-            <ProtectedRoute >
+            <ProtectedRoute 
+              allowedRoles={['Docente']}
+            >
               <Diagnosticos></Diagnosticos>
             </ProtectedRoute>
             }> </Route>
